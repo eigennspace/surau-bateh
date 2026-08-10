@@ -4,12 +4,12 @@
 
 **Blocked by:** 01 — Situs produksi tayang di GitHub Pages dengan navigasi penuh, konten dari Sumber Data
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Sumber Data punya field `donation` dengan QRIS, rekening bank, dan toggle kampanye (judul + deskripsi)
-- [ ] `deriveSiteData` menghasilkan bentuk donasi siap-render yang berbeda sesuai status toggle kampanye
-- [ ] Halaman Infak menampilkan QRIS (proporsional) + info rekening, dengan bingkai kampanye saat toggle aktif
-- [ ] Kartu donasi di panel Agenda menampilkan bentuk yang sama (bukan lagi `DonationProgress`)
-- [ ] `DonationProgress` tidak dirender di manapun di situs produksi
-- [ ] Unit test: toggle kampanye aktif → hasil menyertakan judul & deskripsi
-- [ ] Unit test: toggle kampanye tidak aktif → hasil hanya QRIS + rekening
+- [x] Sumber Data punya field `donation` dengan QRIS, rekening bank, dan toggle kampanye (judul + deskripsi)
+- [x] `deriveSiteData` menghasilkan bentuk donasi siap-render yang berbeda sesuai status toggle kampanye
+- [x] Halaman Infak menampilkan QRIS (proporsional) + info rekening, dengan bingkai kampanye saat toggle aktif
+- [x] Kartu donasi di panel Agenda menampilkan bentuk yang sama (bukan lagi `DonationProgress`)
+- [x] `DonationProgress` tidak dirender di manapun di situs produksi
+- [x] Unit test: toggle kampanye aktif → hasil menyertakan judul & deskripsi
+- [x] Unit test: toggle kampanye tidak aktif → hasil hanya QRIS + rekening

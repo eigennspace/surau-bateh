@@ -1,0 +1,13 @@
+/* Sepadan dengan gaya body di New Surau Bateh Lori Design System/ui_kits/website/index.html */
+body {
+  margin: 0;
+  background: var(--sand-200);
+  font-family: var(--font-sans);
+  color: var(--text-body);
+}
+a {
+  color: var(--text-link);
+}
+a:hover {
+  color: var(--text-link-hover);
+}

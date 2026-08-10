@@ -8,14 +8,14 @@ Repo ini belum jadi git repo — inisialisasi git repo sebagai bagian dari tiket
 
 **Blocked by:** Tidak ada — bisa mulai langsung
 
-**Status:** ready-for-agent
+**Status:** ready-for-human (deploy step pending push + Pages activation)
 
-- [ ] Repo di-init sebagai git repo
-- [ ] Proyek Vite + React baru dibuat di folder terpisah dari `New Surau Bateh Lori Design System/`, dalam repo yang sama
-- [ ] Semua komponen visual yang dipakai situs produksi diimpor langsung dari `New Surau Bateh Lori Design System/components/` dan `tokens/*.css` — tidak ada berkas komponen yang disalin atau ditulis ulang
-- [ ] Navigasi penuh berfungsi antar 6 halaman (Beranda, Profil, Jadwal Salat, Kajian, Infak, Kontak), termasuk perilaku responsif (nav bawah/menu ponsel) seperti di `index.html`/`mobile.html`
-- [ ] Perbandingan visual terhadap `New Surau Bateh Lori Design System/ui_kits/website/index.html` dan `mobile.html` tidak menunjukkan perbedaan pada bagian yang belum diubah tiket ini
-- [ ] Satu berkas Sumber Data (ES module) berisi `times`, `events`, `programs`, `news`, `roadmap`, `contact`, dibaca lewat `deriveSiteData(rawData, now)`
-- [ ] Unit test untuk `deriveSiteData` memverifikasi field-field ini diteruskan tanpa mutasi
-- [ ] Build situs (`vite build` atau setara) berhasil menghasilkan static export
-- [ ] Situs ter-deploy dan bisa diakses di GitHub Pages
+- [x] Repo di-init sebagai git repo
+- [x] Proyek Vite + React baru dibuat di folder terpisah dari `New Surau Bateh Lori Design System/`, dalam repo yang sama
+- [x] Semua komponen visual yang dipakai situs produksi diimpor langsung dari `New Surau Bateh Lori Design System/components/` dan `tokens/*.css` — tidak ada berkas komponen yang disalin atau ditulis ulang
+- [x] Navigasi penuh berfungsi antar 6 halaman (Beranda, Profil, Jadwal Salat, Kajian, Infak, Kontak), termasuk perilaku responsif (nav bawah/menu ponsel) seperti di `index.html`/`mobile.html`
+- [x] Perbandingan visual terhadap `New Surau Bateh Lori Design System/ui_kits/website/index.html` dan `mobile.html` tidak menunjukkan perbedaan pada bagian yang belum diubah tiket ini
+- [x] Satu berkas Sumber Data (ES module) berisi `times`, `events`, `programs`, `news`, `roadmap`, `contact`, dibaca lewat `deriveSiteData(rawData, now)`
+- [x] Unit test untuk `deriveSiteData` memverifikasi field-field ini diteruskan tanpa mutasi
+- [x] Build situs (`vite build` atau setara) berhasil menghasilkan static export
+- [ ] Situs ter-deploy dan bisa diakses di GitHub Pages — workflow `.github/workflows/deploy.yml` sudah dibuat (build + test + `actions/deploy-pages`); menunggu repo di-push ke GitHub dan Pages diaktifkan (Settings → Pages → Source: GitHub Actions) sebelum ini bisa dicentang

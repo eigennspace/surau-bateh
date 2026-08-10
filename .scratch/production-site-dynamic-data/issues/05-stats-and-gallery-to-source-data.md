@@ -4,11 +4,11 @@
 
 **Blocked by:** 01 — Situs produksi tayang di GitHub Pages dengan navigasi penuh, konten dari Sumber Data
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Sumber Data punya field `stats` (manual, bukan dihitung otomatis)
-- [ ] Sumber Data punya field `gallery` (array foto dengan path, alt, caption, meta, ratio/position)
-- [ ] `StatsSection` merender dari `stats` lewat `deriveSiteData`
-- [ ] `GallerySection` merender dari `gallery` lewat `deriveSiteData`
-- [ ] Tidak ada lagi angka statistik atau daftar foto galeri hardcode di kode situs produksi
-- [ ] Unit test: `stats` dan `gallery` diteruskan `deriveSiteData` tanpa mutasi
+- [x] Sumber Data punya field `stats` (manual, bukan dihitung otomatis)
+- [x] Sumber Data punya field `gallery` (array foto dengan path, alt, caption, meta, ratio/position)
+- [x] `StatsSection` merender dari `stats` lewat `deriveSiteData`
+- [x] `GallerySection` merender dari `gallery` lewat `deriveSiteData`
+- [x] Tidak ada lagi angka statistik atau daftar foto galeri hardcode di kode situs produksi
+- [x] Unit test: `stats` dan `gallery` diteruskan `deriveSiteData` tanpa mutasi

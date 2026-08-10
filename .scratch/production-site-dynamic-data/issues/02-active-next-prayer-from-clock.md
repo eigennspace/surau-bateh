@@ -4,11 +4,11 @@
 
 **Blocked by:** 01 — Situs produksi tayang di GitHub Pages dengan navigasi penuh, konten dari Sumber Data
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `deriveSiteData` menghasilkan `activePrayerName`/`nextPrayerName` berdasarkan perbandingan `now` dengan `times`
-- [ ] Hero card dan `PrayerTimeTable` di halaman Jadwal Salat memakai hasil ini, bukan nilai hardcode
-- [ ] Unit test: `now` sebelum Subuh → hasil benar
-- [ ] Unit test: `now` di antara dua waktu salat (mis. antara Ashar dan Maghrib) → hasil benar
-- [ ] Unit test: `now` setelah Isya (menjelang tengah malam) → hasil benar
-- [ ] Tidak ada perubahan pada perilaku tabel "Pekan ini"
+- [x] `deriveSiteData` menghasilkan `activePrayerName`/`nextPrayerName` berdasarkan perbandingan `now` dengan `times`
+- [x] Hero card dan `PrayerTimeTable` di halaman Jadwal Salat memakai hasil ini, bukan nilai hardcode
+- [x] Unit test: `now` sebelum Subuh → hasil benar
+- [x] Unit test: `now` di antara dua waktu salat (mis. antara Ashar dan Maghrib) → hasil benar
+- [x] Unit test: `now` setelah Isya (menjelang tengah malam) → hasil benar
+- [x] Tidak ada perubahan pada perilaku tabel "Pekan ini"

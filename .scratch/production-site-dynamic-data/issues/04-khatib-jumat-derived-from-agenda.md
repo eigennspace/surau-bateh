@@ -4,10 +4,10 @@
 
 **Blocked by:** 01 — Situs produksi tayang di GitHub Pages dengan navigasi penuh, konten dari Sumber Data
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `deriveSiteData` menghasilkan `khatibJumat` dari `events` berkategori "Jumat" terdekat
-- [ ] Kartu Khatib Jumat di halaman Jadwal Salat memakai hasil turunan ini
-- [ ] Tidak ada field terpisah untuk Khatib Jumat di Sumber Data
-- [ ] Unit test: ada entri "Jumat" yang tepat terpilih saat beberapa entri "Jumat" ada di `events`
-- [ ] Unit test: tidak ada entri berkategori "Jumat" di `events` → ditangani dengan wajar (tanpa error)
+- [x] `deriveSiteData` menghasilkan `khatibJumat` dari `events` berkategori "Jumat" terdekat
+- [x] Kartu Khatib Jumat di halaman Jadwal Salat memakai hasil turunan ini
+- [x] Tidak ada field terpisah untuk Khatib Jumat di Sumber Data
+- [x] Unit test: ada entri "Jumat" yang tepat terpilih saat beberapa entri "Jumat" ada di `events`
+- [x] Unit test: tidak ada entri berkategori "Jumat" di `events` → ditangani dengan wajar (tanpa error)
