@@ -4,7 +4,7 @@ import { Icon } from '../core/Icon.jsx';
 import { useBreakpoint } from '../core/useBreakpoint.js';
 
 export function NavBar({ logoSrc = '../../assets/logo-mark.png', brand = 'Surau Bateh Lori', tagline = 'Kota Padang',
-  items = ['Beranda', 'Profil', 'Jadwal Salat', 'Kajian', 'Berita', 'Kontak'], active = 'Beranda', onNavigate, action = 'Salurkan Infak', onAction, style }) {
+  items = ['Beranda', 'Profil', 'Jadwal Shalat', 'Kajian', 'Berita', 'Kontak'], active = 'Beranda', onNavigate, action = 'Salurkan Infak', onAction, style }) {
   const mobile = useBreakpoint();
   const [open, setOpen] = React.useState(false);
   React.useEffect(() => { if (!mobile) setOpen(false); }, [mobile]);

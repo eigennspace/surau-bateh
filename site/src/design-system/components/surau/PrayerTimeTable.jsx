@@ -29,7 +29,7 @@ export function PrayerTimeTable({ date = 'Senin, 10 Agustus 2026', hijri = '26 S
         </span>
       </header>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 'var(--space-4)', padding: '10px var(--space-5) 2px' }}>
-        <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: c.label }}>Salat</span>
+        <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: c.label }}>Shalat</span>
         <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: c.label }}>Adzan</span>
         <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: c.label, width: 62, textAlign: 'right' }}>Iqamah</span>
       </div>

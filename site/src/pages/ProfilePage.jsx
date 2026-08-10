@@ -16,7 +16,7 @@ export default function ProfilePage({ site }) {
             <Badge tone="brand" icon="map-pin">Lori Lubuk Minturun, Kota Padang</Badge>
             <h1 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-extrabold)', lineHeight: 'var(--lh-snug)', fontSize: mobile ? 'var(--fs-h2)' : 'var(--fs-h1)', color: 'var(--text-strong)', textWrap: 'balance' }}>Dibangun bersama, dari halaman yang masih tanah</h1>
             <p style={{ margin: 0, font: 'var(--text-body-default)', color: 'var(--text-muted)', maxWidth: 480, textWrap: 'pretty' }}>
-              Surau Bateh Lori berdiri di lereng bukit di tepi nagari. Surau ini dikerjakan bertahap oleh jamaah sendiri — dari tiang beton dan tumpukan batu bata sampai ruang salat berkarpet yang dipakai hari ini.
+              Surau Bateh Lori berdiri di lereng bukit di tepi nagari. Surau ini dikerjakan bertahap oleh jamaah sendiri — dari tiang beton dan tumpukan batu bata sampai ruang shalat berkarpet yang dipakai hari ini.
             </p>
             <p style={{ margin: 0, font: 'var(--text-body-default)', color: 'var(--text-muted)', maxWidth: 480, textWrap: 'pretty' }}>
               Setiap pekan halaman dan lerengnya dibersihkan bergiliran. Pekerjaan itu tidak pernah selesai, dan justru dari situ surau ini hidup.

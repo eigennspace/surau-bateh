@@ -4,7 +4,7 @@ import { useBreakpoint } from '../core/useBreakpoint.js';
 
 const DEFAULTS = [
   { label: 'Beranda', icon: 'house' },
-  { label: 'Jadwal Salat', icon: 'clock', short: 'Jadwal' },
+  { label: 'Jadwal Shalat', icon: 'clock', short: 'Jadwal' },
   { label: 'Kajian', icon: 'calendar-days' },
   { label: 'Infak', icon: 'hand-coins' },
   { label: 'Kontak', icon: 'phone' },

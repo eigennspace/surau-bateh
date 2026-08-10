@@ -72,16 +72,16 @@ export default function App() {
             items={NAV} style={{ position: 'sticky', top: 0, zIndex: 30 }} />}
 
       {page === 'Beranda' ? <HomePage site={site} onNavigate={setPage} /> : null}
-      {page === 'Jadwal Salat' ? <SchedulePage site={site} /> : null}
+      {page === 'Jadwal Shalat' ? <SchedulePage site={site} /> : null}
       {page === 'Kajian' ? <AgendaPage site={site} onNavigate={setPage} /> : null}
       {page === 'Infak' ? <DonatePage site={site} /> : null}
       {page === 'Profil' ? <ProfilePage site={site} /> : null}
       {page === 'Kontak' ? <ContactPage site={site} /> : null}
 
       <Footer logoSrc={logoMark} columns={mobile ? [
-        { title: 'Tautan', links: ['Jadwal Salat', 'Kajian Rutin', 'Infak & Sedekah', 'Profil', 'Kontak'] },
+        { title: 'Tautan', links: ['Jadwal Shalat', 'Kajian Rutin', 'Infak & Sedekah', 'Profil', 'Kontak'] },
       ] : [
-        { title: 'Layanan', links: ['Jadwal Salat', 'Kajian Rutin', 'Silat Tradisi', 'Santunan'] },
+        { title: 'Layanan', links: ['Jadwal Shalat', 'Kajian Rutin', 'Silat Tradisi', 'Santunan'] },
         { title: 'Surau', links: ['Profil', 'Pengurus', 'Laporan Kas', 'Kontak'] },
         { title: 'Jamaah', links: ['Daftar Kajian', 'Infak & Sedekah', 'Pengumuman'] },
       ]} />

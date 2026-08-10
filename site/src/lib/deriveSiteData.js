@@ -14,7 +14,7 @@ function parseMinutesOfDay(hhmm) {
 }
 
 /**
- * Menentukan waktu salat yang sedang berlangsung (`active`) dan berikutnya
+ * Menentukan waktu shalat yang sedang berlangsung (`active`) dan berikutnya
  * (`next`) dengan membandingkan `now` terhadap daftar `times` hari ini.
  * Sebelum waktu pertama hari ini (mis. sebelum Subuh), waktu yang masih
  * "berlangsung" adalah entri terakhir (Isya, dari hari sebelumnya) dan

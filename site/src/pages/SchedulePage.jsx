@@ -11,7 +11,7 @@ export default function SchedulePage({ site }) {
     <section style={{ padding: mobile ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)', background: 'var(--sand-100)', minHeight: 600 }}>
       <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 'var(--space-6)', flexWrap: 'wrap' }}>
-          <SectionHeading overline="Waktu Salat" title="Jadwal salat Kota Padang" description="Dihitung untuk koordinat Lori Lubuk Minturun, disesuaikan dengan pengumuman iqamah pengurus surau." />
+          <SectionHeading overline="Waktu Shalat" title="Jadwal shalat Kota Padang" description="Dihitung untuk koordinat Lori Lubuk Minturun, disesuaikan dengan pengumuman iqamah pengurus surau." />
           <Tabs items={['Hari ini', 'Pekan ini']} value={range} onChange={setRange} />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1fr .72fr', gap: mobile ? 'var(--space-5)' : 'var(--space-8)', marginTop: 'var(--space-8)', alignItems: 'start' }}>
@@ -48,7 +48,7 @@ export default function SchedulePage({ site }) {
             <Card tone="calm">
               <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                 <Icon name="volume-2" size={18} style={{ color: 'var(--teal-800)' }} />
-                <span style={{ font: 'var(--text-label)', color: 'var(--teal-800)' }}>Waktu salat berikutnya: {site.nextPrayerName}</span>
+                <span style={{ font: 'var(--text-label)', color: 'var(--teal-800)' }}>Waktu shalat berikutnya: {site.nextPrayerName}</span>
               </div>
               <p style={{ margin: '10px 0 0', fontSize: 'var(--fs-body-sm)', color: 'var(--text-muted)' }}>Layar TV surau menampilkan hitung mundur yang sama.</p>
             </Card>

@@ -361,7 +361,7 @@ export const SB_DATA = {
     { icon: 'calendar-days', value: 'Tiap pekan', label: 'Gotong royong halaman' },
   ],
   gallery: [
-    { src: interiorRuangSalat, alt: 'Ruang salat surau', ratio: '16 / 9', meta: 'Ruang Utama', caption: 'Karpet ruang salat selepas Dzuhur.', span: 2 },
+    { src: interiorRuangSalat, alt: 'Ruang shalat surau', ratio: '16 / 9', meta: 'Ruang Utama', caption: 'Karpet ruang shalat selepas Dzuhur.', span: 2 },
     { src: majelisJamaah, alt: 'Majelis jamaah', ratio: '16 / 9', meta: 'Kajian Rutin', caption: 'Majelis ba’da Isya, jamaah putra dan putri.', span: 2 },
     { src: gotongRoyongHalaman, alt: 'Gotong royong halaman surau', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Membersihkan lereng halaman.' },
     { src: latihanSilat, alt: 'Latihan silat di surau', ratio: '3 / 4', position: 'center 35%', meta: 'Remaja', caption: 'Latihan silat tradisi, malam pekanan.' },
