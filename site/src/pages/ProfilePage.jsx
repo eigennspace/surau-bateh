@@ -29,11 +29,11 @@ export default function ProfilePage({ site }) {
       <section style={{ background: 'var(--surface-dark)', padding: pad(mobile) }}>
         <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1fr 1fr', gap: mobile ? 'var(--space-8)' : 'var(--space-12)', alignItems: 'center' }}>
           <PhotoTile src={gotongRoyongBelakang} alt="Membersihkan sisi belakang surau" ratio="4 / 3" position="center 55%"
-            meta="Gotong Royong" icon="users" caption="Merapikan sisi belakang, dekat ruang wudhu baru." />
+            meta="Gotong Royong" icon="users" caption="Merapikan area surau" />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
             <h2 style={{ margin: 0, font: 'var(--text-h2)', color: 'var(--sand-100)', textWrap: 'balance' }}>Dikelola pengurus, dikerjakan jamaah</h2>
             <p style={{ margin: 0, font: 'var(--text-body-default)', color: 'var(--slate-300)', maxWidth: 460, textWrap: 'pretty' }}>
-              Pengurus surau mengatur jadwal khatib, kajian pekanan, dan laporan kas bulanan. Kegiatan hariannya dijalankan bergiliran oleh jamaah sekitar.
+              Pengurus surau mengatur jadwal kajian & tawajjuh pekanan, dan laporan kas bulanan. Kegiatan hariannya dijalankan bergiliran oleh jamaah sekitar.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 'var(--space-4)' }}>
               {site.stats.slice(0, 2).map(s => (

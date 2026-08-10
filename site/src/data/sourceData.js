@@ -32,7 +32,7 @@ export const SB_DATA = {
     { day: 'Min', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
   ],
   programs: [
-    { icon: 'mic', title: 'Kajian dan Tawajjuh', desc: 'Tafsir dan fikih ibadah bersama ustaz undangan dari Kota Padang.', meta: 'Selasa & Kamis · Ba’da Maghrib' },
+    { icon: 'mic', title: 'Kajian dan Tawajjuh', desc: 'Tafsir dan tawajjuh bersama Guru Surau Bateh', meta: 'Selasa, Kamis, Jumat, Sabtu, Minggu · Ba’da Maghrib' },
     { icon: 'swords', title: 'Silat Tradisi', desc: 'Sasaran silat untuk remaja dan dewasa di ruang bawah surau.', meta: 'Malam pekanan · Ba’da Isya' },
     // { icon: 'users', title: 'Tahsin Dewasa', desc: 'Perbaikan bacaan Al-Qur’an untuk jamaah dewasa, kelompok kecil.', meta: 'Rabu · Ba’da Isya' },
     // { icon: 'heart-handshake', title: 'Santunan Anak Yatim', desc: 'Penyaluran bulanan dari infak jamaah untuk anak yatim sekitar surau.', meta: 'Setiap Jumat pertama' },
@@ -362,10 +362,10 @@ export const SB_DATA = {
   ],
   gallery: [
     { src: interiorRuangSalat, alt: 'Ruang shalat surau', ratio: '16 / 9', meta: 'Ruang Utama', caption: 'Karpet ruang shalat selepas Dzuhur.', span: 2 },
-    { src: majelisJamaah, alt: 'Majelis jamaah', ratio: '16 / 9', meta: 'Kajian Rutin', caption: 'Majelis ba’da Isya, jamaah putra dan putri.', span: 2 },
+    { src: majelisJamaah, alt: 'Majelis jamaah', ratio: '16 / 9', meta: 'Kajian Rutin', caption: 'Majelis ba’da Isya bersama jamaah', span: 2 },
     { src: gotongRoyongHalaman, alt: 'Gotong royong halaman surau', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Membersihkan lereng halaman.' },
     { src: latihanSilat, alt: 'Latihan silat di surau', ratio: '3 / 4', position: 'center 35%', meta: 'Remaja', caption: 'Latihan silat tradisi, malam pekanan.' },
     { src: pengurusSurau, alt: 'Pengurus surau', ratio: '3 / 4', position: 'center 40%', meta: 'Pengurus', caption: 'Pengurus dan tuanku selepas musyawarah.' },
-    { src: gotongRoyongJamaah, alt: 'Jamaah bekerja di halaman', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Jamaah menanam di halaman atas.' },
+    { src: gotongRoyongJamaah, alt: 'Jamaah bekerja di halaman', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Jamaah membersihkan halaman atas.' },
   ],
 };

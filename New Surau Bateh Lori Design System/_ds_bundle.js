@@ -3116,7 +3116,7 @@ function ProfilePage() {
     position: "center 55%",
     meta: "Gotong Royong",
     icon: "users",
-    caption: "Merapikan sisi belakang, dekat ruang wudhu baru."
+    caption: "Merapikan area surau"
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
