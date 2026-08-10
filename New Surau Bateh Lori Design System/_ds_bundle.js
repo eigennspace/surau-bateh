@@ -3094,7 +3094,7 @@ function ProfilePage() {
     position: "center 45%",
     meta: "Masa Pembangunan",
     icon: "hammer",
-    caption: "Memasang dinding bata di sisi surambi bawah."
+    caption: "Proses pembangunan surau"
   }))), /*#__PURE__*/React.createElement("section", {
     style: {
       background: 'var(--surface-dark)',

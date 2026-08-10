@@ -23,7 +23,7 @@ export default function ProfilePage({ site }) {
             </p>
           </div>
           <PhotoTile src={pembangunanSurau} alt="Masa pembangunan surau" ratio="4 / 5" position="center 45%"
-            meta="Masa Pembangunan" icon="hammer" caption="Memasang dinding bata di sisi surambi bawah." />
+            meta="Masa Pembangunan" icon="hammer" caption="Proses pembangunan surau" />
         </div>
       </section>
       <section style={{ background: 'var(--surface-dark)', padding: pad(mobile) }}>
