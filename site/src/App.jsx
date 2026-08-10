@@ -11,10 +11,10 @@ import DonatePage from './pages/DonatePage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 
-const NAV = ['Beranda', 'Profil', 'Jadwal Salat', 'Kajian', 'Infak', 'Kontak'];
+const NAV = ['Beranda', 'Profil', 'Jadwal Shalat', 'Kajian', 'Infak', 'Kontak'];
 const BB_ITEMS = [
   { label: 'Beranda', icon: 'house' },
-  { label: 'Jadwal Salat', icon: 'clock', short: 'Jadwal' },
+  { label: 'Jadwal Shalat', icon: 'clock', short: 'Jadwal' },
   { label: 'Kajian', icon: 'calendar-days' },
   { label: 'Infak', icon: 'hand-coins' },
   { label: 'Kontak', icon: 'phone' },
@@ -60,7 +60,7 @@ export default function App() {
   const [page, setPage] = React.useState('Beranda');
   const mobile = useBreakpoint();
   // `now` dihitung ulang setiap render — cukup murah untuk situs statis ini
-  // dan memastikan status salat aktif/berikutnya selalu mengikuti jam nyata.
+  // dan memastikan status shalat aktif/berikutnya selalu mengikuti jam nyata.
   const site = deriveSiteData(SB_DATA, new Date());
   const bundleHasMobileNav = !!BottomBar;
 

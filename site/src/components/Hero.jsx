@@ -15,10 +15,10 @@ export default function Hero({ site, onNavigate }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)', alignItems: 'flex-start' }}>
           <Badge tone="brand" icon="map-pin" style={{ background: 'rgba(253,251,246,.92)', color: 'var(--maroon-700)' }}>Lori Lubuk Minturun, Kota Padang</Badge>
           <h1 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-extrabold)', lineHeight: 'var(--lh-tight)', fontSize: mobile ? 'var(--fs-h1)' : 'var(--fs-display-1)', letterSpacing: 'var(--ls-display)', color: 'var(--sand-100)', textWrap: 'balance', textShadow: '0 2px 20px rgba(34,38,44,.35)' }}>
-            Surau Bateh Lori,<br />rumah ibadah <span style={{ color: 'var(--gold-500)' }}>warga nagari</span>
+            Surau Bateh Lori
           </h1>
           <p style={{ margin: 0, font: 'var(--text-body-default)', fontSize: 'var(--fs-body-lg)', color: 'rgba(253,251,246,.86)', maxWidth: 460, textWrap: 'pretty' }}>
-            Salat lima waktu, kajian pekanan, dan latihan silat tradisi bagi jamaah. Semua kegiatan terbuka untuk warga sekitar surau.
+            Shalat lima waktu, kajian & tawajjuh pekanan, dan latihan silat tradisi bagi jamaah.
           </p>
           <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', width: mobile ? '100%' : 'auto' }}>
             <Button tone="primary" size="lg" icon="hand-coins" fullWidth={mobile} onClick={() => onNavigate('Infak')}>Salurkan Infak</Button>
@@ -28,7 +28,7 @@ export default function Hero({ site, onNavigate }) {
             {jamaahRutin ? (
               <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="users" size={15} />{jamaahRutin.value} jamaah rutin</span>
             ) : null}
-            <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="mic" size={15} />Kajian dua kali sepekan</span>
+            <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="mic" size={15} />Kajian 4 kali sepekan</span>
             <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="users" size={15} />Gotong royong tiap pekan</span>
           </div>
         </div>

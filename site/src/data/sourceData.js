@@ -25,29 +25,324 @@ export const SB_DATA = {
     { name: 'Isya', adzan: '19:36', iqamah: '19:45' },
   ],
   events: [
-    { day: '12', month: 'Ags', title: 'Kajian Tafsir Surah Al-Kahfi', speaker: 'Ust. Rahmat Hidayat', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian Rutin' },
-    { day: '14', month: 'Ags', title: 'Tahsin Al-Qur’an Dewasa', speaker: 'Ust. Zulfikar', time: '19.45 WIB', place: 'Ruang belajar', category: 'Tahsin' },
-    { day: '15', month: 'Ags', title: 'Khutbah Jumat: Amanah dalam Bekerja', speaker: 'Ust. H. Marwan Dt. Rajo', time: '12.10 WIB', place: 'Ruang utama', category: 'Jumat' },
-    { day: '17', month: 'Ags', title: 'Doa Bersama HUT Kemerdekaan RI', speaker: 'Pengurus Surau', time: "Ba'da Subuh", place: 'Halaman surau', category: 'Kegiatan' },
-    { day: '19', month: 'Ags', title: 'Latihan Silat Tradisi', speaker: 'Pelatih sasaran surau', time: "Ba'da Isya", place: 'Ruang bawah', category: 'Silat' },
+    { day: 'Sel', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
+    { day: 'Kam', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
+    { day: 'Jum', month: 'Pekan', title: 'Latihan Silat Tradisi', speaker: 'Pelatih sasaran surau', time: "Ba'da Isya", place: 'Ruang bawah', category: 'Silat' },
+    { day: 'Sab', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
+    { day: 'Min', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
   ],
   programs: [
+    { icon: 'mic', title: 'Kajian dan Tawajjuh', desc: 'Tafsir dan fikih ibadah bersama ustaz undangan dari Kota Padang.', meta: 'Selasa & Kamis · Ba’da Maghrib' },
     { icon: 'swords', title: 'Silat Tradisi', desc: 'Sasaran silat untuk remaja dan dewasa di ruang bawah surau.', meta: 'Malam pekanan · Ba’da Isya' },
-    { icon: 'mic', title: 'Kajian Rutin Pekanan', desc: 'Tafsir dan fikih ibadah bersama ustaz undangan dari Kota Padang.', meta: 'Selasa & Kamis · Ba’da Maghrib' },
-    { icon: 'users', title: 'Tahsin Dewasa', desc: 'Perbaikan bacaan Al-Qur’an untuk jamaah dewasa, kelompok kecil.', meta: 'Rabu · Ba’da Isya' },
-    { icon: 'heart-handshake', title: 'Santunan Anak Yatim', desc: 'Penyaluran bulanan dari infak jamaah untuk anak yatim sekitar surau.', meta: 'Setiap Jumat pertama' },
+    // { icon: 'users', title: 'Tahsin Dewasa', desc: 'Perbaikan bacaan Al-Qur’an untuk jamaah dewasa, kelompok kecil.', meta: 'Rabu · Ba’da Isya' },
+    // { icon: 'heart-handshake', title: 'Santunan Anak Yatim', desc: 'Penyaluran bulanan dari infak jamaah untuk anak yatim sekitar surau.', meta: 'Setiap Jumat pertama' },
   ],
   news: [
-    { tag: 'Pengumuman', title: 'Jadwal Khatib Jumat Agustus 1448 H', date: '8 Agustus 2026' },
-    { tag: 'Laporan', title: 'Laporan Kas Surau Juli 2026', date: '2 Agustus 2026' },
-    { tag: 'Kegiatan', title: 'Gotong Royong Pembersihan Ruang Wudhu', date: '28 Juli 2026' },
+    // { tag: 'Pengumuman', title: 'Jadwal Khatib Jumat Agustus 1448 H', date: '8 Agustus 2026' },
+    // { tag: 'Laporan', title: 'Laporan Kas Surau Juli 2026', date: '2 Agustus 2026' },
+    // { tag: 'Kegiatan', title: 'Gotong Royong Pembersihan Ruang Wudhu', date: '28 Juli 2026' },
   ],
-  roadmap: [
-    { title: 'Tiang dan lantai bawah', period: 'Tahap 1', status: 'selesai', description: 'Tiang beton dan lantai surambi bawah dikerjakan jamaah sendiri.' },
-    { title: 'Surambi kayu lantai atas', period: 'Tahap 2', status: 'selesai', description: 'Pagar dan lantai kayu untuk majelis di lantai atas.' },
-    { title: 'Ruang salat berkarpet', period: 'Tahap 3', status: 'selesai', description: 'Lantai, dinding, dan karpet ruang utama yang dipakai hari ini.' },
-    { title: 'Ruang wudhu sisi belakang', period: 'Tahap 4', status: 'berjalan', description: 'Dinding bata dan saluran air di sisi belakang surau.' },
-    { title: 'Renovasi atap', period: 'Tahap 5', status: 'rencana', description: 'Menunggu dana infak jamaah terkumpul.' },
+  ilmuTauhid: [
+    {
+      title: 'Rasulullah SAW',
+      branches: [
+        {
+          title: 'Anas bin Malik',
+          branches: [
+            {
+              title: 'Rabi\'ah'
+            },
+            {
+              title: 'Ibnu Umar'
+            },
+            {
+              title: 'Nafi\''
+            },
+            {
+              title: 'Imam Malik bin Anas'
+            }
+          ]
+        },
+        {
+          title: 'Ali bin Abi Thalib',
+          branches: [
+            {
+              title: 'Husain bin Ali'
+            },
+            {
+              title: 'Ali Zainal Abidin'
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  ilmuFiqh: [
+    {
+      title: 'Rasulullah SAW',
+      order: 1,
+      branches: [
+        {
+          title: 'Madrasah Madinah',
+          order: 2,
+          branches: [
+            {
+              title: 'Umar bin Khattab',
+            },
+            {
+              title: 'Aisyah',
+              branches: [
+                {title: 'Amr bin Dinar'},
+                {title: 'Sufyan bin Uyainah'}
+              ]
+            },
+            {
+              title: 'Usman bin Affan'
+            },
+            {
+              title: 'Abdullah bin Abbas',
+              branches: [
+                {
+                  title: 'Imam Nafi',
+                  branches: [
+                    {
+                      title: 'Rabi\'ah Ar Rai',
+                      branches: [
+                        {
+                          title: 'Imam Malik',
+                          branches: [
+                            {
+                              title: 'Imam Syafi\'i'
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Madrasah Iraq',
+          branches: [
+            {
+              title: 'Ali bin Abi Thalib',
+              branches: [
+                {
+                  title: 'Alqamah bin Ilyas',
+                  branches: [
+                    { title: 'Amir bin Syahril' },
+                    { title: 'Ibrahim An Nakh\'i' }
+                  ]
+                }
+              ]
+            },
+            {
+              title: 'Abdullah bin Mas\'ud',
+              branches: [
+                {
+                  title: 'Alqamah bin Ilyas',
+                  description: 'Juga berguru pada Ali bin Abi Thalib — lihat cabang di atas untuk murid-muridnya',
+                  // sengaja tanpa `branches` di sini, supaya tidak perlu disinkronkan
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  ilmuTasawuf: [
+    {
+      title: 'Muhammad bin Abdullah SAW',
+      order: 1
+    },
+    {
+      title: 'Abu Bakar Ash Shiddiq',
+      order: 2
+    },
+    {
+      title: 'Sayyidina Salman Al-Farisi',
+      order: 3
+    },
+    {
+      title: 'Al Imam Sayyidina Qasim bin Muhammad bin Abu Bakar As Siddiq',
+      order: 4
+    },
+    {
+      title: "Al 'Arif Billah Al Imam Sayyidina Ja'far As Shadiq",
+      order: 5
+    },
+    {
+      title: 'Sultanul Arifin Asy Syekh Thaifur bin Isa bin Adam bin Sarusyan / Asy Syekh Abu Yazid Al-Busthami',
+      order: 6
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Abul Hasan Ali bin Abu Jafar Al Kharqani',
+      order: 7
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Abu Ali Al-Fadhal bin Muhammad Ath Thusi Al Farimadi',
+      order: 8
+    },
+    {
+      title: 'Abu Yakub Yusuf Al-Hamadani bin Ayyub, Imam Muhammad bin Muhammad Al Ghazali',
+      order: 9
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Abdul Khaliq Al-Fajduwani Ibnu Al-Imam Abdul Jamil',
+      order: 10
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Ar Riwikari',
+      order: 11
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Mahmud Al-Anjir Faghnawi',
+      order: 12
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Ali Ar Ramitani / Asy Syekh Azizan',
+      order: 13
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Muhammad Baba As Samasi',
+      order: 14
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Sayyid Amir Kulal bin Sayyid Hamzah',
+      order: 15
+    },
+    {
+      title: 'As Sayyid Bahauddin Muhammad bin Muhammad bin Muhammad Al Husaini Al Uwaisi Al Bukhari',
+      order: 16
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Muhammad Al-Bukhari Al-Khawarizumi / Asy Syekh Alaudin Al-Aththar',
+      order: 17
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Yaqub Al-Jarkhiq',
+      order: 18
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Nashiruddin Ubaidullah Al-Ahrar As Samarqandi bin Mahmud bin Sihabuddin',
+      order: 19
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Muhammad Az Zahid',
+      order: 20
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Darwis Muhammad Samarqandi',
+      order: 21
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Muhammad Al-Khawajaki Al-Amkani As Samarqandi',
+      order: 22
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Muayyiddin Muhammad Al-Baqi Billah',
+      order: 23
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Akhmad Al-Faruqi As Sirhindi',
+      order: 24
+    },
+    {
+      title: "Al Arif Billah Asy Syekh Muhammad Ma'sum",
+      order: 25
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Muhammad Saifuddin',
+      order: 26
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Asy Syarif Nur Muhammad Al-Badwani',
+      order: 27
+    },
+    {
+      title: "Al Arif Billah Asy Syekh Syamsuddin Habibullah Jani Janani Muzhir Al-'Alawi",
+      order: 28
+    },
+    {
+      title: 'Al Arif Billah Asy Syekh Abdullah Ad Dahlawi',
+      order: 29
+    },
+    {
+      title: 'Al Arif Billah Maulana Asy Syekh Dhiyauddin Khalid Al-Utsmani Al-Kurdi',
+      order: 30
+    },
+    {
+      title: 'Al Arif Billah Asy Syaikh Abdullah Afandi Al Makki Al Khalidi',
+      order: 31
+    },
+    {
+      title: 'Syaikh Ismail Muhammad As Syirwani Al Khalidi',
+      order: 32
+    },
+    {
+      title: 'Al Arif Billah Asy Syaikh Sulaiman Al Karimi Al Khalidi',
+      order: 33
+    },
+    {
+      title: 'Al Arif Billah Asy Syaikh Muhammad Thahir Al Khalidi – Tungka',
+      order: 34
+    },
+    {
+      title: 'Al Arif Billah Asy Syaikh Abu Bakar Al Khalidi – Tabing Pulai',
+      order: 35
+    },
+    {
+      title: "Al Arif Billah Asy Syaikh Muhammad Sa'ad bin Tanta Al Khalidi – Mungka",
+      order: 36
+    },
+    {
+      title: 'Al Arif Billah Asy Syaikh Abdul Wahid Rabbani Al Khalidi – Mungka',
+      order: 37
+    },
+    {
+      title: 'Al Arif Billah Asy Syaikh Abdul Wahid Mani Al Khalidi – Mungka',
+      order: 38
+    },
+    {
+      title: 'Al Arif Billah Asy Syaikh Ahmad Al Karim Al Khalidi – Mungka',
+      order: 39
+    },
+    {
+      title: 'Al Arif Billah Imam Agus Al Khalidi, Syaikh Abdul Ghani Al Kampari',
+      order: 40
+    },
+    {
+      title: 'Syaikh Mudo Muhammad Banoq Al Khalidi – Taeh Baruah',
+      order: 41
+    },
+    {
+      title: 'Syaikh Muhammad Muda Wali Al Khalidi',
+      order: 42
+    },
+    {
+      title: 'Syaikh Mudo Muhammad Nasir bin Abdullah Al Khalidi – Taeh Baruah',
+      order: 43
+    },
+    {
+      title: 'Abu Samah Al Khalidi – Solok',
+      order: 44
+    },
+    {
+      title: 'Al Arif Billah Malin Mudo Etriyel MYH bin Muhammad Nasir Al Khalidi – Taeh Baruah',
+      order: 45
+    },
+    {
+      title: 'Malin Sati Bestari Jaka Budiman bin Dhiyauddin Al Khalidi – Padang Panjang',
+      order: 46
+    },
+    {
+      title: "Angku Mudo 'Alim Jummardianata Aicha bin Chaidir Al Khalidi – Solok",
+      order: 47
+    }
   ],
   contact: {
     maps: 'https://maps.app.goo.gl/bVQSzRjYxisicxUq6?g_st=ic',
@@ -57,12 +352,12 @@ export const SB_DATA = {
   donation: {
     qris: qrisImage,
     bank: { name: 'Bank Syariah Indonesia (BSI)', account: '7771 806 168', holder: 'PONPES RIBATH AS SA ADY' },
-    campaign: { active: true, title: 'Renovasi Atap Surau', description: 'Menunggu dana infak jamaah terkumpul untuk tahap renovasi atap.' },
+    campaign: { active: false, title: 'Renovasi Atap Surau', description: 'Menunggu dana infak jamaah terkumpul untuk tahap renovasi atap.' },
   },
   // Angka statistik: field manual, diisi berdasarkan pengamatan pengurus — bukan hitungan otomatis.
   stats: [
-    { icon: 'users', value: '180', label: 'Jamaah rutin Subuh' },
-    { icon: 'mic', value: '8', label: 'Kajian per bulan' },
+    { icon: 'users', value: '>100', label: 'Jamaah rutin' },
+    { icon: 'mic', value: '>10', label: 'Kajian per bulan' },
     { icon: 'calendar-days', value: 'Tiap pekan', label: 'Gotong royong halaman' },
   ],
   gallery: [

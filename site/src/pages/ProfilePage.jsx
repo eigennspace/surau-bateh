@@ -16,7 +16,7 @@ export default function ProfilePage({ site }) {
             <Badge tone="brand" icon="map-pin">Lori Lubuk Minturun, Kota Padang</Badge>
             <h1 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-extrabold)', lineHeight: 'var(--lh-snug)', fontSize: mobile ? 'var(--fs-h2)' : 'var(--fs-h1)', color: 'var(--text-strong)', textWrap: 'balance' }}>Dibangun bersama, dari halaman yang masih tanah</h1>
             <p style={{ margin: 0, font: 'var(--text-body-default)', color: 'var(--text-muted)', maxWidth: 480, textWrap: 'pretty' }}>
-              Surau Bateh Lori berdiri di lereng bukit di tepi nagari. Bangunan dua lantai dengan surambi kayu ini dikerjakan bertahap oleh jamaah sendiri — dari tiang beton dan tumpukan batu bata sampai ruang salat berkarpet yang dipakai hari ini.
+              Surau Bateh Lori berdiri di lereng bukit di tepi nagari. Surau ini dikerjakan bertahap oleh jamaah sendiri — dari tiang beton dan tumpukan batu bata sampai ruang salat berkarpet yang dipakai hari ini.
             </p>
             <p style={{ margin: 0, font: 'var(--text-body-default)', color: 'var(--text-muted)', maxWidth: 480, textWrap: 'pretty' }}>
               Setiap pekan halaman dan lerengnya dibersihkan bergiliran. Pekerjaan itu tidak pernah selesai, dan justru dari situ surau ini hidup.
@@ -45,16 +45,25 @@ export default function ProfilePage({ site }) {
       </section>
       <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
         <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
-          <SectionHeading overline="Roadmap" title="Tahapan pembangunan surau"
-            description="Dikerjakan bertahap sesuai dana infak yang terkumpul." />
+          <SectionHeading overline="Silsilah" title="Ilmu Tauhid" />
           <Card style={{ marginTop: 'var(--space-8)', padding: mobile ? 'var(--space-5)' : 'var(--space-8)' }}>
-            <Timeline variant="roadmap" items={site.roadmap} />
+            <Timeline variant="silsilah" items={site.ilmuTauhid} />
           </Card>
-          <Card tone="sand" style={{ marginTop: 'var(--space-6)' }}>
-            <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--text-faint)' }}>Silsilah guru surau</span>
-            <p style={{ margin: '8px 0 0', fontSize: 'var(--fs-body-sm)', color: 'var(--text-muted)' }}>
-              Bagian ini sengaja dikosongkan sampai pengurus memastikan nama dan urutan mata rantainya. Strukturnya sudah siap: <code>&lt;Timeline variant="silsilah" /&gt;</code>.
-            </p>
+        </div>
+      </section>
+      <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
+        <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
+          <SectionHeading overline="Silsilah" title="Ilmu Fiqh" />
+          <Card style={{ marginTop: 'var(--space-8)', padding: mobile ? 'var(--space-5)' : 'var(--space-8)' }}>
+            <Timeline variant="silsilah" items={site.ilmuFiqh} />
+          </Card>
+        </div>
+      </section>
+      <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
+        <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
+          <SectionHeading overline="Silsilah" title="Ilmu Tasawuf" />
+          <Card style={{ marginTop: 'var(--space-8)', padding: mobile ? 'var(--space-5)' : 'var(--space-8)' }}>
+            <Timeline variant="silsilah" items={site.ilmuTasawuf} />
           </Card>
         </div>
       </section>

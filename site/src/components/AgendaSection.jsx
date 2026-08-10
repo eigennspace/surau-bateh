@@ -3,7 +3,7 @@ import { Badge, Card, EventItem, SectionHeading, Tag, Button, useBreakpoint } fr
 import DonationCard from './DonationCard.jsx';
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
-const CATEGORIES = ['Semua', 'Kajian Rutin', 'Tahsin', 'Silat', 'Jumat'];
+const CATEGORIES = ['Semua', 'Kajian & Tawajjuh', 'Gotong Royong', 'Silat'];
 
 export default function AgendaSection({ site, compact, onNavigate }) {
   const mobile = useBreakpoint();
@@ -26,15 +26,28 @@ export default function AgendaSection({ site, compact, onNavigate }) {
         {compact ? null : (
           <aside style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
             <Card tone="sand">
-              <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--text-faint)' }}>Pengumuman</span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginTop: 'var(--space-4)' }}>
-                {site.news.map(n => (
+                <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--text-faint)' }}>Pengumuman</span>
+                {site.news?.length > 0 ? 
+                
+                (site.news.map(n => (
                   <a key={n.title} href="#" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <Badge tone="neutral" style={{ alignSelf: 'flex-start', fontSize: 'var(--fs-overline)' }}>{n.tag}</Badge>
                     <span style={{ font: 'var(--text-label)', fontSize: 'var(--fs-body)', color: 'var(--text-strong)' }}>{n.title}</span>
                     <span style={{ fontSize: 'var(--fs-caption)', color: 'var(--text-faint)' }}>{n.date}</span>
                   </a>
-                ))}
+                ))) : (
+                  <div
+                    style={{
+                      padding: 'var(--space-4)',
+                      textAlign: 'center',
+                      color: 'var(--text-faint)',
+                      fontSize: 'var(--fs-body)',
+                    }}
+                  >
+                    Belum ada pengumuman.
+                  </div>
+                )}
               </div>
             </Card>
             <Card tone="dark">
