@@ -1,0 +1,48 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Core — Button, Badge, Tag, Card" subtitle="Aksi pil maroon, label status, wadah konten" -->
+<meta charset="utf-8"><title>Core</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px;background:var(--sand-200);font-family:var(--font-sans);color:var(--text-body)}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}.col{display:flex;flex-direction:column;gap:14px}.lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px}</style>
+<div id="root"></div>
+<script type="text/babel">
+const { Button, Badge, Tag, Card, Icon, SectionHeading } = window.SurauBatehLoriDesignSystem_c76578;
+const App = () => (
+  <div className="col">
+    <div>
+      <div className="lbl">Button</div>
+      <div className="row">
+        <Button tone="primary" icon="hand-coins">Salurkan Infak</Button>
+        <Button tone="accent" icon="calendar-days">Jadwal Kajian</Button>
+        <Button tone="secondary">Profil Surau</Button>
+        <Button tone="ghost" icon="chevron-right" iconPosition="right">Selengkapnya</Button>
+        <Button tone="dark" size="sm">Unduh</Button>
+        <Button tone="primary" size="sm" disabled>Nonaktif</Button>
+      </div>
+    </div>
+    <div className="row" style={{alignItems:'stretch'}}>
+      <div style={{flex:'1 1 280px'}}>
+        <div className="lbl">Badge &amp; Tag</div>
+        <div className="row">
+          <Badge tone="active" icon="clock">Berlangsung</Badge>
+          <Badge tone="accent">Berikutnya</Badge>
+          <Badge tone="brand">Jumat</Badge>
+          <Badge tone="neutral">Arsip</Badge>
+        </div>
+        <div className="row" style={{marginTop:12}}>
+          <Tag selected>Semua</Tag><Tag>Tahsin</Tag><Tag>Silat</Tag><Tag>Jumat</Tag>
+        </div>
+      </div>
+      <div style={{flex:'1 1 300px'}}>
+        <div className="lbl">Card &amp; SectionHeading</div>
+        <Card tone="default" interactive>
+          <SectionHeading overline="Kegiatan" title="Kajian Rutin Ba'da Maghrib" description="Setiap Selasa dan Kamis bersama pengurus surau." />
+        </Card>
+      </div>
+    </div>
+  </div>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>

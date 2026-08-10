@@ -1,0 +1,51 @@
+<!-- @dsCard group="Components" viewport="700x460" name="Surau — Silsilah & Roadmap" subtitle="Satu komponen Timeline: roadmap berstatus, silsilah lurus, silsilah bercabang" -->
+<meta charset="utf-8"><title>Timeline</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px;background:var(--sand-200);font-family:var(--font-sans);color:var(--text-body)}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}.g{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}.lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px}</style>
+<div id="root"></div>
+<script type="text/babel">
+const { Timeline, Card } = window.SurauBatehLoriDesignSystem_c76578;
+const roadmap = [
+  { title: 'Tiang dan lantai bawah', period: 'Tahap 1', status: 'selesai' },
+  { title: 'Surambi kayu lantai atas', period: 'Tahap 2', status: 'selesai' },
+  { title: 'Ruang wudhu', period: 'Tahap 3', status: 'berjalan', branches: [
+    { title: 'Dinding bata sisi belakang', status: 'selesai' },
+    { title: 'Saluran air dan keran', status: 'berjalan' },
+  ] },
+  { title: 'Renovasi atap', period: 'Tahap 4', status: 'rencana' },
+];
+const lurus = [
+  { title: 'Nama guru pertama', role: 'Mata rantai 1', period: 'Tahun —' },
+  { title: 'Nama guru kedua', role: 'Mata rantai 2', period: 'Tahun —' },
+  { title: 'Nama guru ketiga', role: 'Mata rantai 3', period: 'Tahun —' },
+];
+const bercabang = [
+  { title: 'Nama guru pertama', role: 'Mata rantai 1', period: 'Tahun —', branches: [
+    { title: 'Nama murid', role: 'Cabang Kuranji' },
+    { title: 'Nama murid', role: 'Cabang nagari sebelah' },
+  ] },
+  { title: 'Nama guru kedua', role: 'Mata rantai 2', period: 'Tahun —', branches: [
+    { title: 'Nama murid', role: 'Pengasuh sasaran silat' },
+  ] },
+];
+const App = () => (
+  <div className="g">
+    <div>
+      <div className="lbl">variant="roadmap" · dengan branches</div>
+      <Card><Timeline variant="roadmap" items={roadmap} /></Card>
+      <div className="lbl" style={{marginTop:18}}>variant="silsilah" · lurus</div>
+      <Card tone="sand"><Timeline variant="silsilah" items={lurus} /></Card>
+    </div>
+    <div>
+      <div className="lbl">variant="silsilah" · bercabang</div>
+      <Card tone="sand"><Timeline variant="silsilah" items={bercabang} /></Card>
+      <p style={{fontSize:11,color:'var(--text-muted)',lineHeight:1.7,margin:'12px 2px 0'}}>Nama pada contoh silsilah sengaja kosong — menunggu data pengurus surau. Cabang dibatasi dua tingkat.</p>
+    </div>
+  </div>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>

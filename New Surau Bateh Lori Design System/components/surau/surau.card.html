@@ -1,0 +1,36 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Surau — Jadwal, Ayat, Agenda, Infak" subtitle="Komponen khas rumah ibadah" -->
+<meta charset="utf-8"><title>Surau</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px;background:var(--sand-200);font-family:var(--font-sans);color:var(--text-body)}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}.col{display:flex;flex-direction:column;gap:14px}.lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px}</style>
+<div id="root"></div>
+<script type="text/babel">
+const { PrayerTimeTable, ArabicVerse, EventItem, StatBlock, DonationProgress } = window.SurauBatehLoriDesignSystem_c76578;
+const times = [
+  {name:'Subuh',adzan:'04:58',iqamah:'05:10'},
+  {name:'Dzuhur',adzan:'12:16',iqamah:'12:30'},
+  {name:'Ashar',adzan:'15:38',iqamah:'15:50'},
+  {name:'Maghrib',adzan:'18:24',iqamah:'18:32'},
+  {name:'Isya',adzan:'19:36',iqamah:'19:45'},
+];
+const App = () => (
+  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,alignItems:'start'}}>
+    <PrayerTimeTable times={times} activeName="Ashar" nextName="Maghrib" />
+    <div className="col">
+      <EventItem day="12" month="Ags" title="Kajian Tafsir Al-Kahfi" speaker="Ust. Rahmat Hidayat" time="Ba'da Maghrib" category="Kajian Rutin" onClick={()=>{}} />
+      <div style={{background:'var(--surface-card)',border:'1px solid var(--border-default)',borderRadius:'var(--radius-lg)',padding:20}}>
+        <DonationProgress title="Renovasi Atap Surau" collected={38500000} target={75000000} deadline="hingga 30 Sep" />
+      </div>
+      <div className="row" style={{gap:12}}>
+        <StatBlock icon="users" value="180" label="Jamaah rutin Subuh" style={{flex:1}} />
+        <StatBlock icon="mic" value="8" label="Kajian per bulan" style={{flex:1}} />
+      </div>
+      <ArabicVerse arabic="إِنَّمَا يَعْمُرُ مَسَاجِدَ اللَّهِ" translation="Hanyalah yang memakmurkan masjid Allah orang-orang yang beriman kepada Allah." source="QS. At-Taubah: 18" style={{padding:'22px 20px'}} />
+    </div>
+  </div>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>

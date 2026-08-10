@@ -1,0 +1,6 @@
+:root{
+--radius-xs:4px;--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:24px;--radius-2xl:32px;--radius-pill:999px;
+/* Lengkung mihrab: sudut atas membulat penuh, bawah tenang — motif kubah pada emblem */
+--radius-arch:120px 120px var(--radius-lg) var(--radius-lg);
+--border-width-hairline:1px;/* @kind other */--border-width-strong:2px;/* @kind other */--border-width-accent:4px;/* @kind other */
+}
