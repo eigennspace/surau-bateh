@@ -1,3 +1,5 @@
 # Situs produksi mengimpor komponen design system langsung, bukan menulis ulang
 
+> **Superseded by [0003](0003-site-vendors-design-system-snapshot.md).** Situs produksi sekarang menyalin (vendor) snapshot design system ke dalam foldernya sendiri alih-alih mengimpor langsung, supaya bisa di-build tanpa folder design system hadir di sebelahnya. Berkas ini dibiarkan sebagai riwayat keputusan sebelumnya.
+
 Situs produksi wajib identik 100% secara visual dengan `New Surau Bateh Lori Design System/`. Kami memutuskan situs produksi mengimpor langsung berkas komponen di `New Surau Bateh Lori Design System/components/` dan token di `tokens/*.css`, dari folder terpisah di repo yang sama — bukan menulis ulang tampilannya di codebase baru, dan bukan menerbitkannya sebagai paket npm terpisah. Menulis ulang selalu berisiko drift dari desain aslinya sekecil apa pun; publikasi paket menambah lapisan versi tanpa manfaat nyata karena keduanya berada di bawah kendali yang sama. Konsekuensinya: situs produksi punya dependensi struktural pada tata letak folder design system saat ini — memindahkan salah satunya butuh menyesuaikan path impor di yang lain.

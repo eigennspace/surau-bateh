@@ -1,8 +1,8 @@
 import React from 'react';
 import { Badge, Card, PhotoTile, SectionHeading, StatBlock, Timeline, useBreakpoint } from '../ds.js';
-import pembangunanSurau from '../../../New Surau Bateh Lori Design System/assets/photos/pembangunan-surau.jpg';
-import gotongRoyongBelakang from '../../../New Surau Bateh Lori Design System/assets/photos/gotong-royong-belakang.jpg';
-import pengurusSurau from '../../../New Surau Bateh Lori Design System/assets/photos/pengurus-surau.jpg';
+import pembangunanSurau from '../design-system/assets/photos/pembangunan-surau.jpg';
+import gotongRoyongBelakang from '../design-system/assets/photos/gotong-royong-belakang.jpg';
+import pengurusSurau from '../design-system/assets/photos/pengurus-surau.jpg';
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
 

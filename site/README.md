@@ -1,9 +1,13 @@
 # Situs Produksi — Surau Bateh Lori
 
 Situs publik surau, dibangun dengan Vite + React sebagai static export dan
-di-deploy ke GitHub Pages. Tampilannya wajib identik 100% dengan
-`New Surau Bateh Lori Design System/` — komponen visual dan token CSS
-diimpor langsung dari sana (lihat `src/ds.js`), bukan disalin.
+di-deploy ke GitHub Pages. Situs ini independen: bisa di-build tanpa folder
+`New Surau Bateh Lori Design System/` hadir di sebelahnya. Komponen visual,
+token CSS, dan aset yang dipakai disalin (vendor) ke `src/design-system/`
+lewat `npm run sync-ds` (lihat `scripts/sync-design-system.mjs` dan
+ADR [0003](../docs/adr/0003-site-vendors-design-system-snapshot.md)) —
+bukan diimpor langsung. Jalankan `npm run sync-ds` saat desain sumber
+berubah dan situs perlu ditarik ke versi terbaru.
 
 ## Mengubah konten situs
 
@@ -26,6 +30,7 @@ npm install
 npm run dev      # server pengembangan
 npm test         # unit test untuk deriveSiteData
 npm run build    # static export ke dist/
+npm run sync-ds  # tarik ulang komponen/token/aset dari New Surau Bateh Lori Design System/
 ```
 
 ## Struktur
@@ -35,6 +40,9 @@ npm run build    # static export ke dist/
   Sumber Data mentah menjadi data siap-render (status salat aktif/berikutnya,
   Khatib Jumat turunan, bentuk donasi final). Diuji di
   `src/lib/deriveSiteData.test.js`.
+- `src/design-system/` — snapshot komponen, token, dan aset design system,
+  disalin lewat `npm run sync-ds`. Jangan diedit tangan — perubahan akan
+  tertimpa saat sync berikutnya.
 - `src/ds.js` — titik impor tunggal untuk komponen & hook design system.
 - `src/pages/*` — enam halaman situs (Beranda dirakit dari `src/components/*`).
 - `src/App.jsx` — navigasi & bilah bawah/menu ponsel.

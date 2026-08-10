@@ -2,7 +2,7 @@ import React from 'react';
 import { NavBar, Footer, BottomBar, Icon, Button, useBreakpoint } from './ds.js';
 import { SB_DATA } from './data/sourceData.js';
 import { deriveSiteData } from './lib/deriveSiteData.js';
-import logoMark from '../../New Surau Bateh Lori Design System/assets/logo-mark.png';
+import logoMark from './design-system/assets/logo-mark.png';
 
 import HomePage from './pages/HomePage.jsx';
 import SchedulePage from './pages/SchedulePage.jsx';

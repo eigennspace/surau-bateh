@@ -1,9 +1,12 @@
 import React from 'react';
 import { Badge, Button, Icon, PrayerTimeTable, useBreakpoint } from '../ds.js';
-import fotoSurau from '../../../New Surau Bateh Lori Design System/assets/foto-surau.jpg';
+import fotoSurau from '../design-system/assets/foto-surau.jpg';
 
 export default function Hero({ site, onNavigate }) {
   const mobile = useBreakpoint();
+  // Angka jamaah rutin: dibaca dari Sumber Data (site.stats), bukan hardcode —
+  // spec tiket 05 melarang angka statistik hardcode di kode situs produksi.
+  const jamaahRutin = site.stats.find(s => s.label.toLowerCase().includes('jamaah'));
   return (
     <section style={{ position: 'relative', padding: mobile ? '48px var(--space-5) var(--space-12)' : '96px var(--space-8) var(--gutter-section)', overflow: 'hidden',
       backgroundImage: `linear-gradient(100deg,rgba(34,38,44,.86) 0%,rgba(34,38,44,.68) 42%,rgba(34,38,44,.44) 72%,rgba(34,38,44,.52) 100%), url(${fotoSurau})`,
@@ -22,7 +25,9 @@ export default function Hero({ site, onNavigate }) {
             <Button tone="accent" size="lg" icon="calendar-days" fullWidth={mobile} onClick={() => onNavigate('Kajian')}>Lihat Agenda</Button>
           </div>
           <div style={{ display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap', paddingTop: 'var(--space-4)', color: 'rgba(253,251,246,.72)', fontSize: 'var(--fs-body-sm)' }}>
-            <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="users" size={15} />180 jamaah rutin</span>
+            {jamaahRutin ? (
+              <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="users" size={15} />{jamaahRutin.value} jamaah rutin</span>
+            ) : null}
             <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="mic" size={15} />Kajian dua kali sepekan</span>
             <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="users" size={15} />Gotong royong tiap pekan</span>
           </div>

@@ -9,7 +9,7 @@ Satu berkas (gaya `data.js`) yang menjadi satu-satunya sumber konten yang bisa b
 _Avoid_: Database, CMS, backend
 
 **Situs Produksi**:
-Folder terpisah dari `New Surau Bateh Lori Design System/` di dalam repo yang sama, yang benar-benar tayang untuk pengunjung (build Vite + React, static export, di-deploy ke GitHub Pages). Wajib identik 100% secara visual dengan desain di design system — komponennya diimpor langsung dari `New Surau Bateh Lori Design System/components/`, bukan ditulis ulang. Satu-satunya hal yang boleh berbeda antar keduanya adalah isi Sumber Data.
+Folder terpisah dari `New Surau Bateh Lori Design System/` di dalam repo yang sama, yang benar-benar tayang untuk pengunjung (build Vite + React, static export, di-deploy ke GitHub Pages). Bisa di-build secara independen — tidak butuh folder design system hadir saat build/deploy. Komponen, token, dan aset design system yang dipakai situs disalin (vendor) ke `site/src/design-system/` lewat `npm run sync-ds`, bukan diimpor langsung dari folder design system (lihat ADR 0003-site-vendors-design-system-snapshot, yang menggantikan ADR 0002). Selisih visual bisa muncul di antara dua kali sync — pemelihara menjalankan `sync-ds` secara sengaja untuk menarik pembaruan desain. Selain jeda sync itu, satu-satunya hal lain yang boleh berbeda antar situs dan design system adalah isi Sumber Data.
 _Avoid_: Prototype (istilah ini khusus untuk berkas di `ui_kits/website/`, bukan situs produksi)
 
 **Kampanye Donasi**:

@@ -7,13 +7,13 @@
 // Tidak ada panel admin, tidak ada database — berkas ini SATU-SATUNYA sumber
 // konten yang bisa berubah (jadwal salat, agenda, program, donasi, dll).
 
-import qrisImage from '../../../New Surau Bateh Lori Design System/assets/qris-surau-lori.jpg';
-import interiorRuangSalat from '../../../New Surau Bateh Lori Design System/assets/photos/interior-ruang-salat.png';
-import majelisJamaah from '../../../New Surau Bateh Lori Design System/assets/photos/majelis-jamaah.jpg';
-import gotongRoyongHalaman from '../../../New Surau Bateh Lori Design System/assets/photos/gotong-royong-halaman.jpg';
-import latihanSilat from '../../../New Surau Bateh Lori Design System/assets/photos/latihan-silat.jpg';
-import pengurusSurau from '../../../New Surau Bateh Lori Design System/assets/photos/pengurus-surau.jpg';
-import gotongRoyongJamaah from '../../../New Surau Bateh Lori Design System/assets/photos/gotong-royong-jamaah.jpg';
+import qrisImage from '../design-system/assets/qris-surau-lori.jpg';
+import interiorRuangSalat from '../design-system/assets/photos/interior-ruang-salat.png';
+import majelisJamaah from '../design-system/assets/photos/majelis-jamaah.jpg';
+import gotongRoyongHalaman from '../design-system/assets/photos/gotong-royong-halaman.jpg';
+import latihanSilat from '../design-system/assets/photos/latihan-silat.jpg';
+import pengurusSurau from '../design-system/assets/photos/pengurus-surau.jpg';
+import gotongRoyongJamaah from '../design-system/assets/photos/gotong-royong-jamaah.jpg';
 
 export const SB_DATA = {
   times: [

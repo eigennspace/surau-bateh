@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// Token CSS + komponen diimpor langsung dari design system — bukan disalin.
-import '../../New Surau Bateh Lori Design System/styles.css';
+// Token CSS: disalin dari design system via `npm run sync-ds` (ADR 0003).
+import './design-system/styles.css';
 import './global.css';
 import App from './App.jsx';
 
