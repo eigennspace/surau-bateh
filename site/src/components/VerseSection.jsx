@@ -7,9 +7,9 @@ export default function VerseSection() {
     <section style={{ padding: mobile ? '0 var(--space-5)' : '0 var(--space-8)', background: 'var(--sand-200)' }}>
       <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto', paddingBottom: mobile ? 'var(--space-12)' : 'var(--gutter-section)' }}>
         <ArabicVerse tone="sand" style={{ background: 'var(--white)', border: '1px solid var(--border-hairline)', padding: mobile ? 'var(--space-8) var(--space-5)' : undefined }}
-          arabic="إِنَّمَا يَعْمُرُ مَسَاجِدَ اللَّهِ مَنْ آمَنَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ"
-          translation="Hanyalah yang memakmurkan masjid Allah orang-orang yang beriman kepada Allah dan hari akhir."
-          source="QS. At-Taubah: 18" />
+          arabic="اَلَّذِيۡنَ اٰمَنُوۡا وَتَطۡمَٮِٕنُّ قُلُوۡبُهُمۡ بِذِكۡرِ اللّٰهِ​ ؕ اَلَا بِذِكۡرِ اللّٰهِ تَطۡمَٮِٕنُّ الۡقُلُوۡبُ"
+          translation="(yaitu) orang-orang yang beriman dan hati mereka menjadi tenteram dengan mengingat Allah. Ingatlah, hanya dengan mengingat Allah hati menjadi tenteram."
+          source="QS. Ar-Ra'd ayat 28" />
       </div>
     </section>
   );
