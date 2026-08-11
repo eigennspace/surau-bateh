@@ -6,6 +6,7 @@
 // props.
 
 import { parseMinutesOfDay, addMinutesToHHMM } from './hhmm.js';
+import { MONTH_NAMES_ID } from './monthNamesId.js';
 
 const MONTHS_ID = {
   Jan: 0, Feb: 1, Mar: 2, Apr: 3, Mei: 4, Jun: 5,
@@ -14,10 +15,6 @@ const MONTHS_ID = {
 
 const DAY_NAMES_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 const DAY_ABBR_ID = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
-const MONTH_NAMES_ID = [
-  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
-];
 
 const PRAYER_NAMES = [
   ['Subuh', 'subuh'],

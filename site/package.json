@@ -14,6 +14,7 @@
     "sync-ds": "node scripts/sync-design-system.mjs"
   },
   "dependencies": {
+    "marked": "^18.0.9",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

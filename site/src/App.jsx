@@ -14,8 +14,10 @@ import AgendaPage from './pages/AgendaPage.jsx';
 import DonatePage from './pages/DonatePage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import ArtikelPage from './pages/ArtikelPage.jsx';
+import ArticleDetailPage from './pages/ArticleDetailPage.jsx';
 
-const NAV = ['Beranda', 'Profil', 'Jadwal Shalat', 'Kajian', 'Infak', 'Kontak'];
+const NAV = ['Beranda', 'Profil', 'Jadwal Shalat', 'Kajian', 'Infak', 'Artikel', 'Kontak'];
 
 // Peta halaman <-> slug URL (path bersih, tanpa `#`) supaya navigasi antar
 // "halaman" tercermin di address bar -- tanpa ini, refresh selalu balik ke
@@ -31,22 +33,32 @@ const PAGE_SLUGS = {
   'Jadwal Shalat': 'jadwal-shalat',
   Kajian: 'kajian',
   Infak: 'infak',
+  Artikel: 'artikel',
   Kontak: 'kontak',
 };
 const SLUG_PAGES = Object.fromEntries(
   Object.entries(PAGE_SLUGS).filter(([, slug]) => slug).map(([page, slug]) => [slug, page])
 );
 
-function pathForPage(page) {
+// `ArtikelDetail` bukan bagian `PAGE_SLUGS` (satu-ke-satu halaman<->slug) --
+// path-nya dinamis (`/artikel/<slug artikel>`), jadi ditangani terpisah di
+// `pathForPage`/`routeFromPath` alih-alih lewat peta tetap.
+function pathForPage(page, articleSlug) {
+  if (page === 'ArtikelDetail') return `${BASE_PATH}/artikel/${articleSlug || ''}`;
   const slug = PAGE_SLUGS[page] ?? '';
   return slug ? `${BASE_PATH}/${slug}` : `${BASE_PATH}/`;
 }
 
-function pageFromPath() {
+function routeFromPath() {
   const path = window.location.pathname;
   const rel = path.startsWith(BASE_PATH) ? path.slice(BASE_PATH.length) : path;
-  const slug = rel.replace(/^\/+|\/+$/g, '');
-  return SLUG_PAGES[slug] || 'Beranda';
+  const trimmed = rel.replace(/^\/+|\/+$/g, '');
+  const segments = trimmed ? trimmed.split('/') : [];
+  if (segments[0] === 'artikel') {
+    if (segments.length >= 2 && segments[1]) return { page: 'ArtikelDetail', articleSlug: segments[1] };
+    return { page: 'Artikel', articleSlug: undefined };
+  }
+  return { page: SLUG_PAGES[trimmed] || 'Beranda', articleSlug: undefined };
 }
 const BB_ITEMS = [
   { label: 'Beranda', icon: 'house' },
@@ -93,7 +105,8 @@ function MobileHeader({ active, onNavigate, onAction }) {
 }
 
 export default function App() {
-  const [page, setPage] = React.useState(() => pageFromPath());
+  const [route, setRoute] = React.useState(() => routeFromPath());
+  const { page, articleSlug } = route;
   const mobile = useBreakpoint();
   // `now` dihitung ulang setiap render — cukup murah untuk situs statis ini
   // dan memastikan status shalat aktif/berikutnya selalu mengikuti jam nyata.
@@ -102,28 +115,29 @@ export default function App() {
 
   // Navigasi lewat sini supaya URL (path bersih) selalu sinkron dengan
   // halaman yang tampil -- ini yang bikin refresh/back/forward/bookmark
-  // tetap di halaman yang benar, bukan balik ke Beranda.
-  const navigate = React.useCallback(next => {
-    const path = pathForPage(next);
+  // tetap di halaman yang benar, bukan balik ke Beranda. `slug` kedua hanya
+  // dipakai untuk `navigate('ArtikelDetail', slug)`.
+  const navigate = React.useCallback((next, slug) => {
+    const path = pathForPage(next, slug);
     if (window.location.pathname !== path) {
       window.history.pushState(null, '', path);
     }
-    setPage(next);
+    setRoute({ page: next, articleSlug: slug });
   }, []);
 
   // Sinkronkan state dengan path saat back/forward browser.
   React.useEffect(() => {
-    const onPopState = () => setPage(pageFromPath());
+    const onPopState = () => setRoute(routeFromPath());
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  // Scroll ke atas tiap kali halaman berganti -- tanpa ini, konten cuma
-  // di-swap di tempat (bukan reload beneran) sehingga posisi scroll lama
-  // ikut terbawa ke halaman baru.
+  // Scroll ke atas tiap kali halaman (atau artikel) berganti -- tanpa ini,
+  // konten cuma di-swap di tempat (bukan reload beneran) sehingga posisi
+  // scroll lama ikut terbawa ke halaman baru.
   React.useEffect(() => {
     window.scrollTo(0, 0);
-  }, [page]);
+  }, [page, articleSlug]);
 
   return (
     <div style={{ paddingBottom: mobile ? 64 : 0 }}>
@@ -138,6 +152,8 @@ export default function App() {
       {page === 'Infak' ? <DonatePage site={site} /> : null}
       {page === 'Profil' ? <ProfilePage site={site} /> : null}
       {page === 'Kontak' ? <ContactPage site={site} /> : null}
+      {page === 'Artikel' ? <ArtikelPage onNavigate={navigate} /> : null}
+      {page === 'ArtikelDetail' ? <ArticleDetailPage slug={articleSlug} onNavigate={navigate} /> : null}
 
       <Footer logoSrc={logoMark} columns={mobile ? [
         { title: 'Tautan', links: ['Jadwal Shalat', 'Kajian Rutin', 'Infak & Sedekah', 'Profil', 'Kontak'] },
