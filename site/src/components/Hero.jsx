@@ -39,7 +39,7 @@ export default function Hero({ site, onNavigate }) {
         </div>
         <div style={{ position: 'relative' }}>
           <PrayerTimeTable variant="glass" style={{ position: 'relative', zIndex: 1 }}
-            times={site.times} activeName={site.activePrayerName} nextName={site.nextPrayerName} />
+            date={site.dateLabel} times={site.times} activeName={site.activePrayerName} nextName={site.nextPrayerName} />
         </div>
       </div>
     </section>

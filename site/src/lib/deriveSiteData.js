@@ -12,6 +12,12 @@ const MONTHS_ID = {
   Jul: 6, Ags: 7, Sep: 8, Okt: 9, Nov: 10, Des: 11,
 };
 
+const DAY_NAMES_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+const MONTH_NAMES_ID = [
+  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
+];
+
 const PRAYER_NAMES = [
   ['Subuh', 'subuh'],
   ['Syuruq', 'syuruq'],
@@ -26,6 +32,17 @@ function toDateKey(date) {
   const m = String(date.getMonth() + 1).padStart(2, '0');
   const d = String(date.getDate()).padStart(2, '0');
   return `${y}-${m}-${d}`;
+}
+
+/**
+ * Label tanggal Masehi hari ini dalam Bahasa Indonesia (mis. "Selasa, 11
+ * Agustus 2026"), dihitung dari `now` -- bukan teks hardcode. Dipakai kartu
+ * jadwal shalat (`PrayerTimeTable`) di beranda dan halaman Jadwal Shalat,
+ * yang sebelumnya jatuh ke default hardcode komponen ("Senin, 10 Agustus
+ * 2026") karena tak ada pemanggil yang mengirim prop `date`.
+ */
+function formatMasehiDate(date) {
+  return `${DAY_NAMES_ID[date.getDay()]}, ${date.getDate()} ${MONTH_NAMES_ID[date.getMonth()]} ${date.getFullYear()}`;
 }
 
 /**
@@ -166,6 +183,7 @@ export function deriveSiteData(rawData, now = new Date(), prayerTimesDataset = [
   return {
     times,
     week,
+    dateLabel: formatMasehiDate(now),
     events: rawData.events,
     programs: rawData.programs,
     news: rawData.news,

@@ -24,7 +24,7 @@ export default function SchedulePage({ site }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1fr .72fr', gap: mobile ? 'var(--space-5)' : 'var(--space-8)', marginTop: 'var(--space-8)', alignItems: 'start' }}>
           {range === 'Hari ini' ? (
-            <PrayerTimeTable times={site.times} activeName={site.activePrayerName} nextName={site.nextPrayerName} />
+            <PrayerTimeTable date={site.dateLabel} times={site.times} activeName={site.activePrayerName} nextName={site.nextPrayerName} />
           ) : (
             // Tabel "Pekan ini": 7 hari nyata ke depan dengan jam yang benar-benar
             // dihitung per tanggal (site.week), bukan lagi trik interpolasi offset.

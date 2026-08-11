@@ -2,7 +2,7 @@ import React from 'react';
 import { PrayerTimeRow } from './PrayerTimeRow.jsx';
 import { Icon } from '../core/Icon.jsx';
 
-export function PrayerTimeTable({ date = 'Senin, 10 Agustus 2026', hijri = '26 Safar 1448 H', location = 'Kota Padang',
+export function PrayerTimeTable({ date = 'Senin, 10 Agustus 2026', hijri = '', location = 'Kota Padang',
   times = [], activeName, nextName, variant = 'solid', style }) {
   const glass = variant === 'glass';
   const shell = glass
