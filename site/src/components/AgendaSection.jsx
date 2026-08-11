@@ -76,7 +76,7 @@ export default function AgendaSection({ site, compact, onNavigate }) {
             {days.map(d => <Tag key={d} selected={dayFilter === d} onClick={() => setDayFilter(d)}>{d}</Tag>)}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {list.map(e => <EventItem key={`${e.day}-${e.title}`} {...e} onClick={() => {}} />)}
+            {list.map(e => <EventItem key={`${e.day}-${e.title}`} {...e} />)}
             {list.length === 0 ? <p style={{ color: 'var(--text-muted)', font: 'var(--text-body-default)' }}>{emptyMessage}</p> : null}
           </div>
         </div>
