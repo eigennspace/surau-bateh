@@ -37,7 +37,11 @@ export default function Reveal({ children, as: Tag = 'div', style, ...rest }) {
           }
         });
       },
-      { threshold: 0.1 }
+      // Trigger once the section is meaningfully inside the viewport (not
+      // the instant its edge appears at the bottom) so the fade plays out
+      // while it's actually on screen instead of finishing before the
+      // user's eye gets there during a normal scroll.
+      { threshold: 0.1, rootMargin: '0px 0px -15% 0px' }
     );
 
     observer.observe(node);
@@ -52,7 +56,11 @@ export default function Reveal({ children, as: Tag = 'div', style, ...rest }) {
       style={{
         opacity: visible ? 1 : 0,
         transform: reduced ? undefined : `translateY(${visible ? 0 : 8}px)`,
-        transition: reduced ? undefined : 'opacity var(--dur-slow) var(--ease-standard), transform var(--dur-slow) var(--ease-standard)',
+        // Slightly longer than --dur-slow (420ms) on purpose: at that speed
+        // the fade finished before it was noticeable during a normal
+        // scroll. 600ms keeps the same easing/feel but gives the eye time
+        // to catch it.
+        transition: reduced ? undefined : 'opacity 600ms var(--ease-standard), transform 600ms var(--ease-standard)',
         ...style,
       }}
       {...rest}
