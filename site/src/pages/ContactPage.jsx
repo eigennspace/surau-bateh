@@ -11,7 +11,7 @@ export default function ContactPage({ site }) {
     <section style={{ padding: pad(mobile), background: 'var(--sand-200)', minHeight: 560 }}>
       <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
         <SectionHeading align="center" overline="Kontak" title="Menghubungi pengurus surau"
-          description="Untuk pertanyaan jadwal kajian, khatib Jumat, atau penyaluran infak." />
+          description="Untuk pertanyaan berkaitan dengan Kegiatan Surau Bateh" />
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1fr 1fr', gap: 'var(--space-4)', marginTop: 'var(--space-8)' }}>
           {c.pengurus.map(p => (
             <Card key={p.name} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
