@@ -13,6 +13,7 @@ const MONTHS_ID = {
 };
 
 const DAY_NAMES_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+const DAY_ABBR_ID = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
 const MONTH_NAMES_ID = [
   'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
   'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
@@ -152,6 +153,24 @@ function deriveKhatibJumat(events, now) {
 }
 
 /**
+ * Menandai tiap event mingguan (`day` berisi singkatan hari Sen/Sel/dst,
+ * bukan kategori "Jumat" yang memakai `day` sebagai tanggal-di-bulan) dengan
+ * `isToday`: true bila `day` event itu cocok dengan hari-dalam-minggu `now`.
+ * Hanya membandingkan hari, bukan jam — jadi tetap `true` sepanjang hari itu
+ * berjalan, tidak peduli event sudah/belum lewat jamnya. Event kategori
+ * "Jumat" selalu `isToday: false` karena `day`-nya bukan nama hari (lihat
+ * `deriveKhatibJumat`), sehingga tidak salah dicocokkan sebagai singkatan
+ * hari.
+ */
+function deriveEventsWithToday(events, now) {
+  const todayAbbr = DAY_ABBR_ID[now.getDay()];
+  return (events || []).map(event => ({
+    ...event,
+    isToday: event.category !== 'Jumat' && event.day === todayAbbr,
+  }));
+}
+
+/**
  * Menggabungkan `donation` mentah jadi bentuk siap-render: `campaign` hanya
  * disertakan (judul + deskripsi) bila togglenya aktif; sebaliknya `null`,
  * sehingga halaman hanya menampilkan QRIS + rekening polos.
@@ -184,7 +203,7 @@ export function deriveSiteData(rawData, now = new Date(), prayerTimesDataset = [
     times,
     week,
     dateLabel: formatMasehiDate(now),
-    events: rawData.events,
+    events: deriveEventsWithToday(rawData.events, now),
     programs: rawData.programs,
     news: rawData.news,
     ilmuTauhid: rawData.ilmuTauhid,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from '../core/Icon.jsx';
 import { Badge } from '../core/Badge.jsx';
 
-export function EventItem({ day, month, title, speaker, time, place, category, onClick, style }) {
+export function EventItem({ day, month, title, speaker, time, place, category, isToday, onClick, style }) {
   const [hover, setHover] = React.useState(false);
   return (
     <article onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
@@ -16,7 +16,12 @@ export function EventItem({ day, month, title, speaker, time, place, category, o
         <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--maroon-600)' }}>{month}</span>
       </div>
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {category ? <Badge tone="accent" style={{ alignSelf: 'flex-start', fontSize: 'var(--fs-overline)' }}>{category}</Badge> : null}
+        {(category || isToday) ? (
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {category ? <Badge tone="accent" style={{ alignSelf: 'flex-start', fontSize: 'var(--fs-overline)' }}>{category}</Badge> : null}
+            {isToday ? <Badge tone="active" style={{ alignSelf: 'flex-start', fontSize: 'var(--fs-overline)' }}>Hari Ini</Badge> : null}
+          </div>
+        ) : null}
         <h4 style={{ margin: 0, font: 'var(--text-h4)', fontWeight: 'var(--fw-bold)', color: 'var(--text-strong)' }}>{title}</h4>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)', fontSize: 'var(--fs-body-sm)', color: 'var(--text-muted)' }}>
           {speaker ? <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="mic" size={14} />{speaker}</span> : null}

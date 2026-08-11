@@ -132,6 +132,28 @@ describe('deriveSiteData — khatibJumat', () => {
   });
 });
 
+describe('deriveSiteData — events isToday', () => {
+  it('menandai isToday true hanya pada event mingguan yang `day`-nya cocok hari ini', () => {
+    const now = new Date(2026, 7, 10, 10, 0); // Senin, 10 Agustus 2026
+    const events = [
+      { day: 'Sen', month: 'Malam', title: 'Tawajjuh', category: 'Tawajjuh' },
+      { day: 'Kam', month: 'Malam', title: 'Tawajjuh', category: 'Tawajjuh' },
+      { day: 'Sen', month: 'Pagi', title: 'Kajian Lain', category: 'Kajian' },
+    ];
+    const result = deriveSiteData(baseRawData({ events }), now, PRAYER_TIMES_DATASET);
+    expect(result.events.map(e => e.isToday)).toEqual([true, false, true]);
+  });
+
+  it('tidak pernah menandai isToday pada event kategori Jumat, walau `day` (tanggal) kebetulan cocok dengan angka hari', () => {
+    const now = new Date(2026, 7, 10, 10, 0); // 10 Agustus 2026 — tanggal 10
+    const events = [
+      { day: '10', month: 'Ags', title: 'Khutbah Jumat', category: 'Jumat' },
+    ];
+    const result = deriveSiteData(baseRawData({ events }), now, PRAYER_TIMES_DATASET);
+    expect(result.events[0].isToday).toBe(false);
+  });
+});
+
 describe('deriveSiteData — donation', () => {
   it('kampanye aktif → menyertakan judul & deskripsi', () => {
     const now = new Date(2026, 7, 10);

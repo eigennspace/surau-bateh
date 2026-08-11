@@ -31,9 +31,10 @@ export default function AgendaSection({ site, compact, onNavigate }) {
                 {site.news?.length > 0 ? 
                 
                 (site.news.map(n => (
-                  <a key={n.title} href="#" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <a key={n.title} href={n.link} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <Badge tone="neutral" style={{ alignSelf: 'flex-start', fontSize: 'var(--fs-overline)' }}>{n.tag}</Badge>
                     <span style={{ font: 'var(--text-label)', fontSize: 'var(--fs-body)', color: 'var(--text-strong)' }}>{n.title}</span>
+                    <p>{n.description}</p>
                     <span style={{ fontSize: 'var(--fs-caption)', color: 'var(--text-faint)' }}>{n.date}</span>
                   </a>
                 ))) : (
