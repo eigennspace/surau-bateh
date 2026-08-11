@@ -26,7 +26,7 @@ export default function ProgramsSection({ site }) {
           align="center"
           overline="Program"
           title="Kegiatan rutin Surau Bateh Lori"
-          description="Program yang berjalan sepanjang pekan, dikelola pengurus dan didukung infak jamaah."
+          description="Program yang berjalan sepanjang pekan, dikelola pengurus."
         />
 
         <div
