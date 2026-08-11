@@ -51,7 +51,7 @@ export default function AgendaSection({ site, compact, onNavigate }) {
               </div>
             </Card>
             <Card tone="dark">
-              <DonationCard donation={site.donation} tone="dark" qrisSize={128} />
+              <DonationCard donation={site.donation} tone="dark" qrisSize={mobile ? 300 : 300} mobile={mobile} />
               <Button tone="accent" size="sm" fullWidth style={{ marginTop: 'var(--space-5)' }} icon="hand-coins"
                 onClick={() => onNavigate && onNavigate('Infak')}>Ikut Berinfak</Button>
             </Card>
