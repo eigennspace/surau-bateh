@@ -19,7 +19,7 @@ export default function AgendaSection({ site, compact, onNavigate }) {
             {CATEGORIES.map(c => <Tag key={c} selected={filter === c} onClick={() => setFilter(c)}>{c}</Tag>)}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {list.map(e => <EventItem key={e.title} {...e} onClick={() => {}} />)}
+            {list.map(e => <EventItem key={`${e.day}-${e.title}`} {...e} onClick={() => {}} />)}
             {list.length === 0 ? <p style={{ color: 'var(--text-muted)', font: 'var(--text-body-default)' }}>Belum ada agenda pada kategori ini.</p> : null}
           </div>
         </div>
