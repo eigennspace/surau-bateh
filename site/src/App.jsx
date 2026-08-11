@@ -117,6 +117,13 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
+  // Scroll ke atas tiap kali halaman berganti -- tanpa ini, konten cuma
+  // di-swap di tempat (bukan reload beneran) sehingga posisi scroll lama
+  // ikut terbawa ke halaman baru.
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
   return (
     <div style={{ paddingBottom: mobile ? 64 : 0 }}>
       {(mobile && !bundleHasMobileNav)
