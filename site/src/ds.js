@@ -14,6 +14,7 @@ export { Tag } from './design-system/components/core/Tag.jsx';
 export { useBreakpoint } from './design-system/components/core/useBreakpoint.js';
 
 export { Dialog } from './design-system/components/feedback/Dialog.jsx';
+export { PhotoLightbox } from './design-system/components/feedback/PhotoLightbox.jsx';
 export { Toast } from './design-system/components/feedback/Toast.jsx';
 export { Tooltip } from './design-system/components/feedback/Tooltip.jsx';
 
