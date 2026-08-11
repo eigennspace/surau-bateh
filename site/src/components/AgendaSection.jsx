@@ -1,6 +1,6 @@
 import React from 'react';
-import { Badge, Card, EventItem, SectionHeading, Tag, Button, useBreakpoint } from '../ds.js';
-import DonationCard from './DonationCard.jsx';
+import { Badge, Card, EventItem, SectionHeading, Tag, useBreakpoint } from '../ds.js';
+import ContactCard from './ContactCard.jsx';
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
 const CATEGORIES = ['Semua', 'Kajian', 'Tawajjuh','Kajian & Tawajjuh', 'Silat', 'Gotong Royong' ];
@@ -51,9 +51,7 @@ export default function AgendaSection({ site, compact, onNavigate }) {
               </div>
             </Card>
             <Card tone="dark">
-              <DonationCard donation={site.donation} tone="dark" qrisSize={mobile ? 300 : 300} mobile={mobile} />
-              <Button tone="accent" size="sm" fullWidth style={{ marginTop: 'var(--space-5)' }} icon="hand-coins"
-                onClick={() => onNavigate && onNavigate('Infak')}>Ikut Berinfak</Button>
+              <ContactCard contact={site.contact} tone="dark" />
             </Card>
           </aside>
         )}

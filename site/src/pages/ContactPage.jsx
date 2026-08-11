@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Icon, SectionHeading, Button, useBreakpoint } from '../ds.js';
+import { openWhatsApp } from '../lib/whatsapp.js';
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
 
@@ -24,7 +25,8 @@ export default function ContactPage({ site }) {
               <a href={'tel:' + p.phone} style={{ display: 'flex', alignItems: 'center', gap: 8, font: 'var(--text-label)', fontSize: 'var(--fs-body)', textDecoration: 'none', fontVariantNumeric: 'tabular-nums' }}>
                 <Icon name="phone" size={16} />{p.phone}
               </a>
-              <Button tone="secondary" size="sm" icon="message-circle" style={{ alignSelf: 'flex-start', marginTop: 'auto' }}>Kirim WhatsApp</Button>
+              <Button tone="secondary" size="sm" icon="message-circle" style={{ alignSelf: 'flex-start', marginTop: 'auto' }}
+                onClick={() => openWhatsApp(p.phone, `Assalamu'alaikum, saya ingin menghubungi ${p.name} terkait Surau Bateh`)}>Kirim WhatsApp</Button>
             </Card>
           ))}
           <Card tone="sand" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
