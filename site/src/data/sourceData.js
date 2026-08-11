@@ -18,6 +18,8 @@ import gotongRoyongJamaah from '../design-system/assets/photos/gotong-royong-jam
 import flyerDaurah from '../design-system/assets/flyer/daurah-aswaja-13-agus.jpeg';
 import karakterSalik from '../design-system/assets/flyer/karakter-salik.jpeg';
 import backgroundDaurah from '../design-system/assets/background-daurah.jpeg';
+import flyerSilaturahmiIlmiah from '../design-system/assets/photos/flyer-silaturahmi-ilmiah.jpeg';
+import silaturahmiIlmiah from '../design-system/assets/photos/silaturahmi-ilmiah.jpeg';
 
 export const SB_DATA = {
   // Koordinat Surau Bateh Lori, Kota Padang -- dipakai `computePrayerTimes`
@@ -373,6 +375,9 @@ export const SB_DATA = {
   gallery: [
     { src: pengurusSurau, alt: 'Pengurus surau', ratio: '16 / 9', position: 'center 40%', meta: 'Pengurus', caption: 'Guru Surau Bateh', span: 2 },
     { src: majelisJamaah, alt: 'Majelis jamaah', ratio: '16 / 9', meta: 'Kajian Rutin', caption: 'Majelis ba’da Isya bersama jamaah', span: 2 },
+    { src: flyerSilaturahmiIlmiah, alt: 'Flyer Silaturahmi Ilmiah', ratio: '16 / 9', position: 'center 40%', meta: 'flyer-silaturahmi-ilmiah-uin-imam-bonjol-padang', caption: 'Flyer silaturahmi ilmiah UIN imam bonjol padang', span: 2 },
+    { src: silaturahmiIlmiah, alt: 'Dokumentasi Silaturahmi Ilmiah', ratio: '16 / 9', position: 'center 40%', meta: 'dokumentasi-silaturahmi-ilmiah-uin-imam-bonjol-padang', caption: 'Dokumentasi silaturahmi ilmiah UIN imam bonjol padang', span: 2 },
+    { src: pengurusSurau, alt: 'Pengurus surau', ratio: '16 / 9', position: 'center 40%', meta: 'Pengurus', caption: 'Guru Surau Bateh', span: 2 },
     { src: flyerDaurah, alt: 'Daurah Aswaja, Kamis 13 Agustus 2026', ratio: '3 / 4', meta: 'Daurah Aswaja', caption: 'Daurah Aswaja' },
     { src: karakterSalik, alt: '8 Karakter Salik Surah Bateh', ratio: '3 / 4', meta: 'karakter-salik', caption: '8 Karakter Salik Surah Bateh' },
     { src: backgroundDaurah, alt: 'Flyer Daurah', ratio: '16/9', meta: 'Flyer Daurah', caption: 'Daurah Aswaja by Surau Bateh Lori', span: 2},
