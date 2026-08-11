@@ -379,5 +379,6 @@ export const SB_DATA = {
     { src: latihanSilat, alt: 'Latihan silat di surau', ratio: '3 / 4', position: 'center 35%', meta: 'Remaja', caption: 'Latihan silat tradisi, malam pekanan.' },
     { src: interiorRuangSalat, alt: 'Ruang shalat surau', ratio: '3 / 4', meta: 'Ruang Utama', caption: 'Karpet ruang shalat selepas Dzuhur.'},
     { src: gotongRoyongJamaah, alt: 'Jamaah bekerja di halaman', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Jamaah membersihkan halaman atas.' },
+    { src: backgroundDaurah, alt: 'Flyer Daurah', ratio: '16/9', meta: 'Flyer Daurah', caption: 'Daurah Aswaja by Surau Bateh Lori', span: 2},
   ],
 };
