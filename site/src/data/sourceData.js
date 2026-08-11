@@ -44,7 +44,7 @@ export const SB_DATA = {
     // { icon: 'heart-handshake', title: 'Santunan Anak Yatim', desc: 'Penyaluran bulanan dari infak jamaah untuk anak yatim sekitar surau.', meta: 'Setiap Jumat pertama' },
   ],
   news: [
-    { tag: 'Pengumuman', title: 'Pendataan Data Salik Surau Bateh', date: '8 Agustus 2026', link: 'https://forms.gle/2Se3M6uMp6P2QP4t6', description: 'Harap bagi para Salik yang belum mengisi Formulir pendataan untuk segera mengisi' },
+    { tag: 'Pengumuman', title: 'Pendataan Data Salik Surau Bateh', date: '8 Agustus 2026', link: 'https://forms.gle/2Se3M6uMp6P2QP4t6', description: 'Harap bagi para Salik yang belum mengisi Formulir pendataan, untuk segera mengisi dengan klik bagian pengumuman ini.' },
     // { tag: 'Laporan', title: 'Laporan Kas Surau Juli 2026', date: '2 Agustus 2026' },
     // { tag: 'Kegiatan', title: 'Gotong Royong Pembersihan Ruang Wudhu', date: '28 Juli 2026' },
   ],

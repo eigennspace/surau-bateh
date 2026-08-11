@@ -5,6 +5,50 @@ import ContactCard from './ContactCard.jsx';
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
 const CATEGORIES = ['Semua', 'Kajian', 'Tawajjuh','Kajian & Tawajjuh', 'Silat', 'Gotong Royong' ];
 
+function NewsItem({ n }) {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <a
+      href={n.link}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        textDecoration: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 6,
+        background: 'var(--surface-card)',
+        border: '1px solid var(--border-hairline)',
+        borderRadius: 'var(--radius-md)',
+        padding: 'var(--space-4)',
+        boxShadow: hover ? 'var(--shadow-md)' : 'var(--shadow-xs)',
+        transform: hover ? 'translateY(-2px)' : 'none',
+        transition: 'var(--transition-control)',
+      }}
+    >
+      <Badge tone="neutral" style={{ alignSelf: 'flex-start', fontSize: 'var(--fs-overline)' }}>{n.tag}</Badge>
+      <span style={{ font: 'var(--text-label)', fontSize: 'var(--fs-body)', color: 'var(--text-strong)' }}>{n.title}</span>
+      {n.description ? (
+        <p
+          style={{
+            margin: 0,
+            font: 'var(--text-body-default)',
+            fontSize: 'var(--fs-body-sm)',
+            color: 'var(--text-muted)',
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}
+        >
+          {n.description}
+        </p>
+      ) : null}
+      <span style={{ fontSize: 'var(--fs-caption)', color: 'var(--text-faint)' }}>{n.date}</span>
+    </a>
+  );
+}
+
 export default function AgendaSection({ site, compact, onNavigate }) {
   const mobile = useBreakpoint();
   const [filter, setFilter] = React.useState('Semua');
@@ -30,29 +74,7 @@ export default function AgendaSection({ site, compact, onNavigate }) {
                 <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--text-faint)' }}>Pengumuman</span>
                 {site.news?.length > 0 ? 
                 
-                (site.news.map(n => (
-                  <a key={n.title} href={n.link} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    <Badge tone="neutral" style={{ alignSelf: 'flex-start', fontSize: 'var(--fs-overline)' }}>{n.tag}</Badge>
-                    <span style={{ font: 'var(--text-label)', fontSize: 'var(--fs-body)', color: 'var(--text-strong)' }}>{n.title}</span>
-                    {n.description ? (
-                      <p
-                        style={{
-                          margin: 0,
-                          font: 'var(--text-body-default)',
-                          fontSize: 'var(--fs-body-sm)',
-                          color: 'var(--text-muted)',
-                          display: '-webkit-box',
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                        }}
-                      >
-                        {n.description}
-                      </p>
-                    ) : null}
-                    <span style={{ fontSize: 'var(--fs-caption)', color: 'var(--text-faint)' }}>{n.date}</span>
-                  </a>
-                ))) : (
+                (site.news.map(n => <NewsItem key={n.title} n={n} />)) : (
                   <div
                     style={{
                       padding: 'var(--space-4)',
