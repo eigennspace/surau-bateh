@@ -4,7 +4,7 @@
 
 **Blocked by:** None — bisa mulai langsung.
 
-**Status:** ready-for-agent
+**Status:** done
 
 - [ ] Fungsi murni menerima `{ latitude, longitude, date }` dan mengembalikan enam waktu salat (Subuh, Syuruq, Dzuhur, Ashar, Maghrib, Isya) menggunakan algoritma posisi matahari standar (NOAA/Meeus) dengan parameter sudut/ihtiyat resmi Kemenag.
 - [ ] Tidak ada efek samping, tidak ada I/O — fungsi murni, hanya bergantung pada argumen yang diberikan.

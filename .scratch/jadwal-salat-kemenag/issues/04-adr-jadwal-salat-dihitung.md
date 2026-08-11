@@ -4,7 +4,7 @@
 
 **Blocked by:** 03 — Tab "Pekan ini" pakai data 7 hari nyata (ditulis setelah implementasi selesai, supaya ADR mencerminkan apa yang benar-benar dibangun, bukan rencana).
 
-**Status:** ready-for-agent
+**Status:** done
 
 - [ ] Berkas ADR baru dibuat di `docs/adr/` (nomor indikatif `0004`, sesuaikan dengan urutan ADR terbaru saat ticket ini dikerjakan), mengikuti gaya/panjang ADR yang sudah ada di repo (mis. `0001`, `0003`).
 - [ ] ADR menjelaskan: apa yang berubah (jam adzan dihitung, bukan hand-typed), kenapa (jam salat bergeser tiap hari, tidak realistis diketik manual), dan apa yang tetap hand-typed (koordinat lokasi, offset iqamah).

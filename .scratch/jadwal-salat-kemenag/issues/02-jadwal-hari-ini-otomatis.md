@@ -4,7 +4,7 @@
 
 **Blocked by:** 01 — Kalkulator jam salat metode Kemenag.
 
-**Status:** ready-for-agent
+**Status:** done
 
 - [ ] Skrip build-time (nama indikatif `generate-prayer-times.mjs`, mengikuti pola `scripts/sync-design-system.mjs`) memanggil kalkulator dari ticket 01 berulang untuk kira-kira 1 tahun ke depan dari tanggal skrip dijalankan, dan menulis hasilnya ke berkas hasil generate di dalam `site/src/` (bisa diimpor Vite).
 - [ ] Berkas hasil generate ditambahkan ke `site/.gitignore` — tidak ikut ter-commit.

@@ -1,4 +1,4 @@
-Status: ready-for-agent
+Status: done
 
 # Jadwal Salat Dihitung Otomatis (Metode Kemenag)
 

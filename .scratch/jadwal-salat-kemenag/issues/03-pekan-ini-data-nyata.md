@@ -4,7 +4,7 @@
 
 **Blocked by:** 02 — Jadwal "Hari ini" dihitung otomatis, ujung ke ujung.
 
-**Status:** ready-for-agent
+**Status:** done
 
 - [ ] `deriveSiteData` membentuk `week`: array 7 entri berturut-turut mulai hari ini, tiap entri berisi tanggal asli + jam per salat (adzan dari dataset hasil generate, iqamah dari `iqamahOffsets` Sumber Data — offset sama tiap hari karena itu kebijakan tetap, bukan hasil hitung tanggal).
 - [ ] `SchedulePage.jsx`: array `WEEK` hardcode dan seluruh logika interpolasi offset di tabel "Pekan ini" dihapus, diganti render dari `site.week`.
