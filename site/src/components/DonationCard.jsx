@@ -6,7 +6,7 @@ import { Badge, Icon } from '../ds.js';
  * opsional) — menggantikan `DonationProgress` (collected/target/deadline)
  * yang tidak lagi dipakai di manapun di situs produksi.
  */
-export default function DonationCard({ donation, tone = 'light', qrisSize = 180 }) {
+export default function DonationCard({ donation, tone = 'light', qrisSize = 180, mobile=false }) {
   if (!donation) return null;
   const dark = tone === 'dark';
   const strong = dark ? 'var(--sand-100)' : 'var(--text-strong)';
@@ -24,20 +24,111 @@ export default function DonationCard({ donation, tone = 'light', qrisSize = 180 
         </div>
       ) : null}
 
-      <div style={{ display: 'flex', gap: 'var(--space-5)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-        <div style={{ width: qrisSize, height: qrisSize, flex: '0 0 auto', borderRadius: 'var(--radius-md)', overflow: 'hidden',
-          background: dark ? 'var(--white)' : 'var(--sand-100)', border: '1px solid ' + (dark ? 'rgba(253,251,246,.18)' : 'var(--border-default)') }}>
-          <img src={donation.qris} alt="Kode QRIS Surau Bateh Lori" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 4, minWidth: 200 }}>
-          <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: muted }}>Transfer Bank</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 6, font: 'var(--text-label)', fontSize: 'var(--fs-body)', color: strong }}>
-            <Icon name="landmark" size={16} />{donation.bank.name}
-          </span>
-          <span style={{ fontVariantNumeric: 'tabular-nums', fontSize: 'var(--fs-body-lg)', fontWeight: 'var(--fw-bold)', color: strong }}>{donation.bank.account}</span>
-          <span style={{ fontSize: 'var(--fs-body-sm)', color: muted }}>a.n. {donation.bank.holder}</span>
-        </div>
-      </div>
+      <div
+  style={{
+    display: 'flex',
+    flexDirection: mobile ? 'column' : 'row',
+    alignItems: 'center',
+    gap: 'var(--space-6)',
+    width: '100%',
+  }}
+>
+  {/* QRIS */}
+  <div
+    style={{
+      width: qrisSize,
+      height: qrisSize,
+      flex: '0 0 auto',
+      borderRadius: 'var(--radius-md)',
+      overflow: 'hidden',
+      background: dark ? 'var(--white)' : 'var(--sand-100)',
+      border:
+        '1px solid ' +
+        (dark
+          ? 'rgba(253,251,246,.18)'
+          : 'var(--border-default)'),
+    }}
+  >
+    <img
+      src={donation.qris}
+      alt="Kode QRIS Surau Bateh Lori"
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain',
+      }}
+    />
+  </div>
+
+  {/* Divider */}
+  <div
+    aria-hidden="true"
+    style={{
+      width: mobile ? '100%' : 1,
+      height: mobile ? 1 : 120,
+      flex: '0 0 auto',
+      background: 'var(--border-default)',
+    }}
+  />
+
+  {/* Bank information */}
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 4,
+      minWidth: mobile ? 0 : 200,
+      alignItems: mobile ? 'center' : 'flex-start',
+      textAlign: mobile ? 'center' : 'left',
+    }}
+  >
+    <span
+      style={{
+        fontSize: 'var(--fs-overline)',
+        letterSpacing: 'var(--ls-overline)',
+        textTransform: 'uppercase',
+        color: muted,
+      }}
+    >
+      Transfer Bank
+    </span>
+
+    <span
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: mobile ? 'center' : 'flex-start',
+        gap: 6,
+        font: 'var(--text-label)',
+        fontSize: 'var(--fs-body)',
+        color: strong,
+      }}
+    >
+      <Icon name="landmark" size={16} />
+      {donation.bank.name}
+    </span>
+
+    <span
+      style={{
+        fontVariantNumeric: 'tabular-nums',
+        fontSize: 'var(--fs-body-lg)',
+        fontWeight: 'var(--fw-bold)',
+        color: strong,
+      }}
+    >
+      {donation.bank.account}
+    </span>
+
+    <span
+      style={{
+        fontSize: 'var(--fs-body-sm)',
+        color: muted,
+      }}
+    >
+      a.n. {donation.bank.holder}
+    </span>
+  </div>
+</div>
     </div>
   );
 }

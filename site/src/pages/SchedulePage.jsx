@@ -19,12 +19,9 @@ export default function SchedulePage({ site }) {
     <section style={{ padding: mobile ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)', background: 'var(--sand-100)', minHeight: 600 }}>
       <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 'var(--space-6)', flexWrap: 'wrap' }}>
-          <SectionHeading overline="Waktu Shalat" title="Jadwal shalat Kota Padang" description="Dihitung untuk koordinat Lori Lubuk Minturun, disesuaikan dengan pengumuman iqamah pengurus surau." />
+          <SectionHeading overline="Waktu Shalat" title="Jadwal shalat Kota Padang" description="Dihitung otomatis mengikuti metode Kementerian Agama RI (sudut fajar −20°, isya −18°, mazhab Syafi'i untuk Ashar, dengan ihtiyat" />
           <Tabs items={['Hari ini', 'Pekan ini']} value={range} onChange={setRange} />
         </div>
-        <p style={{ margin: 'var(--space-3) 0 0', fontSize: 'var(--fs-body-sm)', color: 'var(--text-muted)' }}>
-          Dihitung otomatis mengikuti metode Kementerian Agama RI (sudut fajar −20°, isya −18°, mazhab Syafi'i untuk Ashar, dengan ihtiyat).
-        </p>
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1fr .72fr', gap: mobile ? 'var(--space-5)' : 'var(--space-8)', marginTop: 'var(--space-8)', alignItems: 'start' }}>
           {range === 'Hari ini' ? (
             <PrayerTimeTable times={site.times} activeName={site.activePrayerName} nextName={site.nextPrayerName} />
@@ -62,14 +59,14 @@ export default function SchedulePage({ site }) {
                 <span style={{ font: 'var(--text-label)', color: 'var(--teal-800)' }}>Waktu shalat berikutnya: {site.nextPrayerName}</span>
               </div>
             </Card>
-            <Card>
+            {/* <Card>
               <span style={{ font: 'var(--text-label)', color: 'var(--text-strong)' }}>Pengaturan pengingat</span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginTop: 'var(--space-4)' }}>
                 <Switch label="Pengingat adzan" defaultChecked />
                 <Switch label="Pengingat kajian" />
                 <Switch label="Pengingat Jumat pagi" defaultChecked />
               </div>
-            </Card>
+            </Card> */}
             {site.khatibJumat ? (
               <Card tone="sand">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
