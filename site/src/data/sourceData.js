@@ -15,6 +15,9 @@ import gotongRoyongHalaman from '../design-system/assets/photos/gotong-royong-ha
 import latihanSilat from '../design-system/assets/photos/latihan-silat.jpg';
 import pengurusSurau from '../design-system/assets/photos/pengurus-surau.jpg';
 import gotongRoyongJamaah from '../design-system/assets/photos/gotong-royong-jamaah.jpg';
+import flyerDaurah from '../design-system/assets/flyer/daurah-aswaja-13-agus.jpeg';
+import karakterSalik from '../design-system/assets/flyer/karakter-salik.jpeg';
+import backgroundDaurah from '../design-system/assets/background-daurah.jpeg';
 
 export const SB_DATA = {
   // Koordinat Surau Bateh Lori, Kota Padang -- dipakai `computePrayerTimes`
@@ -31,7 +34,7 @@ export const SB_DATA = {
   events: [
     { day: 'Sel', month: 'Malam', title: 'Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh' },
     { day: 'Kam', month: 'Malam', title: 'Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh' },
-    { day: 'Kam', month: '13/08/26', title: 'Daurah Aswaja', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: ' Musholla Al Mukmin Berok', category: 'Daurah' },
+    { day: 'Kam', month: '13/08/26', title: 'Daurah Aswaja', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: ' Musholla Al Mukmin Berok', category: 'Daurah', backgroundImage: backgroundDaurah },
     { day: 'Sab', month: 'Malam', title: 'Latihan Silat Tradisi', speaker: 'Pelatih sasaran surau', time: "Ba'da Isya", place: 'Lapangan', category: 'Silat' },
     { day: 'Sab', month: 'Malam', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
     { day: 'Min', month: 'Pagi', title: '(Khusus Salik Baru) Pengenalan Tiga Rukun Agama', speaker: 'Tuan Guru Surau Bateh', time: "09:00 WIB", place: 'Ruang utama', category: 'Kajian' },
@@ -370,6 +373,8 @@ export const SB_DATA = {
   gallery: [
     { src: pengurusSurau, alt: 'Pengurus surau', ratio: '16 / 9', position: 'center 40%', meta: 'Pengurus', caption: 'Guru Surau Bateh', span: 2 },
     { src: majelisJamaah, alt: 'Majelis jamaah', ratio: '16 / 9', meta: 'Kajian Rutin', caption: 'Majelis ba’da Isya bersama jamaah', span: 2 },
+    { src: flyerDaurah, alt: 'Daurah Aswaja, Kamis 13 Agustus 2026', ratio: '3 / 4', meta: 'Daurah Aswaja', caption: 'Daurah Aswaja' },
+    { src: karakterSalik, alt: '8 Karakter Salik Surah Bateh', ratio: '3 / 4', meta: 'karakter-salik', caption: '8 Karakter Salik Surah Bateh' },
     { src: gotongRoyongHalaman, alt: 'Gotong royong halaman surau', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Membersihkan lereng halaman.' },
     { src: latihanSilat, alt: 'Latihan silat di surau', ratio: '3 / 4', position: 'center 35%', meta: 'Remaja', caption: 'Latihan silat tradisi, malam pekanan.' },
     { src: interiorRuangSalat, alt: 'Ruang shalat surau', ratio: '3 / 4', meta: 'Ruang Utama', caption: 'Karpet ruang shalat selepas Dzuhur.'},
