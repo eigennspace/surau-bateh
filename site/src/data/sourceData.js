@@ -315,37 +315,37 @@ export const SB_DATA = {
       title: 'Al Arif Billah Asy Syaikh Ahmad Al Karim Al Khalidi – Mungka',
       order: 39
     },
-    {
-      title: 'Al Arif Billah Imam Agus Al Khalidi, Syaikh Abdul Ghani Al Kampari',
-      order: 40
-    },
+    // {
+    //   title: 'Al Arif Billah Imam Agus Al Khalidi, Syaikh Abdul Ghani Al Kampari',
+    //   order: 40
+    // },
     {
       title: 'Syaikh Mudo Muhammad Banoq Al Khalidi – Taeh Baruah',
+      order: 40
+    },
+    // {
+    //   title: 'Syaikh Muhammad Muda Wali Al Khalidi',
+    //   order: 42
+    // },
+    {
+      title: 'Syaikh Mudo Muhammad Nasir bin Abdullah Al Khalidi – Taeh Baruah',
       order: 41
     },
+    // {
+    //   title: 'Abu Samah Al Khalidi – Solok',
+    //   order: 44
+    // },
     {
-      title: 'Syaikh Muhammad Muda Wali Al Khalidi',
+      title: 'Al Arif Billah Malin Mudo Etriyel MYH bin Muhammad Nasir Al Khalidi – Taeh Baruah',
       order: 42
     },
     {
-      title: 'Syaikh Mudo Muhammad Nasir bin Abdullah Al Khalidi – Taeh Baruah',
+      title: 'Malin Sati Bestari Jaka Budiman bin Dhiyauddin Al Khalidi – Padang Panjang',
       order: 43
     },
     {
-      title: 'Abu Samah Al Khalidi – Solok',
-      order: 44
-    },
-    {
-      title: 'Al Arif Billah Malin Mudo Etriyel MYH bin Muhammad Nasir Al Khalidi – Taeh Baruah',
-      order: 45
-    },
-    {
-      title: 'Malin Sati Bestari Jaka Budiman bin Dhiyauddin Al Khalidi – Padang Panjang',
-      order: 46
-    },
-    {
       title: "Angku Mudo 'Alim Jummardianata Aicha bin Chaidir Al Khalidi – Solok",
-      order: 47
+      order: 44
     }
   ],
   contact: {
