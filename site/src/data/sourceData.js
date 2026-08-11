@@ -7,6 +7,7 @@
 // Tidak ada panel admin, tidak ada database — berkas ini SATU-SATUNYA sumber
 // konten yang bisa berubah (jadwal salat, agenda, program, donasi, dll).
 
+import { LOCATION } from './location.js';
 import qrisImage from '../design-system/assets/qris-surau-lori.jpg';
 import interiorRuangSalat from '../design-system/assets/photos/interior-ruang-salat.png';
 import majelisJamaah from '../design-system/assets/photos/majelis-jamaah.jpg';
@@ -16,14 +17,17 @@ import pengurusSurau from '../design-system/assets/photos/pengurus-surau.jpg';
 import gotongRoyongJamaah from '../design-system/assets/photos/gotong-royong-jamaah.jpg';
 
 export const SB_DATA = {
-  times: [
-    { name: 'Subuh', adzan: '04:58', iqamah: '05:10' },
-    { name: 'Syuruq', adzan: '06:14' },
-    { name: 'Dzuhur', adzan: '12:16', iqamah: '12:30' },
-    { name: 'Ashar', adzan: '15:38', iqamah: '15:50' },
-    { name: 'Maghrib', adzan: '18:24', iqamah: '18:32' },
-    { name: 'Isya', adzan: '19:36', iqamah: '19:45' },
-  ],
+  // Koordinat Surau Bateh Lori, Kota Padang -- dipakai `computePrayerTimes`
+  // (lewat `npm run build` → `generate-prayer-times.mjs`) untuk menghitung
+  // jam adzan metode Kemenag. Ubah nilai di `location.js` bila koordinat
+  // perlu direvisi (dipecah dari berkas ini supaya bisa diimpor build-time
+  // tanpa menarik dependency aset/React -- lihat komentar di `location.js`).
+  location: LOCATION,
+  // Offset iqamah per shalat (menit setelah adzan) -- kebijakan lokal
+  // pengurus surau, Kemenag tidak mendefinisikan iqamah. Syuruq sengaja
+  // tidak punya offset (bukan waktu shalat, tidak ada iqamah). Nilai awal
+  // diturunkan dari selisih adzan/iqamah pada tabel hand-typed sebelumnya.
+  iqamahOffsets: { Subuh: 12, Dzuhur: 14, Ashar: 12, Maghrib: 8, Isya: 9 },
   events: [
     { day: 'Sel', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
     { day: 'Kam', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },

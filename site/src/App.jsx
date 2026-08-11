@@ -2,6 +2,10 @@ import React from 'react';
 import { NavBar, Footer, BottomBar, Icon, Button, useBreakpoint } from './ds.js';
 import { SB_DATA } from './data/sourceData.js';
 import { deriveSiteData } from './lib/deriveSiteData.js';
+// Dataset jadwal shalat hasil generate build-time (lihat
+// `scripts/generate-prayer-times.mjs`) -- di-gitignore, dibangkitkan tiap
+// `npm run build`/`npm run dev`, bukan dikomit ke git.
+import prayerTimesDataset from './generated/prayerTimes.json';
 import logoMark from './design-system/assets/logo-mark.png';
 
 import HomePage from './pages/HomePage.jsx';
@@ -61,7 +65,7 @@ export default function App() {
   const mobile = useBreakpoint();
   // `now` dihitung ulang setiap render — cukup murah untuk situs statis ini
   // dan memastikan status shalat aktif/berikutnya selalu mengikuti jam nyata.
-  const site = deriveSiteData(SB_DATA, new Date());
+  const site = deriveSiteData(SB_DATA, new Date(), prayerTimesDataset);
   const bundleHasMobileNav = !!BottomBar;
 
   return (

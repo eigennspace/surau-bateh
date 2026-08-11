@@ -1,7 +1,15 @@
 import React from 'react';
 import { Badge, Card, Icon, PrayerTimeTable, SectionHeading, Switch, Tabs, useBreakpoint } from '../ds.js';
 
-const WEEK = ['Sen 10', 'Sel 11', 'Rab 12', 'Kam 13', 'Jum 14', 'Sab 15', 'Ahd 16'];
+const SHORT_DAY_NAMES = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+
+// Label hari untuk tabel "Pekan ini", dihitung dari tanggal asli (`YYYY-MM-DD`
+// hasil `deriveSiteData`) -- bukan teks hardcode.
+function dayLabel(dateKey) {
+  const [y, m, d] = dateKey.split('-').map(Number);
+  const date = new Date(y, m - 1, d);
+  return `${SHORT_DAY_NAMES[date.getDay()]} ${date.getDate()}`;
+}
 
 export default function SchedulePage({ site }) {
   const mobile = useBreakpoint();
@@ -14,12 +22,15 @@ export default function SchedulePage({ site }) {
           <SectionHeading overline="Waktu Shalat" title="Jadwal shalat Kota Padang" description="Dihitung untuk koordinat Lori Lubuk Minturun, disesuaikan dengan pengumuman iqamah pengurus surau." />
           <Tabs items={['Hari ini', 'Pekan ini']} value={range} onChange={setRange} />
         </div>
+        <p style={{ margin: 'var(--space-3) 0 0', fontSize: 'var(--fs-body-sm)', color: 'var(--text-muted)' }}>
+          Dihitung otomatis mengikuti metode Kementerian Agama RI (sudut fajar −20°, isya −18°, mazhab Syafi'i untuk Ashar, dengan ihtiyat).
+        </p>
         <div style={{ display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1fr .72fr', gap: mobile ? 'var(--space-5)' : 'var(--space-8)', marginTop: 'var(--space-8)', alignItems: 'start' }}>
           {range === 'Hari ini' ? (
             <PrayerTimeTable times={site.times} activeName={site.activePrayerName} nextName={site.nextPrayerName} />
           ) : (
-            // Tabel "Pekan ini" tetap perkiraan berbasis offset dari jadwal hari ini —
-            // bukan cakupan pekerjaan ini untuk diganti data 7 hari yang sungguhan.
+            // Tabel "Pekan ini": 7 hari nyata ke depan dengan jam yang benar-benar
+            // dihitung per tanggal (site.week), bukan lagi trik interpolasi offset.
             <Card style={{ padding: 0, overflow: mobile ? 'auto' : 'hidden' }}>
               <table style={{ borderCollapse: 'collapse', width: '100%', fontFamily: 'var(--font-sans)', fontSize: 'var(--fs-body-sm)' }}>
                 <thead>
@@ -30,12 +41,12 @@ export default function SchedulePage({ site }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {WEEK.map((day, i) => (
-                    <tr key={day} style={{ background: i === 0 ? 'var(--status-next-soft)' : 'transparent', borderTop: '1px solid var(--border-default)' }}>
-                      <td style={{ padding: '12px 14px', fontWeight: 'var(--fw-semibold)', color: 'var(--text-strong)' }}>{day}</td>
-                      {site.times.map(t => (
+                  {site.week.map((day, i) => (
+                    <tr key={day.date} style={{ background: i === 0 ? 'var(--status-next-soft)' : 'transparent', borderTop: '1px solid var(--border-default)' }}>
+                      <td style={{ padding: '12px 14px', fontWeight: 'var(--fw-semibold)', color: 'var(--text-strong)' }}>{dayLabel(day.date)}</td>
+                      {day.times.map(t => (
                         <td key={t.name} style={{ padding: '12px 14px', fontVariantNumeric: 'tabular-nums', color: 'var(--text-body)' }}>
-                          {t.adzan.replace(/^(\d+):(\d+)$/, (m, h, mm) => String(Number(h)).padStart(2, '0') + ':' + String((Number(mm) + i) % 60).padStart(2, '0'))}
+                          {t.adzan}
                         </td>
                       ))}
                     </tr>

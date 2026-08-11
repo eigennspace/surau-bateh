@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Dataset jadwal shalat hasil generate build-time (lihat
+# scripts/generate-prayer-times.mjs) -- data turunan, bukan sumber
+# kebenaran, dibangkitkan ulang tiap `npm run build`.
+src/generated/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
