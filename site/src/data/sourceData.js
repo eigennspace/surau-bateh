@@ -375,10 +375,10 @@ export const SB_DATA = {
     { src: majelisJamaah, alt: 'Majelis jamaah', ratio: '16 / 9', meta: 'Kajian Rutin', caption: 'Majelis ba’da Isya bersama jamaah', span: 2 },
     { src: flyerDaurah, alt: 'Daurah Aswaja, Kamis 13 Agustus 2026', ratio: '3 / 4', meta: 'Daurah Aswaja', caption: 'Daurah Aswaja' },
     { src: karakterSalik, alt: '8 Karakter Salik Surah Bateh', ratio: '3 / 4', meta: 'karakter-salik', caption: '8 Karakter Salik Surah Bateh' },
+    { src: backgroundDaurah, alt: 'Flyer Daurah', ratio: '16/9', meta: 'Flyer Daurah', caption: 'Daurah Aswaja by Surau Bateh Lori', span: 2},
     { src: gotongRoyongHalaman, alt: 'Gotong royong halaman surau', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Membersihkan lereng halaman.' },
     { src: latihanSilat, alt: 'Latihan silat di surau', ratio: '3 / 4', position: 'center 35%', meta: 'Remaja', caption: 'Latihan silat tradisi, malam pekanan.' },
     { src: interiorRuangSalat, alt: 'Ruang shalat surau', ratio: '3 / 4', meta: 'Ruang Utama', caption: 'Karpet ruang shalat selepas Dzuhur.'},
     { src: gotongRoyongJamaah, alt: 'Jamaah bekerja di halaman', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Jamaah membersihkan halaman atas.' },
-    { src: backgroundDaurah, alt: 'Flyer Daurah', ratio: '16/9', meta: 'Flyer Daurah', caption: 'Daurah Aswaja by Surau Bateh Lori', span: 2},
   ],
 };
