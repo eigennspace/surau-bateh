@@ -14,7 +14,9 @@ export function Card({ children, tone = 'default', padding = 'var(--gutter-card)
       style={{ borderRadius: 'var(--radius-lg)', padding, fontFamily: 'var(--font-sans)', color: 'var(--text-body)',
         boxShadow: interactive && hover ? 'var(--shadow-md)' : 'var(--shadow-sm)',
         transform: interactive && hover ? 'translateY(-2px)' : 'none',
-        transition: 'var(--transition-control)', ...TONE[tone], ...style }}>
+        transition: 'var(--transition-control)', overflow: 'auto', ...TONE[tone], ...style,
+        overflow: 'auto',
+        maxHeight: '500px', }}>
       {children}
     </div>
   );
