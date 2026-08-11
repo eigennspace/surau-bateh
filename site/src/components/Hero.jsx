@@ -23,7 +23,7 @@ export default function Hero({ site, onNavigate }) {
             Surau Bateh Lori
           </h1>
           <p style={{ margin: 0, font: 'var(--text-body-default)', fontSize: 'var(--fs-body-lg)', color: 'rgba(253,251,246,.86)', maxWidth: 460, textWrap: 'pretty' }}>
-            Shalat lima waktu, kajian & tawajjuh pekanan, dan latihan silat tradisi bagi jamaah.
+            Ber-<b>IHSAN</b> Bersama Surau Bateh Lori Kota Padang.
           </p>
           <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', width: mobile ? '100%' : 'auto' }}>
             <Button tone="primary" size="lg" icon="hand-coins" fullWidth={mobile} onClick={() => onNavigate('Infak')}>Salurkan Infak</Button>
