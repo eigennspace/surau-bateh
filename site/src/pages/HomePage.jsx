@@ -5,16 +5,27 @@ import GallerySection from '../components/GallerySection.jsx';
 import VerseSection from '../components/VerseSection.jsx';
 import AgendaSection from '../components/AgendaSection.jsx';
 import StatsSection from '../components/StatsSection.jsx';
+import Reveal from '../components/Reveal.jsx';
 
 export default function HomePage({ site, onNavigate }) {
   return (
     <>
       <Hero site={site} onNavigate={onNavigate} />
-      <ProgramsSection site={site} />
-      <GallerySection site={site} />
-      <VerseSection />
-      <AgendaSection site={site} onNavigate={onNavigate} />
-      <StatsSection site={site} />
+      <Reveal>
+        <ProgramsSection site={site} />
+      </Reveal>
+      <Reveal>
+        <GallerySection site={site} />
+      </Reveal>
+      <Reveal>
+        <VerseSection />
+      </Reveal>
+      <Reveal>
+        <AgendaSection site={site} onNavigate={onNavigate} />
+      </Reveal>
+      <Reveal>
+        <StatsSection site={site} />
+      </Reveal>
     </>
   );
 }
