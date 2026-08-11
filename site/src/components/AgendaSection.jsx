@@ -3,7 +3,7 @@ import { Badge, Card, EventItem, SectionHeading, Tag, Button, useBreakpoint } fr
 import DonationCard from './DonationCard.jsx';
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
-const CATEGORIES = ['Semua', 'Kajian & Tawajjuh', 'Gotong Royong', 'Silat'];
+const CATEGORIES = ['Semua', 'Kajian', 'Tawajjuh','Kajian & Tawajjuh', 'Silat', 'Gotong Royong' ];
 
 export default function AgendaSection({ site, compact, onNavigate }) {
   const mobile = useBreakpoint();

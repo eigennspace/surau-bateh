@@ -14,13 +14,14 @@ export function NavBar({ logoSrc = '../../assets/logo-mark.png', brand = 'Surau 
       padding: mobile ? '12px var(--space-5)' : '14px var(--space-8)', flexWrap: 'wrap',
       background: 'rgba(253,251,246,.88)', backdropFilter: 'var(--blur-glass)', borderBottom: '1px solid var(--border-hairline)',
       fontFamily: 'var(--font-sans)', ...style }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <a href="#" onClick={e => { e.preventDefault(); go('Beranda'); }} aria-label="Ke beranda"
+        style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', cursor: 'pointer' }}>
         <img src={logoSrc} alt="" style={{ height: mobile ? 32 : 38, width: 'auto' }} />
         <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
           <span style={{ fontWeight: 'var(--fw-extrabold)', fontSize: 'var(--fs-body)', color: 'var(--maroon-700)', letterSpacing: '-0.01em' }}>{brand}</span>
           <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{tagline}</span>
         </div>
-      </div>
+      </a>
       {mobile ? (
         <button type="button" aria-label={open ? 'Tutup menu' : 'Buka menu'} aria-expanded={open} onClick={() => setOpen(o => !o)}
           style={{ marginLeft: 'auto', width: 44, height: 44, display: 'grid', placeItems: 'center', cursor: 'pointer',
