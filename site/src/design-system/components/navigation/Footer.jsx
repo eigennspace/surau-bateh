@@ -19,7 +19,7 @@ export function Footer({ logoSrc = '../../assets/logo-mark.png', address = 'Lori
         {columns.map(col => (
           <div key={col.title} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--gold-500)' }}>{col.title}</span>
-            {col.links.map(l => <a key={l} href="#" style={{ color: 'var(--slate-300)', textDecoration: 'none', fontSize: 'var(--fs-body-sm)' }}>{l}</a>)}
+            {col.links.map(l => <a key={l} style={{ color: 'var(--slate-300)', textDecoration: 'none', fontSize: 'var(--fs-body-sm)' }}>{l}</a>)}
           </div>
         ))}
       </div>
