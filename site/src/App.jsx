@@ -16,6 +16,37 @@ import ProfilePage from './pages/ProfilePage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 
 const NAV = ['Beranda', 'Profil', 'Jadwal Shalat', 'Kajian', 'Infak', 'Kontak'];
+
+// Peta halaman <-> slug URL (path bersih, tanpa `#`) supaya navigasi antar
+// "halaman" tercermin di address bar -- tanpa ini, refresh selalu balik ke
+// Beranda karena state halaman cuma hidup di memori React. Path dibangun di
+// atas `base` Vite (`/surau-bateh`); di GitHub Pages, `public/404.html` +
+// skrip pemulihan di `index.html` menangani refresh/deep-link langsung ke
+// path ini (lihat catatan di kedua file itu).
+const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
+const PAGE_SLUGS = {
+  Beranda: '',
+  Profil: 'profil',
+  'Jadwal Shalat': 'jadwal-shalat',
+  Kajian: 'kajian',
+  Infak: 'infak',
+  Kontak: 'kontak',
+};
+const SLUG_PAGES = Object.fromEntries(
+  Object.entries(PAGE_SLUGS).filter(([, slug]) => slug).map(([page, slug]) => [slug, page])
+);
+
+function pathForPage(page) {
+  const slug = PAGE_SLUGS[page] ?? '';
+  return slug ? `${BASE_PATH}/${slug}` : `${BASE_PATH}/`;
+}
+
+function pageFromPath() {
+  const path = window.location.pathname;
+  const rel = path.startsWith(BASE_PATH) ? path.slice(BASE_PATH.length) : path;
+  const slug = rel.replace(/^\/+|\/+$/g, '');
+  return SLUG_PAGES[slug] || 'Beranda';
+}
 const BB_ITEMS = [
   { label: 'Beranda', icon: 'house' },
   { label: 'Jadwal Shalat', icon: 'clock', short: 'Jadwal' },
@@ -61,23 +92,41 @@ function MobileHeader({ active, onNavigate, onAction }) {
 }
 
 export default function App() {
-  const [page, setPage] = React.useState('Beranda');
+  const [page, setPage] = React.useState(() => pageFromPath());
   const mobile = useBreakpoint();
   // `now` dihitung ulang setiap render — cukup murah untuk situs statis ini
   // dan memastikan status shalat aktif/berikutnya selalu mengikuti jam nyata.
   const site = deriveSiteData(SB_DATA, new Date(), prayerTimesDataset);
   const bundleHasMobileNav = !!BottomBar;
 
+  // Navigasi lewat sini supaya URL (path bersih) selalu sinkron dengan
+  // halaman yang tampil -- ini yang bikin refresh/back/forward/bookmark
+  // tetap di halaman yang benar, bukan balik ke Beranda.
+  const navigate = React.useCallback(next => {
+    const path = pathForPage(next);
+    if (window.location.pathname !== path) {
+      window.history.pushState(null, '', path);
+    }
+    setPage(next);
+  }, []);
+
+  // Sinkronkan state dengan path saat back/forward browser.
+  React.useEffect(() => {
+    const onPopState = () => setPage(pageFromPath());
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
   return (
     <div style={{ paddingBottom: mobile ? 64 : 0 }}>
       {(mobile && !bundleHasMobileNav)
-        ? <MobileHeader active={page} onNavigate={setPage} onAction={() => setPage('Infak')} />
-        : <NavBar logoSrc={logoMark} active={page} onNavigate={setPage} onAction={() => setPage('Infak')}
+        ? <MobileHeader active={page} onNavigate={navigate} onAction={() => navigate('Infak')} />
+        : <NavBar logoSrc={logoMark} active={page} onNavigate={navigate} onAction={() => navigate('Infak')}
             items={NAV} style={{ position: 'sticky', top: 0, zIndex: 30 }} />}
 
-      {page === 'Beranda' ? <HomePage site={site} onNavigate={setPage} /> : null}
+      {page === 'Beranda' ? <HomePage site={site} onNavigate={navigate} /> : null}
       {page === 'Jadwal Shalat' ? <SchedulePage site={site} /> : null}
-      {page === 'Kajian' ? <AgendaPage site={site} onNavigate={setPage} /> : null}
+      {page === 'Kajian' ? <AgendaPage site={site} onNavigate={navigate} /> : null}
       {page === 'Infak' ? <DonatePage site={site} /> : null}
       {page === 'Profil' ? <ProfilePage site={site} /> : null}
       {page === 'Kontak' ? <ContactPage site={site} /> : null}
@@ -89,7 +138,7 @@ export default function App() {
         { title: 'Surau', links: ['Profil', 'Pengurus', 'Laporan Kas', 'Kontak'] },
         { title: 'Jamaah', links: ['Daftar Kajian', 'Infak & Sedekah', 'Pengumuman'] },
       ]} />
-      <BottomBar items={BB_ITEMS} active={page} onNavigate={setPage} />
+      <BottomBar items={BB_ITEMS} active={page} onNavigate={navigate} />
     </div>
   );
 }
