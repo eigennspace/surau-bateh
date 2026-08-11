@@ -61,7 +61,6 @@ export default function SchedulePage({ site }) {
                 <Icon name="volume-2" size={18} style={{ color: 'var(--teal-800)' }} />
                 <span style={{ font: 'var(--text-label)', color: 'var(--teal-800)' }}>Waktu shalat berikutnya: {site.nextPrayerName}</span>
               </div>
-              <p style={{ margin: '10px 0 0', fontSize: 'var(--fs-body-sm)', color: 'var(--text-muted)' }}>Layar TV surau menampilkan hitung mundur yang sama.</p>
             </Card>
             <Card>
               <span style={{ font: 'var(--text-label)', color: 'var(--text-strong)' }}>Pengaturan pengingat</span>
