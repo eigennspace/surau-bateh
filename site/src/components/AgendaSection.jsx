@@ -3,7 +3,15 @@ import { Badge, Card, EventItem, SectionHeading, Tag, useBreakpoint } from '../d
 import ContactCard from './ContactCard.jsx';
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
-const CATEGORIES = ['Semua', 'Kajian', 'Tawajjuh','Kajian & Tawajjuh', 'Silat', 'Gotong Royong' ];
+const WEEKDAY_ORDER = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+const ALL_DAY = 'Semua Hari';
+
+function deriveDays(events) {
+  const present = [...new Set(events.map(e => e.day).filter(Boolean))];
+  const known = WEEKDAY_ORDER.filter(d => present.includes(d));
+  const unknown = present.filter(d => !WEEKDAY_ORDER.includes(d));
+  return [ALL_DAY, ...known, ...unknown];
+}
 
 function NewsItem({ n }) {
   const [hover, setHover] = React.useState(false);
@@ -51,8 +59,13 @@ function NewsItem({ n }) {
 
 export default function AgendaSection({ site, compact, onNavigate }) {
   const mobile = useBreakpoint();
-  const [filter, setFilter] = React.useState('Semua');
-  const list = site.events.filter(e => filter === 'Semua' || e.category === filter);
+  const [dayFilter, setDayFilter] = React.useState(ALL_DAY);
+  const days = React.useMemo(() => deriveDays(site.events), [site.events]);
+  const list = site.events.filter(e => dayFilter === ALL_DAY || e.day === dayFilter);
+
+  const emptyMessage = dayFilter === ALL_DAY
+    ? 'Belum ada agenda.'
+    : `Belum ada agenda di hari ${dayFilter}.`;
 
   return (
     <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
@@ -60,11 +73,11 @@ export default function AgendaSection({ site, compact, onNavigate }) {
         <div>
           <SectionHeading overline="Agenda" title="Kajian dan kegiatan pekan ini" />
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: 'var(--space-6) 0' }}>
-            {CATEGORIES.map(c => <Tag key={c} selected={filter === c} onClick={() => setFilter(c)}>{c}</Tag>)}
+            {days.map(d => <Tag key={d} selected={dayFilter === d} onClick={() => setDayFilter(d)}>{d}</Tag>)}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {list.map(e => <EventItem key={`${e.day}-${e.title}`} {...e} onClick={() => {}} />)}
-            {list.length === 0 ? <p style={{ color: 'var(--text-muted)', font: 'var(--text-body-default)' }}>Belum ada agenda pada kategori ini.</p> : null}
+            {list.length === 0 ? <p style={{ color: 'var(--text-muted)', font: 'var(--text-body-default)' }}>{emptyMessage}</p> : null}
           </div>
         </div>
         {compact ? null : (
