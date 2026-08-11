@@ -31,7 +31,7 @@ export const SB_DATA = {
   events: [
     { day: 'Sel', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
     { day: 'Kam', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
-    { day: 'Jum', month: 'Pekan', title: 'Latihan Silat Tradisi', speaker: 'Pelatih sasaran surau', time: "Ba'da Isya", place: 'Ruang bawah', category: 'Silat' },
+    { day: 'Sab', month: 'Pekan', title: 'Latihan Silat Tradisi', speaker: 'Pelatih sasaran surau', time: "Ba'da Isya", place: 'Ruang bawah', category: 'Silat' },
     { day: 'Sab', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
     { day: 'Min', month: 'Pekan', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
   ],
