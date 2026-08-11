@@ -20,9 +20,10 @@ const NAV = ['Beranda', 'Profil', 'Jadwal Shalat', 'Kajian', 'Infak', 'Kontak'];
 // Peta halaman <-> slug URL (path bersih, tanpa `#`) supaya navigasi antar
 // "halaman" tercermin di address bar -- tanpa ini, refresh selalu balik ke
 // Beranda karena state halaman cuma hidup di memori React. Path dibangun di
-// atas `base` Vite (`/surau-bateh`); di GitHub Pages, `public/404.html` +
-// skrip pemulihan di `index.html` menangani refresh/deep-link langsung ke
-// path ini (lihat catatan di kedua file itu).
+// atas `base` Vite (`/`) -- situs disajikan di root domain kustom
+// (suraubateh.web.id), bukan subpath GitHub Pages bawaan. Di GitHub Pages,
+// `public/404.html` + skrip pemulihan di `index.html` menangani
+// refresh/deep-link langsung ke path ini (lihat catatan di kedua file itu).
 const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
 const PAGE_SLUGS = {
   Beranda: '',
