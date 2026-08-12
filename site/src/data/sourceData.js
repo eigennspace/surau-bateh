@@ -382,7 +382,7 @@ export const SB_DATA = {
     { src: flyerDaurah, alt: 'Daurah Aswaja, Kamis 13 Agustus 2026', ratio: '3 / 4', meta: 'Daurah Aswaja', caption: 'Daurah Aswaja' },
     { src: karakterSalik, alt: '8 Karakter Salik Surah Bateh', ratio: '3 / 4', meta: 'karakter-salik', caption: '8 Karakter Salik Surah Bateh' },
     { src: backgroundDaurah, alt: 'Flyer Daurah', ratio: '16/9', meta: 'Flyer Daurah', caption: 'Daurah Aswaja by Surau Bateh Lori', span: 2},
-    { src: daurahPertama, alt: 'Daurah Pertama', ratio: '16 / 9', meta: 'Daurah', caption: 'Daurah Perdana, di Mushalla Al-Ikhlas Talau Mundam. Masyarakat sangat antusias dengan tema kajian yaitu, menyempurnakan Rukun Agama terkhusus pada kajian Ihsan.', span: 2 },
+    { src: daurahPertama, alt: 'Daurah Pertama', ratio: '16 / 9', meta: 'Daurah', caption: 'Daurah Perdana, di Mushalla Al-Ikhlas Talao Mundam. Masyarakat sangat antusias dengan tema kajian yaitu, menyempurnakan Rukun Agama terkhusus pada kajian Ihsan.', span: 2 },
     { src: undanganUinPadang, alt: 'Undangan UIN IB', ratio: '16 / 9', meta: 'Undangan', caption: 'Surau Bateh di Undang oleh Prodi Tasawuf dan Psikoterapi UIN IB Padang dalam rangka evaluasi kurikulum', span: 2 },
     { src: gotongRoyongHalaman, alt: 'Gotong royong halaman surau', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Membersihkan lereng halaman.' },
     { src: latihanSilat, alt: 'Latihan silat di surau', ratio: '3 / 4', position: 'center 35%', meta: 'Remaja', caption: 'Latihan silat tradisi, malam pekanan.' },
