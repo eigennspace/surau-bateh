@@ -4,7 +4,7 @@
 
 **Blocked by:** 03 (butuh scaffold fetch + webhook sudah terbukti jalan).
 
-**Status:** ready-for-human (satu sub-langkah pembuktian akhir menunggu webhook manual di tiket 03)
+**Status:** done
 
 - [x] Schema `article` didefinisikan di Sanity Studio (`studio/schemaTypes/article.ts`): `title`, `slug` (tipe slug Sanity, auto-generate dari title, bisa diedit manual), `author`, `date`, `excerpt`, `cover` (image, asset Sanity dengan hotspot), `body` (Portable Text — block + image, mendukung bold/italic/link lewat mark bawaan Sanity + gambar inline).
 - [x] Skrip migrasi satu-kali dibuat dan dijalankan (`scripts/migrate-articles-to-sanity.mjs` + konverter murni `src/lib/markdownToPortableText.js`, ditest di `markdownToPortableText.test.js`): membaca 3 artikel Markdown existing (`site/src/data/articles/*.md` — bukan `site/public/articles/*.md` seperti disebut spec, folder itu cuma berisi gambar), konversi body Markdown → Portable Text, upload sebagai dokumen `article` ke dataset `production`. Dijalankan `--dry-run` dulu (3 artikel terverifikasi), lalu `--write` — 3 dokumen `article` (termasuk asset cover + 1 gambar inline) berhasil ditulis.
@@ -12,4 +12,4 @@
 - [x] Rendering artikel (`ArticleDetailPage`) memakai `@portabletext/react` untuk merender `body` (komponen `image` kustom baca `imageUrl` hasil resolve build-time), menggantikan `dangerouslySetInnerHTML` dari `marked.parse`.
 - [x] Fixture test (`articlesTestFixtures.js`) dan test terkait (`ArticleDetailPage.test.jsx`, `deriveArticles.test.js`) diperbarui memakai bentuk data Portable Text — `ArtikelPage.test.jsx`/`.smallset.test.jsx`/`.empty.test.jsx` tidak perlu berubah (sudah mock `../data/articles.js` di level `ARTICLES`, tidak menyentuh bentuk `body`). `npm test` (57 test) lulus penuh.
 - [x] Diverifikasi lewat dev server + browser (bukan produksi, webhook belum terkonfigurasi — lihat tiket 03): ketiga artikel hasil migrasi tampil di `/artikel` dan `/artikel/<slug>`, cover + gambar inline termuat dari `cdn.sanity.io`, judul/penulis/tanggal/isi sesuai data Sanity.
-- [ ] **Menunggu tiket 03**: bukti end-to-end penuh (edit artikel di Studio → publish → webhook → rebuild otomatis → judul baru tampil di situs produksi) belum bisa dicentang sampai maintainer menyelesaikan konfigurasi webhook manual (lihat tiket 03). Setelah itu, verifikasi cukup: ubah judul satu artikel di https://surau-bateh.sanity.studio/ → Publish → cek GitHub Actions run baru → cek situs live.
+- [x] Dibuktikan end-to-end penuh di produksi (lihat tiket 03): webhook Sanity → `repository_dispatch` → rebuild otomatis terkonfirmasi jalan (GitHub Actions run `31566936516`, build+deploy sukses, log build mengonfirmasi 3 artikel ditarik segar dari dataset produksi saat rebuild).

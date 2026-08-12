@@ -12,9 +12,10 @@ a:hover {
   color: var(--text-link-hover);
 }
 
-/* Badan artikel (`ArticleDetailPage`, dirender dari `bodyHtml` Markdown) --
-   gambar yang disisipkan penulis di badan tulisan dibatasi terhadap lebar
-   kontainer supaya tidak meluber/distorsi, paragraf diberi jarak wajar. */
+/* Badan artikel (`ArticleDetailPage`, dirender dari Portable Text lewat
+   `@portabletext/react` -- lihat ADR 0006) -- gambar yang disisipkan
+   penulis di badan tulisan dibatasi terhadap lebar kontainer supaya tidak
+   meluber/distorsi, paragraf diberi jarak wajar. */
 .article-body img {
   max-width: 100%;
   height: auto;

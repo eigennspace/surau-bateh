@@ -9,19 +9,6 @@
 
 import { LOCATION } from './location.js';
 import qrisImage from '../design-system/assets/qris-surau-lori.jpg';
-import interiorRuangSalat from '../design-system/assets/photos/interior-ruang-salat.png';
-import majelisJamaah from '../design-system/assets/photos/majelis-jamaah.jpg';
-import gotongRoyongHalaman from '../design-system/assets/photos/gotong-royong-halaman.jpg';
-import latihanSilat from '../design-system/assets/photos/latihan-silat.jpg';
-import pengurusSurau from '../design-system/assets/photos/pengurus-surau.jpg';
-import gotongRoyongJamaah from '../design-system/assets/photos/gotong-royong-jamaah.jpg';
-import flyerDaurah from '../design-system/assets/flyer/daurah-aswaja-13-agus.jpeg';
-import karakterSalik from '../design-system/assets/flyer/karakter-salik.jpeg';
-import backgroundDaurah from '../design-system/assets/background-daurah.jpeg';
-import flyerSilaturahmiIlmiah from '../design-system/assets/photos/flyer-silaturahmi-ilmiah.jpeg';
-import silaturahmiIlmiah from '../design-system/assets/photos/silaturahmi-ilmiah.jpeg';
-import undanganUinPadang from '../design-system/assets/photos/undangan-uin-ib-padang.jpeg';
-import daurahPertama from '../design-system/assets/photos/daurah-pertama.jpeg';
 
 export const SB_DATA = {
   // Koordinat Surau Bateh Lori, Kota Padang -- dipakai `computePrayerTimes`
@@ -391,19 +378,9 @@ export const SB_DATA = {
     { icon: 'mic', value: '>10', label: 'Kajian per bulan' },
     { icon: 'calendar-days', value: 'Tiap pekan', label: 'Gotong royong halaman' },
   ],
-  gallery: [
-    { src: pengurusSurau, alt: 'Pengurus surau', ratio: '16 / 9', position: 'center 40%', meta: 'Pengurus', caption: 'Guru Surau Bateh', span: 2 },
-    { src: majelisJamaah, alt: 'Majelis jamaah', ratio: '16 / 9', meta: 'Kajian Rutin', caption: 'Majelis ba’da Isya bersama jamaah', span: 2 },
-    { src: flyerSilaturahmiIlmiah, alt: 'Flyer Silaturahmi Ilmiah', ratio: '16 / 9', position: 'center 40%', meta: 'flyer-silaturahmi-ilmiah-uin-imam-bonjol-padang', caption: 'Flyer silaturahmi ilmiah UIN imam bonjol padang', span: 2 },
-    { src: silaturahmiIlmiah, alt: 'Dokumentasi Silaturahmi Ilmiah', ratio: '16 / 9', position: 'center 40%', meta: 'dokumentasi-silaturahmi-ilmiah-uin-imam-bonjol-padang', caption: 'Dokumentasi silaturahmi ilmiah UIN imam bonjol padang', span: 2 },
-    { src: flyerDaurah, alt: 'Daurah Aswaja, Kamis 13 Agustus 2026', ratio: '3 / 4', meta: 'Daurah Aswaja', caption: 'Daurah Aswaja' },
-    { src: karakterSalik, alt: '8 Karakter Salik Surah Bateh', ratio: '3 / 4', meta: 'karakter-salik', caption: '8 Karakter Salik Surah Bateh' },
-    { src: backgroundDaurah, alt: 'Flyer Daurah', ratio: '16/9', meta: 'Flyer Daurah', caption: 'Daurah Aswaja by Surau Bateh Lori', span: 2},
-    { src: daurahPertama, alt: 'Daurah Pertama', ratio: '16 / 9', meta: 'Daurah', caption: 'Daurah Perdana, di Mushalla Al-Ikhlas Talao Mundam. Masyarakat sangat antusias dengan tema kajian yaitu, menyempurnakan Rukun Agama terkhusus pada kajian Ihsan.', span: 2 },
-    { src: undanganUinPadang, alt: 'Undangan UIN IB', ratio: '16 / 9', meta: 'Undangan', caption: 'Surau Bateh di Undang oleh Prodi Tasawuf dan Psikoterapi UIN IB Padang dalam rangka evaluasi kurikulum', span: 2 },
-    { src: gotongRoyongHalaman, alt: 'Gotong royong halaman surau', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Membersihkan lereng halaman.' },
-    { src: latihanSilat, alt: 'Latihan silat di surau', ratio: '3 / 4', position: 'center 35%', meta: 'Remaja', caption: 'Latihan silat tradisi, malam pekanan.' },
-    { src: interiorRuangSalat, alt: 'Ruang shalat surau', ratio: '3 / 4', meta: 'Ruang Utama', caption: 'Karpet ruang shalat selepas Dzuhur.'},
-    { src: gotongRoyongJamaah, alt: 'Jamaah bekerja di halaman', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Jamaah membersihkan halaman atas.' },
-  ],
+  // `gallery` DIHAPUS dari sini sejak ADR 0006 (cutover tiket 06) -- galeri
+  // foto sekarang sepenuhnya berasal dari Sanity (dokumen `galleryItem`),
+  // ditarik build-time oleh `scripts/fetch-sanity-content.mjs` dan
+  // digabung ke `rawData` di `App.jsx` sebelum dipanggil ke
+  // `deriveSiteData`. Lihat `docs/adr/0006-galeri-artikel-pindah-ke-sanity.md`.
 };

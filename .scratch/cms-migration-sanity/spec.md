@@ -1,6 +1,6 @@
 # Migrasi Konten ke CMS (Sanity) — Fase 1: Galeri & Artikel
 
-Status: ready-for-human
+Status: done — semua tiket (01-06) selesai, dibuktikan end-to-end di produksi (lihat tiket 03).
 
 ## Problem Statement
 
