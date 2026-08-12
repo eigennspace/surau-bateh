@@ -1,15 +1,15 @@
 ---
-title: Gotong Royong Renovasi Atap Surau
-author: Panitia Renovasi
+title: Gotong Royong Rutin Surau Bateh
+author: Admin
 date: 2026-07-15
-excerpt: Jamaah bergotong royong membongkar dan mengganti sebagian rangka atap surau yang sudah lapuk dimakan usia.
-cover: /articles/gotong-royong-atap.jpg
+excerpt: Jamaah bergotong royong di area surau bateh lori.
+cover: /articles/gotong-royong.jpg
 ---
 
-Minggu pagi kemarin, puluhan jamaah Surau Bateh Lori berkumpul untuk bergotong royong mengganti sebagian rangka atap yang sudah lapuk. Kegiatan ini merupakan tahap awal dari rencana renovasi atap yang lebih besar, yang saat ini masih menggalang dana lewat kampanye infak "Renovasi Atap Surau".
+Jamaah Surau Bateh Lori berkumpul untuk bergotong royong di area surau bateh lori. Kegiatan ini merupakan kegiatan rutin yang dilaksanakan setiap minggu oleh pengurus dan jamaah.
 
 Selain tenaga, sebagian jamaah juga menyumbangkan material dan konsumsi untuk para pekerja. Semangat kebersamaan ini menjadi bukti bahwa surau bukan hanya tempat ibadah, tetapi juga perekat sosial warga sekitar.
 
-![Jamaah bergotong royong mengangkat rangka atap](/articles/gotong-royong-atap.jpg)
+![Jamaah bergotong royong bersama](/articles/gotong-royong.jpg)
 
-Pengurus berharap renovasi tahap berikutnya dapat segera dimulai begitu dana yang terkumpul mencukupi. Informasi lebih lanjut mengenai kampanye ini dapat dilihat di halaman Infak.
+Pengurus berharap gotong royong tahap berikutnya dapat rutin dan semakin ramai dilakukan. Informasi lebih lanjut mengenai gotong roying ini dapat menghubungi Admin.
