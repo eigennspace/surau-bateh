@@ -28,7 +28,7 @@ export default function ProgramSection({ overline, title, narrative, events, per
         </div>
         <aside>
           <Card tone="dark">
-            <ContactCard person={person} tone="dark" heading={`Berminat ikut ${title}?`} message={whatsappMessage} />
+            <ContactCard person={person} tone="dark" heading={`Mari booking ${title} nya`} message={whatsappMessage} />
           </Card>
         </aside>
       </div>

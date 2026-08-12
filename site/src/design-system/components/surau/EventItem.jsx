@@ -47,7 +47,7 @@ export function EventItem({ day, month, title, speaker, time, place, category, i
         <div style={{ width: 62, height: 66, flex: '0 0 auto', display: 'grid', placeItems: 'center', gap: 0,
           background: 'var(--surface-brand-soft)', border: '1px solid var(--maroon-100)', borderRadius: 'var(--radius-md)' }}>
           <span style={{ font: 'var(--text-h3)', color: 'var(--maroon-700)', lineHeight: 1 }}>{day}</span>
-          <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--maroon-600)' }}>{month}</span>
+          <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--maroon-600)', textAlign: 'center' }}>{month}</span>
         </div>
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
           {(category || isToday) ? (

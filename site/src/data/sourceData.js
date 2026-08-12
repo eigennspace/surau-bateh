@@ -38,7 +38,7 @@ export const SB_DATA = {
   events: [
     { day: 'Sel', month: 'Malam', title: 'Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh' },
     { day: 'Kam', month: 'Malam', title: 'Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh' },
-    { day: 'Kam', month: '13/08/26', title: 'Daurah Aswaja', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: ' Musholla Al Mukmin Berok', category: 'Dauroh' },
+    { day: 'Kam', month: 'Tiap Bulan', title: 'Daurah Aswaja', speaker: 'Tuan Guru Surau Bateh', time: "13 Agustus 2026 — Ba'da Maghrib", place: ' Musholla Al Mukmin Berok', category: 'Dauroh' },
     { day: 'Sab', month: 'Malam', title: 'Latihan Silat Tradisi', speaker: 'Pelatih sasaran surau', time: "Ba'da Isya", place: 'Lapangan', category: 'Silat' },
     { day: 'Sab', month: 'Malam', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
     { day: 'Min', month: 'Pagi', title: '(Khusus Salik Baru) Pengenalan Tiga Rukun Agama', speaker: 'Tuan Guru Surau Bateh', time: "09:00 WIB", place: 'Ruang utama', category: 'Kajian' },
@@ -377,7 +377,7 @@ export const SB_DATA = {
   },
   dauroh: {
     title: 'Dauroh',
-    narrative: 'Dauroh adalah kegiatan kajian intensif yang diselenggarakan Surau Bateh Lori untuk memperdalam ilmu agama -- mencakup akidah Ahlussunnah wal Jamaah, fikih, dan tasawuf -- dalam durasi yang lebih panjang dibanding kajian rutin pekanan. Dauroh terbuka untuk umum dan biasanya menghadirkan pemateri dari luar surau. Informasi jadwal dan pendaftaran dapat ditanyakan langsung kepada kontak person di bawah.',
+    narrative: 'Dauroh adalah pelatihan Ahlussunnah wal-Jama\'ah (ASWAJA), berbeda dengan kajian  pada umumnya, dalam pelatihan ini ditargetkan peserta mendapatkan kompetensi yang utuh dan paham dengan rukun Agama yang tiga yaitu, Iman Islam dan Ihsan, sehingga lengkaplah di dalam diri para peserta pemahaman terhadap rukun Agama tersebut. \n \nDalam daurah ini Peserta tidak hanya mendapatkan ilmu secara teori, akan tetapi dibimbing agar bisa mencapai kedudukan Ihsan yang disampaikan oleh Nabi dalam Hadisnya; Merasakan Allah dalam setiap Ibadah. Surau bateh siap hadir untuk mengisi Dauroh di berbagai Mesjid, Musholla, Lembaga atau Komunitas di Seluruh Kota Padang. **Daurah ini full gratis**, untuk info lebih lanjut silahkan hubungi kontak person di bawah ini:',
   },
   // Nilai awal `bank` berasal dari `New Surau Bateh Lori Design System/assets/informasi-rekening.md`.
   donation: {
