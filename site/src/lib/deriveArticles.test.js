@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { deriveArticles, slugFromFilename, formatArticleDate, parseFrontmatter } from './deriveArticles.js';
+import { deriveArticles, formatArticleDate } from './deriveArticles.js';
 
 // Fixture: bentuk artikel yang sudah difetch+diresolve dari Sanity build-time
 // (lihat `scripts/fetch-sanity-content.mjs`) -- `body` adalah array blok
@@ -36,11 +36,6 @@ describe('deriveArticles', () => {
     expect(a.cover).toBeUndefined();
   });
 
-  it('slug diturunkan dari nama file, termasuk file dengan prefix tanggal', () => {
-    expect(slugFromFilename('./articles/2026-08-12-santunan-yatim.md')).toBe('santunan-yatim');
-    expect(slugFromFilename('./articles/tanpa-prefix-tanggal.md')).toBe('tanpa-prefix-tanggal');
-  });
-
   it('urutan hasil terbaru dulu berdasarkan tanggal', () => {
     const result = deriveArticles([
       article({ slug: 'lama', title: 'Lama', author: 'A', date: '2026-07-15', excerpt: 'x' }),
@@ -63,22 +58,6 @@ describe('deriveArticles', () => {
   it('array kosong kalau tidak ada artikel sama sekali', () => {
     expect(deriveArticles([])).toEqual([]);
     expect(deriveArticles()).toEqual([]);
-  });
-});
-
-describe('parseFrontmatter', () => {
-  it('memisahkan blok frontmatter dari badan, termasuk value bertanda kutip', () => {
-    const raw = ['---', 'title: "Judul: Dua Titik"', "author: 'Penulis'", '---', 'Badan tulisan.'].join('\n');
-    const { data, content } = parseFrontmatter(raw);
-    expect(data.title).toBe('Judul: Dua Titik');
-    expect(data.author).toBe('Penulis');
-    expect(content).toBe('Badan tulisan.');
-  });
-
-  it('tanpa blok frontmatter: content dikembalikan apa adanya, data kosong', () => {
-    const { data, content } = parseFrontmatter('Cuma badan, tanpa frontmatter.');
-    expect(data).toEqual({});
-    expect(content).toBe('Cuma badan, tanpa frontmatter.');
   });
 });
 
