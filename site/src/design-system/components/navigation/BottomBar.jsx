@@ -37,7 +37,7 @@ export function BottomBar({ items = DEFAULTS, active = 'Beranda', onNavigate, st
       return;
     }
     setOpenPopover(null);
-    onNavigate && onNavigate(it.label);
+    onNavigate && onNavigate(it.page || it.label);
   };
 
   return (
@@ -48,7 +48,7 @@ export function BottomBar({ items = DEFAULTS, active = 'Beranda', onNavigate, st
       fontFamily: 'var(--font-sans)', ...style }}>
       {items.map(it => {
         const hasChildren = Array.isArray(it.children);
-        const on = hasChildren ? it.children.includes(active) : it.label === active;
+        const on = hasChildren ? it.children.includes(active) : (it.page || it.label) === active;
         const popoverOpen = openPopover === it.label;
         return (
           <div key={it.label} style={{ position: 'relative' }}>

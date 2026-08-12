@@ -52,8 +52,6 @@ export function NavBar({ logoSrc = '../../assets/logo-mark.png', brand = 'Surau 
               {it}<Icon name="chevron-right" size={16} style={{ color: 'var(--text-faint)' }} />
             </a>
           ))}
-          <Button tone="primary" size="lg" fullWidth icon="hand-coins" style={{ marginTop: 'var(--space-3)' }}
-            onClick={() => { setOpen(false); onAction && onAction(); }}>{action}</Button>
         </nav>
       ) : null}
     </header>

@@ -85,8 +85,8 @@ function routeFromPath() {
 }
 const BB_ITEMS = [
   { label: 'Beranda', icon: 'house' },
-  { label: 'Jadwal Shalat', icon: 'clock', short: 'Jadwal' },
-  { label: 'Kegiatan', icon: 'calendar-days', children: KEGIATAN_CHILDREN },
+  { label: 'Kegiatan', icon: 'calendar-days', page: 'Kajian' },
+  { label: 'Sosial', icon: 'heart-handshake', children: ['Khitanan', 'Dauroh'] },
   { label: 'Infak', icon: 'hand-coins' },
   { label: 'Kontak', icon: 'phone' },
 ];

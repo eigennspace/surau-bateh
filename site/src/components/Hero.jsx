@@ -16,8 +16,10 @@ export default function Hero({ site, onNavigate }) {
       padding: mobile ? '48px var(--space-5) var(--space-12)' : '96px var(--space-8) var(--gutter-section)', overflow: 'hidden',
       backgroundImage: `linear-gradient(100deg,rgba(34,38,44,.86) 0%,rgba(34,38,44,.68) 42%,rgba(34,38,44,.44) 72%,rgba(34,38,44,.52) 100%), url(${fotoSurau})`,
       backgroundSize: 'cover', backgroundPosition: 'center 58%' }}>
-      <div style={{ width: '100%', maxWidth: 'var(--container-max)', margin: '0 auto', display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1.05fr .95fr', gap: mobile ? 'var(--space-8)' : 'var(--space-16)', alignItems: 'center', position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)', alignItems: 'flex-start' }}>
+      {/* Kolom kanan (PrayerTimeTable) sudah disembunyikan → grid dibuat 1 kolom
+          supaya konten kiri tidak lagi berbagi ruang dengan track kosong. */}
+      <div style={{ width: '100%', maxWidth: 'var(--container-max)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)', alignItems: 'flex-start' }}>
           <Badge tone="brand" icon="map-pin" style={{ background: 'rgba(253,251,246,.92)', color: 'var(--maroon-700)' }}>Lori Lubuk Minturun, Kota Padang</Badge>
           <h1 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--fw-extrabold)', lineHeight: 'var(--lh-tight)', fontSize: mobile ? 'var(--fs-h1)' : 'var(--fs-display-1)', letterSpacing: 'var(--ls-display)', color: 'var(--sand-100)', textWrap: 'balance', textShadow: '0 2px 20px rgba(34,38,44,.35)' }}>
             Surau Bateh Lori
@@ -36,10 +38,10 @@ export default function Hero({ site, onNavigate }) {
             <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="users" size={15} />Gotong royong tiap pekan</span>
           </div>
         </div>
-        <div style={{ position: 'relative' }}>
+        {/* <div style={{ position: 'relative' }}>
           <PrayerTimeTable variant="glass" style={{ position: 'relative', zIndex: 1 }}
             date={site.dateLabel} times={site.times} activeName={site.activePrayerName} nextName={site.nextPrayerName} />
-        </div>
+        </div> */}
       </div>
     </section>
   );

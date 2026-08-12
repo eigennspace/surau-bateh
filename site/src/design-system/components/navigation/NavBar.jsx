@@ -120,8 +120,6 @@ export function NavBar({ logoSrc = '../../assets/logo-mark.png', brand = 'Surau 
               </a>
             );
           })}
-          <Button tone="primary" size="lg" fullWidth icon="hand-coins" style={{ marginTop: 'var(--space-3)' }}
-            onClick={() => { setOpen(false); onAction && onAction(); }}>{action}</Button>
         </nav>
       ) : null}
     </header>
