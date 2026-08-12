@@ -12,10 +12,17 @@ dist
 dist-ssr
 *.local
 
-# Dataset jadwal shalat hasil generate build-time (lihat
-# scripts/generate-prayer-times.mjs) -- data turunan, bukan sumber
-# kebenaran, dibangkitkan ulang tiap `npm run build`.
+# Dataset jadwal shalat (scripts/generate-prayer-times.mjs) dan konten
+# Sanity (scripts/fetch-sanity-content.mjs) hasil generate/fetch build-time
+# -- data turunan, bukan sumber kebenaran, dibangkitkan ulang tiap
+# `npm run build`.
 src/generated/
+
+# Env var build-time fetch Sanity (lihat .env.example) -- token rahasia,
+# tidak pernah dikomit.
+.env
+.env.*
+!.env.example
 
 # Editor directories and files
 .vscode/*

@@ -1,25 +1,27 @@
 import { describe, it, expect } from 'vitest';
 import { deriveArticles, slugFromFilename, formatArticleDate, parseFrontmatter } from './deriveArticles.js';
 
-// Fixture: peta nama-file (path glob) -> raw markdown string, meniru bentuk
-// hasil `import.meta.glob('./articles/*.md', { query: '?raw', eager: true,
-// import: 'default' })` -- tidak menyentuh filesystem sungguhan.
-function article({ title, author, date, excerpt, cover, body }) {
-  const front = ['---', `title: ${title}`, `author: ${author}`, `date: ${date}`, `excerpt: ${excerpt}`];
-  if (cover) front.push(`cover: ${cover}`);
-  front.push('---', body ?? '');
-  return front.join('\n');
+// Fixture: bentuk artikel yang sudah difetch+diresolve dari Sanity build-time
+// (lihat `scripts/fetch-sanity-content.mjs`) -- `body` adalah array blok
+// Portable Text, bukan Markdown mentah. `deriveArticles` sendiri tidak
+// fetch/parse apa pun, hanya mengurutkan (lihat `deriveArticles.js`).
+function article({ title, author, date, excerpt, cover, slug, body }) {
+  return {
+    slug: slug ?? 'artikel',
+    title,
+    author,
+    date,
+    excerpt,
+    cover,
+    body: body ?? [{ _type: 'block', _key: 'b1', style: 'normal', markDefs: [], children: [{ _type: 'span', _key: 's1', text: 'Isi.', marks: [] }] }],
+  };
 }
 
 describe('deriveArticles', () => {
-  it('mem-parsing frontmatter lengkap (title/author/date/excerpt/cover)', () => {
-    const files = {
-      './articles/2026-08-01-santunan-yatim.md': article({
-        title: 'Santunan Yatim', author: 'Pengurus', date: '2026-08-01',
-        excerpt: 'Ringkasan santunan.', cover: '/articles/cover.jpg', body: 'Isi artikel.',
-      }),
-    };
-    const [a] = deriveArticles(files);
+  it('mempertahankan field artikel apa adanya (title/author/date/excerpt/cover/body)', () => {
+    const [a] = deriveArticles([
+      article({ slug: 'santunan-yatim', title: 'Santunan Yatim', author: 'Pengurus', date: '2026-08-01', excerpt: 'Ringkasan santunan.', cover: '/articles/cover.jpg' }),
+    ]);
     expect(a.title).toBe('Santunan Yatim');
     expect(a.author).toBe('Pengurus');
     expect(a.date).toBe('2026-08-01');
@@ -27,14 +29,10 @@ describe('deriveArticles', () => {
     expect(a.cover).toBe('/articles/cover.jpg');
   });
 
-  it('artikel tanpa cover: field cover tidak ada/undefined, artikel lain tetap terparsing', () => {
-    const files = {
-      './articles/2026-08-01-tanpa-cover.md': article({
-        title: 'Tanpa Cover', author: 'Penulis', date: '2026-08-01',
-        excerpt: 'Ringkasan.', body: 'Isi.',
-      }),
-    };
-    const [a] = deriveArticles(files);
+  it('artikel tanpa cover: field cover tidak ada/undefined', () => {
+    const [a] = deriveArticles([
+      article({ slug: 'tanpa-cover', title: 'Tanpa Cover', author: 'Penulis', date: '2026-08-01', excerpt: 'Ringkasan.' }),
+    ]);
     expect(a.cover).toBeUndefined();
   });
 
@@ -44,30 +42,27 @@ describe('deriveArticles', () => {
   });
 
   it('urutan hasil terbaru dulu berdasarkan tanggal', () => {
-    const files = {
-      './articles/2026-07-15-lama.md': article({ title: 'Lama', author: 'A', date: '2026-07-15', excerpt: 'x', body: 'y' }),
-      './articles/2026-08-10-terbaru.md': article({ title: 'Terbaru', author: 'A', date: '2026-08-10', excerpt: 'x', body: 'y' }),
-      './articles/2026-08-01-tengah.md': article({ title: 'Tengah', author: 'A', date: '2026-08-01', excerpt: 'x', body: 'y' }),
-    };
-    const result = deriveArticles(files);
+    const result = deriveArticles([
+      article({ slug: 'lama', title: 'Lama', author: 'A', date: '2026-07-15', excerpt: 'x' }),
+      article({ slug: 'terbaru', title: 'Terbaru', author: 'A', date: '2026-08-10', excerpt: 'x' }),
+      article({ slug: 'tengah', title: 'Tengah', author: 'A', date: '2026-08-01', excerpt: 'x' }),
+    ]);
     expect(result.map(a => a.slug)).toEqual(['terbaru', 'tengah', 'lama']);
   });
 
-  it('badan Markdown (termasuk gambar) diubah jadi bodyHtml', () => {
-    const files = {
-      './articles/2026-08-01-dengan-gambar.md': article({
-        title: 'Dengan Gambar', author: 'A', date: '2026-08-01', excerpt: 'x',
-        body: 'Paragraf pembuka.\n\n![Alt teks](/articles/foto.jpg)\n\nParagraf penutup.',
-      }),
-    };
-    const [a] = deriveArticles(files);
-    expect(a.bodyHtml).toContain('<p>Paragraf pembuka.</p>');
-    expect(a.bodyHtml).toContain('<img src="/articles/foto.jpg" alt="Alt teks">');
-    expect(a.bodyHtml).toContain('<p>Paragraf penutup.</p>');
+  it('body (blok Portable Text, termasuk gambar) diteruskan apa adanya', () => {
+    const body = [
+      { _type: 'block', _key: 'b1', style: 'normal', markDefs: [], children: [{ _type: 'span', _key: 's1', text: 'Paragraf pembuka.', marks: [] }] },
+      { _type: 'image', _key: 'img1', alt: 'Alt teks', imageUrl: '/articles/foto.jpg' },
+      { _type: 'block', _key: 'b2', style: 'normal', markDefs: [], children: [{ _type: 'span', _key: 's2', text: 'Paragraf penutup.', marks: [] }] },
+    ];
+    const [a] = deriveArticles([article({ slug: 'dengan-gambar', title: 'Dengan Gambar', author: 'A', date: '2026-08-01', excerpt: 'x', body })]);
+    expect(a.body).toEqual(body);
   });
 
-  it('array kosong kalau tidak ada file sama sekali', () => {
-    expect(deriveArticles({})).toEqual([]);
+  it('array kosong kalau tidak ada artikel sama sekali', () => {
+    expect(deriveArticles([])).toEqual([]);
+    expect(deriveArticles()).toEqual([]);
   });
 });
 

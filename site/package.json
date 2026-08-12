@@ -4,16 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "node scripts/generate-prayer-times.mjs",
+    "predev": "node scripts/generate-prayer-times.mjs && node scripts/fetch-sanity-content.mjs",
     "dev": "vite",
-    "build": "node scripts/generate-prayer-times.mjs && vite build",
+    "build": "node scripts/generate-prayer-times.mjs && node scripts/fetch-sanity-content.mjs && vite build",
     "generate-prayer-times": "node scripts/generate-prayer-times.mjs",
+    "fetch-sanity-content": "node scripts/fetch-sanity-content.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",
     "sync-ds": "node scripts/sync-design-system.mjs"
   },
   "dependencies": {
+    "@portabletext/react": "^7.0.1",
+    "@sanity/client": "^7.26.2",
+    "@sanity/image-url": "^2.1.1",
     "marked": "^18.0.9",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

@@ -7,6 +7,13 @@ on:
       - "site/**"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
+  # Dipicu webhook Sanity saat dokumen `article`/`galleryItem` di-publish di
+  # Studio (lihat ADR 0006, .scratch/cms-migration-sanity/issues/03-scaffold-build-time-fetch-webhook.md)
+  # -- webhook memanggil GitHub API `POST /repos/{owner}/{repo}/dispatches`
+  # dengan `event_type: sanity-publish`. Menjalankan job yang sama persis
+  # (test -> build -> deploy), tidak ada jalur pintas yang melewati test.
+  repository_dispatch:
+    types: [sanity-publish]
 
 permissions:
   contents: read
@@ -35,6 +42,10 @@ jobs:
         run: npm test
       - name: Build
         working-directory: site
+        env:
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          SANITY_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
         run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

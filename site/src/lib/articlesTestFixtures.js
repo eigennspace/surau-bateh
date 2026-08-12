@@ -13,6 +13,6 @@ export function makeArticleFixtures(count, { startDay = 20 } = {}) {
     date: `2026-08-${String(startDay - i).padStart(2, '0')}`,
     excerpt: 'Ringkasan.',
     cover: undefined,
-    bodyHtml: '<p>Isi</p>',
+    body: [{ _type: 'block', _key: `b${i}`, style: 'normal', markDefs: [], children: [{ _type: 'span', _key: `s${i}`, text: 'Isi.', marks: [] }] }],
   }));
 }
