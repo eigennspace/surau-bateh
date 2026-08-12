@@ -4,7 +4,7 @@
 // `vite build`/`vite dev` -- lihat `predev`/`build` di `package.json`).
 // Hasil fetch ditulis ke `src/generated/sanityContent.json` (di-gitignore,
 // data turunan, bukan sumber kebenaran -- mengikuti pola
-// `generated/prayerTimes.json`), diimpor statis di sini persis seperti
+// `generated/sanityContent.json`), diimpor statis di sini persis seperti
 // `App.jsx` mengimpor dataset jadwal shalat.
 //
 // `deriveArticles` sendiri tetap murni (lihat `../lib/deriveArticles.js`);

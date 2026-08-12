@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '../core/Button.jsx';
 import { Icon } from '../core/Icon.jsx';
 import { useBreakpoint } from '../core/useBreakpoint.js';
 
@@ -11,7 +10,7 @@ const isParent = it => typeof it === 'object' && it !== null && Array.isArray(it
 const labelOf = it => (typeof it === 'string' ? it : it.label);
 
 export function NavBar({ logoSrc = '../../assets/logo-mark.png', brand = 'Surau Bateh Lori', tagline = 'Kota Padang',
-  items = ['Beranda', 'Profil', 'Jadwal Shalat', 'Kajian', 'Berita', 'Kontak'], active = 'Beranda', onNavigate, action = 'Salurkan Infak', onAction, style }) {
+  items = ['Beranda', 'Profil', 'Jadwal Kegiatan', 'Berita', 'Kontak'], active = 'Beranda', onNavigate, style }) {
   const mobile = useBreakpoint();
   const [open, setOpen] = React.useState(false);
   const [openDropdown, setOpenDropdown] = React.useState(null);
@@ -33,6 +32,8 @@ export function NavBar({ logoSrc = '../../assets/logo-mark.png', brand = 'Surau 
         </div>
       </a>
       {mobile ? (
+        // Mobile hanya menampilkan hamburger; seluruh entri (termasuk Infak)
+        // ada di dalam burger menu.
         <button type="button" aria-label={open ? 'Tutup menu' : 'Buka menu'} aria-expanded={open} onClick={() => setOpen(o => !o)}
           style={{ marginLeft: 'auto', width: 44, height: 44, display: 'grid', placeItems: 'center', cursor: 'pointer',
             background: 'var(--white)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-pill)',
@@ -40,45 +41,42 @@ export function NavBar({ logoSrc = '../../assets/logo-mark.png', brand = 'Surau 
           <Icon name={open ? 'x' : 'menu'} size={20} />
         </button>
       ) : (
-        <>
-          <nav style={{ display: 'flex', gap: 'var(--space-6)', marginLeft: 'auto' }}>
-            {items.map(it => {
-              if (isParent(it)) {
-                const activeParent = it.children.includes(active);
-                return (
-                  <div key={it.label} style={{ position: 'relative' }}
-                    onMouseEnter={() => setOpenDropdown(it.label)}
-                    onMouseLeave={() => setOpenDropdown(null)}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: 4, cursor: 'default',
-                      font: 'var(--text-label)', color: activeParent ? 'var(--maroon-700)' : 'var(--text-body)',
-                      paddingBottom: 2, borderBottom: '2px solid ' + (activeParent ? 'var(--gold-500)' : 'transparent'), transition: 'var(--transition-control)' }}>
-                      {it.label}<Icon name="chevron-down" size={14} />
-                    </span>
-                    {openDropdown === it.label ? (
-                      <div style={{ position: 'absolute', top: '100%', left: 0, paddingTop: 8, zIndex: 40, minWidth: 180 }}>
-                        <div style={{ background: 'var(--white)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
-                          boxShadow: 'var(--shadow-md)', overflow: 'hidden' }}>
-                          {it.children.map(child => (
-                            <a key={child} href="#" onClick={e => { e.preventDefault(); go(child); }}
-                              style={{ display: 'block', padding: '10px 14px', textDecoration: 'none', font: 'var(--text-label)',
-                                color: child === active ? 'var(--maroon-700)' : 'var(--text-body)',
-                                background: child === active ? 'var(--surface-brand-soft)' : 'transparent' }}>{child}</a>
-                          ))}
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                );
-              }
+        <nav style={{ display: 'flex', gap: 'var(--space-6)', marginLeft: 'auto' }}>
+          {items.map(it => {
+            if (isParent(it)) {
+              const activeParent = it.children.includes(active);
               return (
-                <a key={it} href="#" onClick={e => { e.preventDefault(); go(it); }}
-                  style={{ textDecoration: 'none', font: 'var(--text-label)', color: it === active ? 'var(--maroon-700)' : 'var(--text-body)',
-                    paddingBottom: 2, borderBottom: '2px solid ' + (it === active ? 'var(--gold-500)' : 'transparent'), transition: 'var(--transition-control)' }}>{it}</a>
+                <div key={it.label} style={{ position: 'relative' }}
+                  onMouseEnter={() => setOpenDropdown(it.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 4, cursor: 'default',
+                    font: 'var(--text-label)', color: activeParent ? 'var(--maroon-700)' : 'var(--text-body)',
+                    paddingBottom: 2, borderBottom: '2px solid ' + (activeParent ? 'var(--gold-500)' : 'transparent'), transition: 'var(--transition-control)' }}>
+                    {it.label}<Icon name="chevron-down" size={14} />
+                  </span>
+                  {openDropdown === it.label ? (
+                    <div style={{ position: 'absolute', top: '100%', left: 0, paddingTop: 8, zIndex: 40, minWidth: 180 }}>
+                      <div style={{ background: 'var(--white)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
+                        boxShadow: 'var(--shadow-md)', overflow: 'hidden' }}>
+                        {it.children.map(child => (
+                          <a key={child} href="#" onClick={e => { e.preventDefault(); go(child); }}
+                            style={{ display: 'block', padding: '10px 14px', textDecoration: 'none', font: 'var(--text-label)',
+                              color: child === active ? 'var(--maroon-700)' : 'var(--text-body)',
+                              background: child === active ? 'var(--surface-brand-soft)' : 'transparent' }}>{child}</a>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               );
-            })}
-          </nav>
-          <Button tone="primary" size="sm" icon="hand-coins" onClick={onAction}>{action}</Button>
-        </>
+            }
+            return (
+              <a key={it} href="#" onClick={e => { e.preventDefault(); go(it); }}
+                style={{ textDecoration: 'none', font: 'var(--text-label)', color: it === active ? 'var(--maroon-700)' : 'var(--text-body)',
+                  paddingBottom: 2, borderBottom: '2px solid ' + (it === active ? 'var(--gold-500)' : 'transparent'), transition: 'var(--transition-control)' }}>{it}</a>
+            );
+          })}
+        </nav>
       )}
       {mobile && open ? (
         <nav style={{ flexBasis: '100%', display: 'flex', flexDirection: 'column', gap: 2, paddingTop: 'var(--space-4)' }}>

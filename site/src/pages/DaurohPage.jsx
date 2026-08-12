@@ -10,12 +10,13 @@ export default function DaurohPage({ site }) {
   const events = site.events.filter(e => DAUROH_CATEGORIES.includes(e.category));
   return (
     <ProgramSection
-      overline="Kegiatan & Aksi Sosial"
+      overline="Dakwah"
       title={site.dauroh?.title || 'Dauroh'}
       narrative={site.dauroh?.narrative}
       events={events}
       person={site.contact?.dauroh}
       whatsappMessage="Assalamu'alaikum, saya ingin bertanya soal program Dauroh di Surau Bateh Lori"
+      gallery={site.dauroh?.gallery}
     />
   );
 }

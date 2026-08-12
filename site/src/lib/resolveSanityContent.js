@@ -3,8 +3,7 @@
 // bentuk siap-tulis ke `src/generated/sanityContent.json`, dipakai
 // `scripts/fetch-sanity-content.mjs`. Diekstrak dari skrip itu supaya
 // mengikuti pola "skrip I/O tipis di atas modul murni yang sudah diuji
-// terpisah" yang sudah dipakai `generate-prayer-times.mjs`/
-// `prayerTimeCalculator.js` dan `markdownToPortableText.js` di repo ini --
+// terpisah" yang sudah dipakai `markdownToPortableText.js` di repo ini --
 // fungsi di sini tidak melakukan HTTP call/upload apa pun sendiri,
 // `urlFor` (builder URL asset) diserahkan sebagai parameter oleh
 // pemanggil (lapisan I/O yang sudah dikonfigurasi dengan project/dataset).

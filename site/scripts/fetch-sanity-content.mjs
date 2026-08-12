@@ -2,7 +2,7 @@
 // fetch-sanity-content — skrip build-time yang menarik artikel (`article`)
 // dan galeri (`galleryItem`) dari dataset Sanity dan menuliskannya sebagai
 // JSON siap-pakai untuk `src/data/articles.js`/`App.jsx`. Mengikuti pola
-// `generate-prayer-times.mjs`: skrip I/O tipis di atas modul transformasi
+// skrip I/O tipis di atas modul transformasi
 // murni yang sudah diuji terpisah (`src/lib/resolveSanityContent.js`,
 // lihat `resolveSanityContent.test.js`), dijalankan sebelum `vite
 // build`/`vite dev` (lihat `predev`/`build` di `package.json`), hasilnya

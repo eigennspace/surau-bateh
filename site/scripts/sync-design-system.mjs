@@ -25,7 +25,7 @@ const dsRoot = path.join(repoRoot, 'New Surau Bateh Lori Design System');
 const target = path.join(siteRoot, 'src', 'design-system');
 
 // Komponen yang diekspor `src/ds.js`, plus dependensi internalnya
-// (mis. PrayerTimeRow dipakai PrayerTimeTable tapi tidak diekspor sendiri).
+// (mis. sebuah komponen dipakai komponen lain tapi tidak diekspor sendiri).
 const COMPONENT_FILES = [
   'core/Badge.jsx',
   'core/Button.jsx',
@@ -49,8 +49,6 @@ const COMPONENT_FILES = [
   'surau/ArabicVerse.jsx',
   'surau/EventItem.jsx',
   'surau/PhotoTile.jsx',
-  'surau/PrayerTimeRow.jsx',
-  'surau/PrayerTimeTable.jsx',
   'surau/StatBlock.jsx',
   'surau/Timeline.jsx',
 ];

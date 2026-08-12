@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Button, Icon, PrayerTimeTable, useBreakpoint } from '../ds.js';
+import { Badge, Button, Icon, useBreakpoint } from '../ds.js';
 import fotoSurau from '../design-system/assets/foto-surau.jpg';
 
 export default function Hero({ site, onNavigate }) {
@@ -16,8 +16,8 @@ export default function Hero({ site, onNavigate }) {
       padding: mobile ? '48px var(--space-5) var(--space-12)' : '96px var(--space-8) var(--gutter-section)', overflow: 'hidden',
       backgroundImage: `linear-gradient(100deg,rgba(34,38,44,.86) 0%,rgba(34,38,44,.68) 42%,rgba(34,38,44,.44) 72%,rgba(34,38,44,.52) 100%), url(${fotoSurau})`,
       backgroundSize: 'cover', backgroundPosition: 'center 58%' }}>
-      {/* Kolom kanan (PrayerTimeTable) sudah disembunyikan → grid dibuat 1 kolom
-          supaya konten kiri tidak lagi berbagi ruang dengan track kosong. */}
+      {/* Grid satu kolom: kolom kanan dulu berisi kartu jadwal shalat, yang
+          sudah dihapus bersama fiturnya (ADR 0007). */}
       <div style={{ width: '100%', maxWidth: 'var(--container-max)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0,1fr)', alignItems: 'center', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)', alignItems: 'flex-start' }}>
           <Badge tone="brand" icon="map-pin" style={{ background: 'rgba(253,251,246,.92)', color: 'var(--maroon-700)' }}>Lori Lubuk Minturun, Kota Padang</Badge>
@@ -28,7 +28,7 @@ export default function Hero({ site, onNavigate }) {
             Ber-<b>IHSAN</b> Bersama Surau Bateh Lori Kota Padang.
           </p>
           <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', width: mobile ? '100%' : 'auto' }}>
-            <Button tone="accent" size="lg" icon="calendar-days" fullWidth={mobile} onClick={() => onNavigate('Kajian')}>Lihat Agenda</Button>
+            <Button tone="accent" size="lg" icon="calendar-days" fullWidth={mobile} onClick={() => onNavigate('Jadwal Kegiatan')}>Lihat Agenda</Button>
           </div>
           <div style={{ display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap', paddingTop: 'var(--space-4)', color: 'rgba(253,251,246,.72)', fontSize: 'var(--fs-body-sm)' }}>
             {jamaahRutin ? (
@@ -38,10 +38,6 @@ export default function Hero({ site, onNavigate }) {
             <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Icon name="users" size={15} />Gotong royong tiap pekan</span>
           </div>
         </div>
-        {/* <div style={{ position: 'relative' }}>
-          <PrayerTimeTable variant="glass" style={{ position: 'relative', zIndex: 1 }}
-            date={site.dateLabel} times={site.times} activeName={site.activePrayerName} nextName={site.nextPrayerName} />
-        </div> */}
       </div>
     </section>
   );

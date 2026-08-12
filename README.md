@@ -3,7 +3,6 @@
 ![React](https://img.shields.io/badge/React-19.2-149ECA?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-B73BFE?logo=vite&logoColor=white)
 ![Vitest](https://img.shields.io/badge/Vitest-4-6E9F18?logo=vitest&logoColor=white)
-![adhan](https://img.shields.io/badge/adhan.js-4.4-0E5F53)
 ![oxlint](https://img.shields.io/badge/lint-oxlint-EFD81D)
 ![Node](https://img.shields.io/badge/Node-20-339933?logo=node.js&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/deploy-GitHub%20Pages-222?logo=githubpages&logoColor=white)
@@ -26,8 +25,7 @@ berubah dan situs perlu ditarik ke versi terbaru.
 | UI | [React 19](https://react.dev) | Function components + hooks, tanpa router terpisah (navigasi diatur manual di `site/src/App.jsx`). |
 | Build tool | [Vite 8](https://vite.dev) (`@vitejs/plugin-react`) | Dev server + static export (`vite build`) ke `site/dist/`. |
 | Bahasa | JavaScript (JSX), tanpa TypeScript runtime | `@types/react`/`@types/react-dom` dipasang untuk IDE type-checking saja. |
-| Jadwal salat | [adhan.js](https://github.com/batoulapps/adhan-js) | Menghitung jam adzan dari koordinat + metode Kemenag, dibangkitkan saat build lewat `site/scripts/generate-prayer-times.mjs` (lihat ADR [0004](docs/adr/0004-prayer-times-computed-not-hand-typed.md)). |
-| Testing | [Vitest 4](https://vitest.dev) | Unit test untuk logika murni (`deriveSiteData`, kalkulator jadwal salat). |
+| Testing | [Vitest 4](https://vitest.dev) | Unit test untuk logika murni (`deriveSiteData`, model navigasi) dan render SSR halaman. |
 | Linting | [oxlint](https://oxc.rs/docs/guide/usage/linter.html) | Linter Rust-based, cepat, konfigurasi di `site/.oxlintrc.json`. |
 | Styling | CSS murni (design tokens) | Tidak ada framework CSS (Tailwind/CSS-in-JS) — lihat bagian [Design System](#design-system) di bawah. |
 | Hosting/CI | GitHub Actions → GitHub Pages | `.github/workflows/deploy.yml`: `npm ci` → `npm test` → `npm run build` → publish `site/dist`. Domain custom diatur lewat Settings, bukan file `CNAME` (ADR [0005](docs/adr/0005-github-pages-dengan-domain-custom-diatur-lewat-settings.md)). |
@@ -63,7 +61,7 @@ Titik impor tunggal untuk komponen & hook ada di [`site/src/ds.js`](site/src/ds.
 | Feedback | `Dialog`, `PhotoLightbox`, `Toast`, `Tooltip` |
 | Forms | `Checkbox`, `Input`, `RadioGroup`, `Select`, `Switch` |
 | Navigation | `BottomBar`, `Footer`, `NavBar`, `Tabs` |
-| Domain (surau) | `ArabicVerse`, `EventItem`, `PhotoTile`, `PrayerTimeTable`, `StatBlock`, `Timeline` |
+| Domain (surau) | `ArabicVerse`, `EventItem`, `PhotoTile`, `StatBlock`, `Timeline` |
 
 ⚠️ **Jangan edit `site/src/design-system/` dengan tangan** — folder ini adalah
 snapshot hasil sync, perubahan akan tertimpa saat `npm run sync-ds`
@@ -72,7 +70,7 @@ dijalankan lagi. Perubahan desain dilakukan di
 
 ## Mengubah konten situs
 
-Satu-satunya sumber konten yang bisa berubah (jadwal salat, agenda, program,
+Satu-satunya sumber konten yang bisa berubah (agenda, program, galeri program,
 pengumuman, roadmap, donasi, statistik, galeri, kontak) adalah
 **Sumber Data**: [`site/src/data/sourceData.js`](site/src/data/sourceData.js).
 
@@ -90,7 +88,7 @@ pengunjung setelah build + deploy ulang.
 cd site
 npm install
 npm run dev      # server pengembangan
-npm test         # unit test untuk deriveSiteData & kalkulator jadwal salat
+npm test         # unit test untuk deriveSiteData, model navigasi & halaman
 npm run lint     # oxlint
 npm run build    # static export ke dist/
 npm run sync-ds  # tarik ulang komponen/token/aset dari New Surau Bateh Lori Design System/
@@ -100,13 +98,13 @@ npm run sync-ds  # tarik ulang komponen/token/aset dari New Surau Bateh Lori Des
 
 - `site/src/data/sourceData.js` — Sumber Data (`SB_DATA`).
 - `site/src/lib/deriveSiteData.js` — satu-satunya fungsi murni yang
-  menerjemahkan Sumber Data mentah menjadi data siap-render (status salat
-  aktif/berikutnya, Khatib Jumat turunan, bentuk donasi final). Diuji di
+  menerjemahkan Sumber Data mentah menjadi data siap-render (penanda kegiatan
+  hari ini, Khatib Jumat turunan, bentuk donasi final). Diuji di
   `site/src/lib/deriveSiteData.test.js`.
-- `site/src/lib/prayerTimeCalculator.js` — kalkulator jam adzan (adhan.js +
-  metode Kemenag), dipakai `site/scripts/generate-prayer-times.mjs` saat build.
-- `site/src/generated/prayerTimes.json` — dataset jam adzan ter-generate (±1
-  tahun ke depan), di-gitignore, dibangkitkan ulang tiap `dev`/`build`.
+- `site/src/lib/navigation.js` — model navigasi sebagai data murni: grup
+  Kegiatan/Dakwah/Sosial, daftar entri tiap permukaan (navbar, burger, bottom
+  bar), peta halaman↔slug, dan slug lama yang masih dilayani. Diuji di
+  `site/src/lib/navigation.test.js`.
 - `site/src/design-system/` — snapshot komponen, token, dan aset design
   system, disalin lewat `npm run sync-ds`. Jangan diedit tangan — perubahan
   akan tertimpa saat sync berikutnya.

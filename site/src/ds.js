@@ -32,7 +32,6 @@ export { Tabs } from './design-system/components/navigation/Tabs.jsx';
 export { ArabicVerse } from './design-system/components/surau/ArabicVerse.jsx';
 export { EventItem } from './design-system/components/surau/EventItem.jsx';
 export { PhotoTile } from './design-system/components/surau/PhotoTile.jsx';
-export { PrayerTimeTable } from './design-system/components/surau/PrayerTimeTable.jsx';
 export { StatBlock } from './design-system/components/surau/StatBlock.jsx';
 export { Timeline } from './design-system/components/surau/Timeline.jsx';
 
