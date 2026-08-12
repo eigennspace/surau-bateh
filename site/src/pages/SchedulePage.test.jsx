@@ -46,13 +46,17 @@ describe('SchedulePage — tanggal yang ditampilkan mengikuti hari ini, bukan ha
   });
 });
 
-describe('Hero — kartu jadwal shalat di beranda juga mengikuti hari ini', () => {
-  it('menampilkan label tanggal Masehi untuk `now` yang dipakai, walau `now` bukan 10 Agustus', () => {
+describe('Hero — kartu jadwal shalat di beranda', () => {
+  // Kartu PrayerTimeTable di kolom kanan Hero sengaja disembunyikan (lihat
+  // komentar di Hero.jsx) sehingga Hero tidak lagi merender tanggal apa pun.
+  // Guard hardcode-tanggal untuk beranda kini cukup dijamin oleh test
+  // SchedulePage di atas, yang masih menampilkan kartu tersebut.
+  it('tidak merender tanggal hardcode karena kartu jadwal shalat disembunyikan', () => {
     const now = new Date(2026, 7, 11, 10, 0); // 11 Agustus 2026
     const site = deriveSiteData(baseRawData(), now, PRAYER_TIMES_DATASET);
     const html = renderToStaticMarkup(<Hero site={site} onNavigate={() => {}} />);
 
-    expect(html).toContain('11 Agustus 2026');
+    expect(html).not.toContain('11 Agustus 2026');
     expect(html).not.toContain('Senin, 10 Agustus 2026');
   });
 });
