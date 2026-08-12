@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, EventItem, SectionHeading, useBreakpoint } from '../ds.js';
+import { Card, EventItem, PhotoTile, SectionHeading, useBreakpoint } from '../ds.js';
 import ContactCard from './ContactCard.jsx';
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
@@ -10,8 +10,12 @@ const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) 
  * langsung oleh `KhitananPage`/`DaurohPage`, mengikuti pola tampilan
  * `AgendaSection` (dua kolom desktop, ditumpuk di mobile) tapi tanpa
  * filter hari/pengumuman yang khusus dipakai halaman Kajian.
+ *
+ * `gallery` (opsional) — array `{ src, alt, caption }` dokumentasi kegiatan,
+ * ditampilkan sebagai grid foto di bawah jadwal. Tidak dirender kalau kosong,
+ * jadi halaman yang belum punya foto (mis. Dauroh) tidak berubah tampilannya.
  */
-export default function ProgramSection({ overline, title, narrative, events, person, whatsappMessage }) {
+export default function ProgramSection({ overline, title, narrative, events, person, whatsappMessage, gallery }) {
   const mobile = useBreakpoint();
   return (
     <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
@@ -25,6 +29,16 @@ export default function ProgramSection({ overline, title, narrative, events, per
               ? events.map(e => <EventItem key={`${e.day}-${e.title}`} {...e} />)
               : <p style={{ color: 'var(--text-muted)', font: 'var(--text-body-default)' }}>Kegiatan akan segera hadir</p>}
           </div>
+          {gallery && gallery.length > 0 ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+              <span style={{ font: 'var(--text-label)', fontSize: 'var(--fs-body)', color: 'var(--text-strong)' }}>Dokumentasi</span>
+              <div style={{ display: 'grid', gridTemplateColumns: mobile ? 'repeat(2,1fr)' : 'repeat(3,1fr)', gap: 'var(--space-3)' }}>
+                {gallery.map((g, i) => (
+                  <PhotoTile key={g.src || i} src={g.src} alt={g.alt || ''} caption={g.caption} ratio="1 / 1" />
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
         <aside>
           <Card tone="dark">

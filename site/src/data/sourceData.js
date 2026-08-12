@@ -30,7 +30,7 @@ export const SB_DATA = {
     { day: 'Sab', month: 'Malam', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
     { day: 'Min', month: 'Pagi', title: '(Khusus Salik Baru) Pengenalan Tiga Rukun Agama', speaker: 'Tuan Guru Surau Bateh', time: "09:00 WIB", place: 'Ruang utama', category: 'Kajian' },
     { day: 'Min', month: 'Siang', title: 'Kajian & Tawajjuh Jama\'ah Wanita', speaker: 'Tuan Guru Surau Bateh', time: "Siang", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
-    { day: 'Min', month: 'Malam', title: 'Kajian & Tawajjuh PPDS Urologi', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
+    { day: 'Min', month: 'Malam', title: 'Tawajjuh & Penguatan Karakter Ikhlas Mahasiswa/i', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
   ],
   programs: [
     { icon: 'mic', title: 'Kajian dan Tawajjuh', desc: 'Tafsir dan tawajjuh bersama Guru Surau Bateh', meta: 'Selasa, Kamis, Sabtu, Minggu · Ba’da Maghrib' },
@@ -360,7 +360,7 @@ export const SB_DATA = {
   // direview/diedit pengurus surau sebelum publish.
   khitanan: {
     title: 'Khitanan',
-    narrative: 'Program khitanan Surau Bateh Lori adalah kegiatan sosial bagi anak-anak jamaah dan masyarakat sekitar yang membutuhkan bantuan biaya khitan. Kegiatan diselenggarakan bekerja sama dengan tenaga medis berpengalaman, dengan tujuan meringankan beban orang tua sekaligus menanamkan syiar sunnah kepada anak sejak dini. Pendaftaran dan jadwal pelaksanaan diinformasikan langsung oleh kontak person di bawah.',
+    narrative: 'Program khitanan gratis Surau Bateh Lori adalah salah satu kegiatan sosial yang dikhususkan bagi anak-anak yang kurang mampu. Kegiatan ini dilaksanakan pada hari libur semester, yang dilaksanakan/disuvervisi langsung oleh Ahli Urologi yaitu, **Dr.dr. Etriyel MYH, SpU (K)**.  Tujuan dari kegiatan ini adalah meringankan beban orang tua sekaligus menanamkan syi\'ar Agama kepada anak sejak dini. Pendaftaran dan jadwal pelaksanaan diinformasikan langsung oleh kontak person di bawah ini:',
   },
   dauroh: {
     title: 'Dauroh',
