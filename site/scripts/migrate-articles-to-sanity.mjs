@@ -21,26 +21,14 @@ import { fileURLToPath } from 'node:url';
 import { createClient } from '@sanity/client';
 import { parseFrontmatter, slugFromFilename } from '../src/lib/deriveArticles.js';
 import { markdownToPortableText } from '../src/lib/markdownToPortableText.js';
+import { loadDotEnv } from './lib/loadDotEnv.mjs';
+import { requireSanityWriteEnv } from './lib/sanityEnv.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(__dirname, '..');
 const articlesDir = path.join(siteRoot, 'src', 'data', 'articles');
 const publicDir = path.join(siteRoot, 'public');
 
-function loadDotEnv(file) {
-  if (!existsSync(file)) return;
-  for (const line of readFileSync(file, 'utf8').split(/\r?\n/)) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('#')) continue;
-    const eq = trimmed.indexOf('=');
-    if (eq === -1) continue;
-    const key = trimmed.slice(0, eq).trim();
-    let value = trimmed.slice(eq + 1).trim();
-    const quoted = (value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"));
-    if (quoted) value = value.slice(1, -1);
-    if (key && !(key in process.env)) process.env[key] = value;
-  }
-}
 loadDotEnv(path.join(siteRoot, '.env'));
 
 const write = process.argv.includes('--write');
@@ -67,14 +55,7 @@ async function uploadLocalImage(client, publicRelativePath, cache) {
 }
 
 async function main() {
-  const projectId = process.env.SANITY_PROJECT_ID;
-  const dataset = process.env.SANITY_DATASET;
-  const token = process.env.SANITY_API_TOKEN;
-  if (!projectId || !dataset || !token) {
-    console.error('migrate-articles-to-sanity: SANITY_PROJECT_ID/SANITY_DATASET/SANITY_API_TOKEN belum diset (lihat site/.env.example). Token butuh hak tulis (bukan role Viewer).');
-    process.exit(1);
-  }
-
+  const { projectId, dataset, token } = requireSanityWriteEnv('migrate-articles-to-sanity');
   const client = createClient({ projectId, dataset, token, apiVersion: '2026-01-01', useCdn: false });
   const files = readdirSync(articlesDir).filter(f => f.endsWith('.md'));
   console.log(`migrate-articles-to-sanity: ${files.length} artikel ditemukan di ${path.relative(siteRoot, articlesDir)}${dryRun ? ' (DRY RUN -- tidak menulis apa pun)' : ' (MENULIS ke dataset produksi)'}`);

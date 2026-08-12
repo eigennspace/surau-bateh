@@ -25,25 +25,13 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createClient } from '@sanity/client';
+import { loadDotEnv } from './lib/loadDotEnv.mjs';
+import { requireSanityWriteEnv } from './lib/sanityEnv.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(__dirname, '..');
 const assetsDir = path.join(siteRoot, 'src', 'design-system', 'assets');
 
-function loadDotEnv(file) {
-  if (!existsSync(file)) return;
-  for (const line of readFileSync(file, 'utf8').split(/\r?\n/)) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('#')) continue;
-    const eq = trimmed.indexOf('=');
-    if (eq === -1) continue;
-    const key = trimmed.slice(0, eq).trim();
-    let value = trimmed.slice(eq + 1).trim();
-    const quoted = (value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"));
-    if (quoted) value = value.slice(1, -1);
-    if (key && !(key in process.env)) process.env[key] = value;
-  }
-}
 loadDotEnv(path.join(siteRoot, '.env'));
 
 // hotspot perkiraan (x/y 0..1) untuk entri yang dulu punya `position` bebas
@@ -73,13 +61,7 @@ const write = process.argv.includes('--write');
 const dryRun = !write;
 
 async function main() {
-  const projectId = process.env.SANITY_PROJECT_ID;
-  const dataset = process.env.SANITY_DATASET;
-  const token = process.env.SANITY_API_TOKEN;
-  if (!projectId || !dataset || !token) {
-    console.error('migrate-gallery-to-sanity: SANITY_PROJECT_ID/SANITY_DATASET/SANITY_API_TOKEN belum diset (lihat site/.env.example). Token butuh hak tulis (bukan role Viewer).');
-    process.exit(1);
-  }
+  const { projectId, dataset, token } = requireSanityWriteEnv('migrate-gallery-to-sanity');
 
   const client = createClient({ projectId, dataset, token, apiVersion: '2026-01-01', useCdn: false });
   console.log(`migrate-gallery-to-sanity: ${GALLERY_MANIFEST.length} entri galeri${dryRun ? ' (DRY RUN -- tidak menulis apa pun)' : ' (MENULIS ke dataset produksi)'}`);
