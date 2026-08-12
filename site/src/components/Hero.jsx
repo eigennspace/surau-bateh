@@ -26,7 +26,7 @@ export default function Hero({ site, onNavigate }) {
             Ber-<b>IHSAN</b> Bersama Surau Bateh Lori Kota Padang.
           </p>
           <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', width: mobile ? '100%' : 'auto' }}>
-            <Button tone="primary" size="lg" icon="hand-coins" fullWidth={mobile} onClick={() => onNavigate('Infak')}>Salurkan Infak</Button>
+            {/* <Button tone="primary" size="lg" icon="hand-coins" fullWidth={mobile} onClick={() => onNavigate('Infak')}>Salurkan Infak</Button> */}
             <Button tone="accent" size="lg" icon="calendar-days" fullWidth={mobile} onClick={() => onNavigate('Kajian')}>Lihat Agenda</Button>
           </div>
           <div style={{ display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap', paddingTop: 'var(--space-4)', color: 'rgba(253,251,246,.72)', fontSize: 'var(--fs-body-sm)' }}>
