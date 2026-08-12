@@ -360,6 +360,7 @@ export const SB_DATA = {
   ],
   contact: {
     maps: 'https://maps.app.goo.gl/bVQSzRjYxisicxUq6?g_st=ic',
+    address: 'Jl. Lori Lubuk Minturun, Lubuk Minturun, Kec. Koto Tangah, Kota Padang, Sumatera Barat 25586',
     pengurus: [{ name: 'Ustadz Anshor', role: 'Pengurus surau', phone: '081261246706' }],
     // Kontak person khusus per-program Kegiatan & Aksi Sosial (bukan pengurus
     // umum surau) -- ditampilkan di kartu kontak halaman `/khitanan` dan

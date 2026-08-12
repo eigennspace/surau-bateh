@@ -91,6 +91,11 @@ export default function App() {
   // `now` dihitung ulang setiap render — cukup murah untuk situs statis ini
   // dan memastikan status shalat aktif/berikutnya selalu mengikuti jam nyata.
   const site = deriveSiteData(SB_DATA, new Date(), prayerTimesDataset);
+  // Peta mini di footer -- endpoint `output=embed` tidak butuh API key
+  // (beda dari Google Maps Embed API resmi), dibangun dari koordinat
+  // `SB_DATA.location` yang sama dipakai generator jadwal shalat.
+  const { latitude, longitude } = SB_DATA.location;
+  const mapEmbedSrc = `https://maps.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`;
 
   // Navigasi lewat sini supaya URL (path bersih) selalu sinkron dengan
   // halaman yang tampil -- ini yang bikin refresh/back/forward/bookmark
@@ -134,7 +139,7 @@ export default function App() {
       {page === 'Artikel' ? <ArtikelPage onNavigate={navigate} /> : null}
       {page === 'ArtikelDetail' ? <ArticleDetailPage slug={articleSlug} onNavigate={navigate} /> : null}
 
-      <Footer logoSrc={logoMark} columns={mobile ? [
+      <Footer logoSrc={logoMark} address={site.contact.address} addressHref={site.contact.maps} mapEmbedSrc={mapEmbedSrc} columns={mobile ? [
         { title: 'Tautan', links: ['Jadwal Shalat', 'Kajian Rutin', 'Infak & Sedekah', 'Profil', 'Kontak'] },
       ] : [
         { title: 'Layanan', links: ['Jadwal Shalat', 'Kajian Rutin', 'Silat Tradisi', 'Santunan'] },
