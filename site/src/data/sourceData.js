@@ -20,6 +20,8 @@ import karakterSalik from '../design-system/assets/flyer/karakter-salik.jpeg';
 import backgroundDaurah from '../design-system/assets/background-daurah.jpeg';
 import flyerSilaturahmiIlmiah from '../design-system/assets/photos/flyer-silaturahmi-ilmiah.jpeg';
 import silaturahmiIlmiah from '../design-system/assets/photos/silaturahmi-ilmiah.jpeg';
+import undanganUinPadang from '../design-system/assets/photos/undangan-uin-ib-padang.jpeg';
+import undanganUinPadang2 from '../design-system/assets/photos/undangan-uin-ib-padang-2.jpeg';
 
 export const SB_DATA = {
   // Koordinat Surau Bateh Lori, Kota Padang -- dipakai `computePrayerTimes`
@@ -385,5 +387,7 @@ export const SB_DATA = {
     { src: latihanSilat, alt: 'Latihan silat di surau', ratio: '3 / 4', position: 'center 35%', meta: 'Remaja', caption: 'Latihan silat tradisi, malam pekanan.' },
     { src: interiorRuangSalat, alt: 'Ruang shalat surau', ratio: '3 / 4', meta: 'Ruang Utama', caption: 'Karpet ruang shalat selepas Dzuhur.'},
     { src: gotongRoyongJamaah, alt: 'Jamaah bekerja di halaman', ratio: '3 / 4', meta: 'Gotong Royong', caption: 'Jamaah membersihkan halaman atas.' },
+    { src: undanganUinPadang, alt: 'Undangan UIN IB', ratio: '3 / 4', meta: 'Undangan', caption: 'Surau Bateh di Undang oleh Prodi Tasawuf dan Psikoterapi UIN IB Padang dalam rangka evaluasi kurikulum' },
+    { src: undanganUinPadang2, alt: 'Undangan UIB IB 2', ratio: '3 / 4', meta: 'Undangan', caption: 'Surau Bateh di Undang oleh Prodi Tasawuf dan Psikoterapi UIN IB Padang dalam rangka evaluasi kurikulum' },
   ],
 };

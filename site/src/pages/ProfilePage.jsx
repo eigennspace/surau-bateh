@@ -43,22 +43,22 @@ export default function ProfilePage({ site }) {
           </div>
         </div>
       </section>
-      <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
+      {/* <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
         <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
           <SectionHeading overline="Silsilah" title="Ilmu Tauhid" />
           <Card style={{ marginTop: 'var(--space-8)', padding: mobile ? 'var(--space-5)' : 'var(--space-8)' }}>
             <Timeline variant="silsilah" items={site.ilmuTauhid} />
           </Card>
         </div>
-      </section>
-      <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
+      </section> */}
+      {/* <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
         <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
           <SectionHeading overline="Silsilah" title="Ilmu Fiqh" />
           <Card style={{ marginTop: 'var(--space-8)', padding: mobile ? 'var(--space-5)' : 'var(--space-8)' }}>
             <Timeline variant="silsilah" items={site.ilmuFiqh} />
           </Card>
         </div>
-      </section>
+      </section> */}
       <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
         <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
           <SectionHeading overline="Silsilah" title="Ilmu Tasawuf" />
