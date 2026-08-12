@@ -38,7 +38,7 @@ export const SB_DATA = {
   events: [
     { day: 'Sel', month: 'Malam', title: 'Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh' },
     { day: 'Kam', month: 'Malam', title: 'Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh' },
-    { day: 'Kam', month: '13/08/26', title: 'Daurah Aswaja', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: ' Musholla Al Mukmin Berok', category: 'Daurah' },
+    { day: 'Kam', month: '13/08/26', title: 'Daurah Aswaja', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: ' Musholla Al Mukmin Berok', category: 'Dauroh' },
     { day: 'Sab', month: 'Malam', title: 'Latihan Silat Tradisi', speaker: 'Pelatih sasaran surau', time: "Ba'da Isya", place: 'Lapangan', category: 'Silat' },
     { day: 'Sab', month: 'Malam', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
     { day: 'Min', month: 'Pagi', title: '(Khusus Salik Baru) Pengenalan Tiga Rukun Agama', speaker: 'Tuan Guru Surau Bateh', time: "09:00 WIB", place: 'Ruang utama', category: 'Kajian' },
@@ -361,6 +361,22 @@ export const SB_DATA = {
   contact: {
     maps: 'https://maps.app.goo.gl/bVQSzRjYxisicxUq6?g_st=ic',
     pengurus: [{ name: 'Ustadz Anshor', role: 'Pengurus surau', phone: '081261246706' }],
+    // Kontak person khusus per-program Kegiatan & Aksi Sosial (bukan pengurus
+    // umum surau) -- ditampilkan di kartu kontak halaman `/khitanan` dan
+    // `/dauroh` masing-masing.
+    khitanan: { name: 'Angku Bosa', role: 'Kontak Program Khitanan', phone: '081374720759' },
+    dauroh: { name: 'Muhammad Galang', role: 'Kontak Program Dauroh', phone: '082171136418' },
+  },
+  // Narasi program untuk halaman `/khitanan` dan `/dauroh` -- draft awal
+  // Claude berdasarkan konteks kajian yang sudah ada di situs, untuk
+  // direview/diedit pengurus surau sebelum publish.
+  khitanan: {
+    title: 'Khitanan',
+    narrative: 'Program khitanan Surau Bateh Lori adalah kegiatan sosial bagi anak-anak jamaah dan masyarakat sekitar yang membutuhkan bantuan biaya khitan. Kegiatan diselenggarakan bekerja sama dengan tenaga medis berpengalaman, dengan tujuan meringankan beban orang tua sekaligus menanamkan syiar sunnah kepada anak sejak dini. Pendaftaran dan jadwal pelaksanaan diinformasikan langsung oleh kontak person di bawah.',
+  },
+  dauroh: {
+    title: 'Dauroh',
+    narrative: 'Dauroh adalah kegiatan kajian intensif yang diselenggarakan Surau Bateh Lori untuk memperdalam ilmu agama -- mencakup akidah Ahlussunnah wal Jamaah, fikih, dan tasawuf -- dalam durasi yang lebih panjang dibanding kajian rutin pekanan. Dauroh terbuka untuk umum dan biasanya menghadirkan pemateri dari luar surau. Informasi jadwal dan pendaftaran dapat ditanyakan langsung kepada kontak person di bawah.',
   },
   // Nilai awal `bank` berasal dari `New Surau Bateh Lori Design System/assets/informasi-rekening.md`.
   donation: {

@@ -207,6 +207,8 @@ export function deriveSiteData(rawData, now = new Date(), prayerTimesDataset = [
     ilmuFiqh: rawData.ilmuFiqh,
     ilmuTasawuf: rawData.ilmuTasawuf,
     contact: rawData.contact,
+    khitanan: rawData.khitanan,
+    dauroh: rawData.dauroh,
     stats: rawData.stats,
     gallery: rawData.gallery,
     activePrayerName,

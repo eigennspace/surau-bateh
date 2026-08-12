@@ -18,3 +18,25 @@ describe('SB_DATA.events React key uniqueness', () => {
     expect(uniqueKeys.size).toBe(keys.length);
   });
 });
+
+// Regresi: halaman `/khitanan` dan `/dauroh` (lihat KhitananPage.jsx /
+// DaurohPage.jsx) mengandalkan `SB_DATA.contact.khitanan` /
+// `SB_DATA.contact.dauroh` untuk kartu kontak person, dan kategori event
+// `'Dauroh'` (bukan ejaan lama `'Daurah'`) untuk menemukan jadwal Dauroh
+// yang sudah ada ("Daurah Aswaja"). Tes ini mengunci kedua invarian itu
+// supaya perubahan Sumber Data di masa depan tidak diam-diam merusak
+// kedua halaman itu.
+describe('SB_DATA — kontak & kategori event Khitanan/Dauroh', () => {
+  it('punya kontak person Khitanan dan Dauroh dengan nomor telepon terisi', () => {
+    expect(SB_DATA.contact.khitanan?.name).toBeTruthy();
+    expect(SB_DATA.contact.khitanan?.phone).toBeTruthy();
+    expect(SB_DATA.contact.dauroh?.name).toBeTruthy();
+    expect(SB_DATA.contact.dauroh?.phone).toBeTruthy();
+  });
+
+  it('memakai ejaan kategori "Dauroh" (bukan "Daurah") pada events', () => {
+    const categories = SB_DATA.events.map(e => e.category);
+    expect(categories).not.toContain('Daurah');
+    expect(categories).toContain('Dauroh');
+  });
+});
