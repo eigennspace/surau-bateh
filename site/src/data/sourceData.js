@@ -364,8 +364,8 @@ export const SB_DATA = {
     // Kontak person khusus per-program Kegiatan & Aksi Sosial (bukan pengurus
     // umum surau) -- ditampilkan di kartu kontak halaman `/khitanan` dan
     // `/dauroh` masing-masing.
-    khitanan: { name: 'Angku Bosa', role: 'Kontak Program Khitanan', phone: '081374720759' },
-    dauroh: { name: 'Muhammad Galang', role: 'Kontak Program Dauroh', phone: '082171136418' },
+    dauroh: { name: 'Angku Bosa', role: 'Kontak Program Dauroh', phone: '081374720759' },
+    khitanan: { name: 'Muhammad Galang', role: 'Kontak Program Khitanan', phone: '082171136418' },
   },
   // Narasi program untuk halaman `/khitanan` dan `/dauroh` -- draft awal
   // Claude berdasarkan konteks kajian yang sudah ada di situs, untuk
