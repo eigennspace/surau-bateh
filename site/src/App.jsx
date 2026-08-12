@@ -6,6 +6,13 @@ import { deriveSiteData } from './lib/deriveSiteData.js';
 // `scripts/generate-prayer-times.mjs`) -- di-gitignore, dibangkitkan tiap
 // `npm run build`/`npm run dev`, bukan dikomit ke git.
 import prayerTimesDataset from './generated/prayerTimes.json';
+// Galeri hasil fetch build-time dari Sanity (lihat
+// `scripts/fetch-sanity-content.mjs`, ADR 0006) -- digabung ke `SB_DATA`
+// SEBELUM dipanggil ke `deriveSiteData`, supaya `deriveSiteData` sendiri
+// tetap fungsi murni tanpa I/O (konsisten dengan pola `prayerTimesDataset`
+// di atas, yang juga diserahkan sebagai parameter alih-alih difetch di
+// dalam `deriveSiteData`).
+import sanityContent from './generated/sanityContent.json';
 import logoMark from './design-system/assets/logo-mark.png';
 
 import HomePage from './pages/HomePage.jsx';
@@ -90,7 +97,8 @@ export default function App() {
   const mobile = useBreakpoint();
   // `now` dihitung ulang setiap render — cukup murah untuk situs statis ini
   // dan memastikan status shalat aktif/berikutnya selalu mengikuti jam nyata.
-  const site = deriveSiteData(SB_DATA, new Date(), prayerTimesDataset);
+  const rawData = { ...SB_DATA, gallery: sanityContent.gallery };
+  const site = deriveSiteData(rawData, new Date(), prayerTimesDataset);
   // Peta mini di footer -- endpoint `output=embed` tidak butuh API key
   // (beda dari Google Maps Embed API resmi), dibangun dari koordinat
   // `SB_DATA.location` yang sama dipakai generator jadwal shalat.

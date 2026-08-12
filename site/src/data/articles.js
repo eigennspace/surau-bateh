@@ -1,20 +1,15 @@
-// articles — satu-satunya titik yang menyentuh `import.meta.glob` untuk
-// folder artikel Markdown (analog `sourceData.js` untuk `SB_DATA`, tapi
-// artikel adalah sumber data yang sepenuhnya terpisah, tanpa perubahan
-// skema di `sourceData.js`). Tiap file di `./articles/*.md` yang ada saat
-// build dianggap tayang -- tidak ada field draft/published, kontrol tayang
-// cukup lewat commit ke `main` (lihat `.scratch/artikel-page/spec.md`).
+// articles — sejak ADR 0006, artikel bukan lagi Markdown lokal
+// (`import.meta.glob('./articles/*.md')`), melainkan hasil fetch build-time
+// dari dataset Sanity (`scripts/fetch-sanity-content.mjs`, jalan sebelum
+// `vite build`/`vite dev` -- lihat `predev`/`build` di `package.json`).
+// Hasil fetch ditulis ke `src/generated/sanityContent.json` (di-gitignore,
+// data turunan, bukan sumber kebenaran -- mengikuti pola
+// `generated/prayerTimes.json`), diimpor statis di sini persis seperti
+// `App.jsx` mengimpor dataset jadwal shalat.
 //
-// `deriveArticles` sendiri murni (lihat `../lib/deriveArticles.js`); berkas
-// ini hanya menyediakan input glob mentah yang hanya bisa didapat lewat API
-// Vite (raw string import, eager -- artikel tidak banyak, lazy-load per
-// artikel tidak sepadan kompleksitasnya untuk situs sekecil ini).
+// `deriveArticles` sendiri tetap murni (lihat `../lib/deriveArticles.js`);
+// berkas ini hanya menyediakan input hasil fetch yang sudah diresolve.
 import { deriveArticles } from '../lib/deriveArticles.js';
+import sanityContent from '../generated/sanityContent.json';
 
-const rawArticleFiles = import.meta.glob('./articles/*.md', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-});
-
-export const ARTICLES = deriveArticles(rawArticleFiles);
+export const ARTICLES = deriveArticles(sanityContent.articles);

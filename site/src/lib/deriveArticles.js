@@ -1,12 +1,17 @@
-// deriveArticles — mem-parsing hasil `import.meta.glob` (peta nama-file →
-// raw string Markdown) menjadi array artikel siap-render, mengikuti pola
-// `deriveSiteData`/`prayerTimeCalculator`: fungsi murni, tidak membaca
-// filesystem sendiri, tidak ada efek samping, sehingga bisa dites dengan
-// fixture string tanpa file sungguhan. Artikel adalah sumber data yang
-// sepenuhnya terpisah dari `SB_DATA`/`sourceData.js` -- tidak ada perubahan
-// skema di berkas itu untuk fitur ini.
+// deriveArticles — sejak ADR 0006, artikel dikelola lewat Sanity (dokumen
+// `article`, body Portable Text), bukan lagi file Markdown di
+// `src/data/articles/`. `deriveArticles` menerima array artikel yang sudah
+// difetch+diresolve build-time oleh `scripts/fetch-sanity-content.mjs`
+// (lihat `src/data/articles.js`) dan hanya melakukan pengurutan -- fungsi
+// murni, tidak melakukan fetch sendiri, sehingga tetap bisa dites dengan
+// fixture objek tanpa Sanity sungguhan (lihat `articlesTestFixtures.js`).
+//
+// `parseFrontmatter`/`slugFromFilename` di bawah adalah sisa parser Markdown
+// jalur lama -- sengaja BELUM dihapus (lihat tiket 04), tapi sudah tidak
+// dipanggil dari jalur baca aktif manapun. Dihapus di tiket cutover
+// (`.scratch/cms-migration-sanity/issues/06-cutover-hapus-pipeline-lama.md`)
+// begitu Sanity terverifikasi jalan penuh di produksi.
 
-import { marked } from 'marked';
 import { MONTH_NAMES_ID } from './monthNamesId.js';
 
 const DATE_PREFIX_RE = /^\d{4}-\d{2}-\d{2}-/;
@@ -77,26 +82,19 @@ export function parseFrontmatter(raw) {
 }
 
 /**
- * @param {Record<string, string>} rawFiles Peta nama-file (path glob) →
- *   konten Markdown mentah (frontmatter + badan), hasil `import.meta.glob`
- *   dengan `{ query: '?raw', import: 'default', eager: true }`.
+ * @param {Array<{slug: string, title: string, author: string, date: string,
+ *   excerpt: string, cover?: string, body: Array<object>}>} articles Artikel
+ *   yang sudah difetch dari Sanity dan diresolve build-time (asset gambar
+ *   sudah jadi URL plain, `body` tetap array blok Portable Text untuk
+ *   dirender `@portabletext/react`) -- lihat
+ *   `scripts/fetch-sanity-content.mjs`/`src/data/articles.js`. Fungsi ini
+ *   tidak fetch/resolve apa pun sendiri, hanya mengurutkan.
  * @returns {Array<{slug: string, title: string, author: string, date: string,
- *   excerpt: string, cover?: string, bodyHtml: string}>} Terurut tanggal
+ *   excerpt: string, cover?: string, body: Array<object>}>} Terurut tanggal
  *   terbaru dulu.
  */
-export function deriveArticles(rawFiles = {}) {
-  const articles = Object.entries(rawFiles).map(([filename, raw]) => {
-    const { data, content } = parseFrontmatter(raw);
-    return {
-      slug: slugFromFilename(filename),
-      title: data.title,
-      author: data.author,
-      date: data.date,
-      excerpt: data.excerpt,
-      cover: data.cover || undefined,
-      bodyHtml: marked.parse(content.trim(), { async: false }),
-    };
-  });
-  articles.sort((a, b) => new Date(b.date) - new Date(a.date));
-  return articles;
+export function deriveArticles(articles = []) {
+  const sorted = [...articles];
+  sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return sorted;
 }

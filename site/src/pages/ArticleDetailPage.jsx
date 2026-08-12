@@ -1,7 +1,22 @@
 import React from 'react';
+import { PortableText } from '@portabletext/react';
 import { Button, Icon, useBreakpoint } from '../ds.js';
 import { ARTICLES } from '../data/articles.js';
 import { formatArticleDate } from '../lib/deriveArticles.js';
+
+// Komponen `image` Portable Text kustom -- Sanity mengembalikan referensi
+// asset lewat GROQ, tapi `scripts/fetch-sanity-content.mjs` sudah
+// meresolvenya build-time jadi `imageUrl` (URL plain), karena situs publik
+// tidak punya dependency runtime ke Sanity (lihat ADR 0006). Blok gambar
+// tanpa `imageUrl` (mis. asset gagal resolve) tidak dirender sama sekali,
+// bukan `<img>` rusak.
+const articleBodyComponents = {
+  types: {
+    image: ({ value }) => (value?.imageUrl ? (
+      <img src={value.imageUrl} alt={value.alt || ''} style={{ width: '100%', borderRadius: 'var(--radius-lg)', margin: 'var(--space-5) 0' }} />
+    ) : null),
+  },
+};
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
 
@@ -62,8 +77,9 @@ export default function ArticleDetailPage({ slug, onNavigate }) {
         <div
           className="article-body"
           style={{ marginTop: 'var(--space-6)', font: 'var(--text-body-default)', color: 'var(--text-body)', lineHeight: 'var(--lh-relaxed)' }}
-          dangerouslySetInnerHTML={{ __html: article.bodyHtml }}
-        />
+        >
+          <PortableText value={article.body} components={articleBodyComponents} />
+        </div>
       </div>
     </article>
   );

@@ -1,0 +1,17 @@
+# 05 — Galeri foto via Sanity
+
+**What to build:** Pengurus bisa mengunggah foto baru (dengan crop/hotspot sendiri) lewat Sanity Studio, dan foto itu tayang di galeri Beranda situs publik setelah rebuild otomatis — tanpa bisa merusak tata letak grid galeri lewat field yang salah isi.
+
+**Blocked by:** 03 (butuh scaffold fetch + webhook sudah terbukti jalan). Tidak bergantung pada tiket 04 — bisa dikerjakan paralel dengannya.
+
+**Status:** ready-for-human (satu sub-langkah pembuktian akhir menunggu webhook manual di tiket 03)
+
+- [x] Schema `galleryItem` didefinisikan di Sanity Studio (`studio/schemaTypes/galleryItem.ts`): `image` (asset Sanity dengan hotspot), `alt`, `caption`, `meta`. Keputusan field layout risiko-tinggi (dicatat di sini sesuai permintaan checklist, bukan hanya di PR):
+  - **`ratio`**: opsi (a) — dropdown pilihan tetap (radio di Studio), 2 nilai: Lanskap `16 / 9` / Potret `3 / 4`. Ini persis 2 rasio yang benar-benar dipakai 13 entri lama (satu entri lama sempat menulis `'16/9'` tanpa spasi — bug penulisan yang sekarang tidak mungkin terulang karena dropdown, bukan teks bebas).
+  - **`span`** (lebar ubin grid) diganti field boolean `wide` ("ubin lebar 2 kolom?") — lebih jelas bagi pengurus non-teknis daripada angka span bebas, dan hanya ada 2 kemungkinan lebar di grid 4 kolom yang ada (`GallerySection.jsx`).
+  - **`position`** (dulu object-position CSS bebas-teks) **dihapus total dari schema** (opsi b) — digantikan hotspot bawaan Sanity pada field `image` (pengurus menyeret titik fokus visual di Studio, bukan mengetik nilai CSS); `scripts/fetch-sanity-content.mjs` menghitung `object-position` dari `hotspot.x`/`hotspot.y` saat build. Field tambahan `order` (angka) juga ditambahkan supaya urutan galeri bisa diatur eksplisit oleh pengurus, bukan cuma `_createdAt`.
+- [x] Skrip migrasi satu-kali dibuat dan dijalankan (`scripts/migrate-gallery-to-sanity.mjs`): membaca (menyalin manifest dari) `SB_DATA.gallery` di `sourceData.js`, upload ke-13 gambar lokal ke asset pipeline Sanity, buat dokumen `galleryItem` per entri dengan `order` mempertahankan urutan lama. Dijalankan `--dry-run` dulu (13 entri terverifikasi), lalu `--write` — 13 dokumen berhasil ditulis.
+- [x] `deriveSiteData.js` sendiri tidak diubah (tetap murni, `gallery: rawData.gallery` seperti semula) — `App.jsx` yang menggabungkan `sanityContent.gallery` (hasil `fetch-sanity-content.mjs`, tiket 03) ke `rawData` SEBELUM memanggil `deriveSiteData`, persis pola `prayerTimesDataset` yang sudah ada. Field `gallery` di `sourceData.js` **belum dihapus di tiket ini** (dihapus di tiket 06).
+- [x] `npm test` (57 test) lulus penuh tanpa perubahan pada test galeri yang ada — bentuk data `gallery` (`src`/`alt`/`ratio`/`position`/`meta`/`caption`/`span`) yang dikonsumsi `GallerySection.jsx` sengaja dipertahankan identik di output `fetch-sanity-content.mjs`, jadi tidak ada fixture test yang perlu berubah.
+- [x] Diverifikasi lewat dev server + browser (bukan produksi, webhook belum terkonfigurasi — lihat tiket 03): 13 foto galeri hasil migrasi tampil di Beranda, dimuat dari `cdn.sanity.io`, grid tidak rusak (rasio & ubin lebar sesuai data lama).
+- [ ] **Menunggu tiket 03**: bukti end-to-end penuh (unggah foto baru di Studio → publish → webhook → rebuild otomatis → foto baru tampil di produksi) belum bisa dicentang sampai maintainer menyelesaikan konfigurasi webhook manual (lihat tiket 03).

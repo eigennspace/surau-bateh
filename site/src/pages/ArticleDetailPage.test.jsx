@@ -12,7 +12,10 @@ vi.mock('../data/articles.js', () => ({
       date: '2026-08-01',
       excerpt: 'Ringkasan santunan.',
       cover: '/articles/cover.jpg',
-      bodyHtml: '<p>Paragraf isi.</p><img src="/articles/foto.jpg" alt="Foto kegiatan">',
+      body: [
+        { _type: 'block', _key: 'b1', style: 'normal', markDefs: [], children: [{ _type: 'span', _key: 's1', text: 'Paragraf isi.', marks: [] }] },
+        { _type: 'image', _key: 'img1', alt: 'Foto kegiatan', imageUrl: '/articles/foto.jpg' },
+      ],
     },
   ],
 }));
