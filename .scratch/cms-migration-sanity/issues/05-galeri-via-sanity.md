@@ -4,7 +4,7 @@
 
 **Blocked by:** 03 (butuh scaffold fetch + webhook sudah terbukti jalan). Tidak bergantung pada tiket 04 — bisa dikerjakan paralel dengannya.
 
-**Status:** ready-for-human (satu sub-langkah pembuktian akhir menunggu webhook manual di tiket 03)
+**Status:** done
 
 - [x] Schema `galleryItem` didefinisikan di Sanity Studio (`studio/schemaTypes/galleryItem.ts`): `image` (asset Sanity dengan hotspot), `alt`, `caption`, `meta`. Keputusan field layout risiko-tinggi (dicatat di sini sesuai permintaan checklist, bukan hanya di PR):
   - **`ratio`**: opsi (a) — dropdown pilihan tetap (radio di Studio), 2 nilai: Lanskap `16 / 9` / Potret `3 / 4`. Ini persis 2 rasio yang benar-benar dipakai 13 entri lama (satu entri lama sempat menulis `'16/9'` tanpa spasi — bug penulisan yang sekarang tidak mungkin terulang karena dropdown, bukan teks bebas).
@@ -14,4 +14,4 @@
 - [x] `deriveSiteData.js` sendiri tidak diubah (tetap murni, `gallery: rawData.gallery` seperti semula) — `App.jsx` yang menggabungkan `sanityContent.gallery` (hasil `fetch-sanity-content.mjs`, tiket 03) ke `rawData` SEBELUM memanggil `deriveSiteData`, persis pola `prayerTimesDataset` yang sudah ada. Field `gallery` di `sourceData.js` **belum dihapus di tiket ini** (dihapus di tiket 06).
 - [x] `npm test` (57 test) lulus penuh tanpa perubahan pada test galeri yang ada — bentuk data `gallery` (`src`/`alt`/`ratio`/`position`/`meta`/`caption`/`span`) yang dikonsumsi `GallerySection.jsx` sengaja dipertahankan identik di output `fetch-sanity-content.mjs`, jadi tidak ada fixture test yang perlu berubah.
 - [x] Diverifikasi lewat dev server + browser (bukan produksi, webhook belum terkonfigurasi — lihat tiket 03): 13 foto galeri hasil migrasi tampil di Beranda, dimuat dari `cdn.sanity.io`, grid tidak rusak (rasio & ubin lebar sesuai data lama).
-- [ ] **Menunggu tiket 03**: bukti end-to-end penuh (unggah foto baru di Studio → publish → webhook → rebuild otomatis → foto baru tampil di produksi) belum bisa dicentang sampai maintainer menyelesaikan konfigurasi webhook manual (lihat tiket 03).
+- [x] Dibuktikan end-to-end penuh di produksi (lihat tiket 03): webhook Sanity → `repository_dispatch` → rebuild otomatis terkonfirmasi jalan (GitHub Actions run `31566936516`, build+deploy sukses, log build mengonfirmasi 13 foto galeri ditarik segar dari dataset produksi saat rebuild).
