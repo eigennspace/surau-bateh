@@ -12,6 +12,8 @@ import qrisImage from '../design-system/assets/qris-surau-lori.jpg';
 import dokumentasiKhitanan1 from '../design-system/assets/photos/dokumentasi-khitanan-1.jpeg';
 import dokumentasiKhitanan2 from '../design-system/assets/photos/dokumentasi-khitanan-2.jpeg';
 import dokumentasiKhitanan3 from '../design-system/assets/photos/dokumentasi-khitanan-3.jpeg';
+import daurahPertama from '../design-system/assets/photos/daurah-pertama.jpeg';
+import daurahFlyer from '../design-system/assets/background-daurah.jpeg';
 
 export const SB_DATA = {
   // Koordinat Surau Bateh Lori, Kota Padang -- dipakai peta mini di footer.
@@ -360,7 +362,10 @@ export const SB_DATA = {
   },
   dauroh: {
     title: 'Dauroh',
-    gallery: [],
+    gallery: [
+      { src: daurahPertama, alt: 'Dokumentasi Dauroh Aswaja bersama jamaah' },
+      { src: daurahFlyer, alt: 'Dokumentasi Flyer Daurah' },
+    ],
     narrative: 'Dauroh adalah pelatihan Ahlussunnah wal-Jama\'ah (ASWAJA), berbeda dengan kajian  pada umumnya, dalam pelatihan ini ditargetkan peserta mendapatkan kompetensi yang utuh dan paham dengan rukun Agama yang tiga yaitu, Iman Islam dan Ihsan, sehingga lengkaplah di dalam diri para peserta pemahaman terhadap rukun Agama tersebut. \n \nDalam daurah ini Peserta tidak hanya mendapatkan ilmu secara teori, akan tetapi dibimbing agar bisa mencapai kedudukan Ihsan yang disampaikan oleh Nabi dalam Hadisnya; Merasakan Allah dalam setiap Ibadah. Surau bateh siap hadir untuk mengisi Dauroh di berbagai Mesjid, Musholla, Lembaga atau Komunitas di Seluruh Kota Padang. **Daurah ini full gratis**, untuk info lebih lanjut silahkan hubungi kontak person di bawah ini:',
   },
   tawajjuh: {
