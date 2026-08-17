@@ -15,12 +15,11 @@ export const GROUPS = {
 };
 
 // Grup "Profil" berperilaku sama persis dengan ketiga grup di atas (dropdown
-// navbar / drop-up burger), tapi SENGAJA tidak jadi anggota `GROUPS` -- lihat
-// ADR 0008. Dua alasannya: (1) `GROUPS` berarti "grup Halaman Program", dan
-// Profil Surau/Profil Salik bukan program (lihat istilah "Halaman Profil" di
-// CONTEXT.md); (2) `GROUPS` adalah jaminan bahwa navbar dan bottom bar tidak
-// menyimpang, sementara Profil memang hadir di navbar saja -- bottom bar
-// tetap lima tab. Jadi kalau Anda menghitung empat dropdown di navbar tapi
+// navbar / drop-up burger / popover bottom bar), tapi SENGAJA tidak jadi
+// anggota `GROUPS` -- lihat ADR 0008. Alasannya kini tinggal satu, dan itu
+// alasan domain: `GROUPS` berarti "grup Halaman Program", sedangkan Profil
+// Surau/Profil Salik bukan program (lihat istilah "Halaman Profil" di
+// CONTEXT.md). Jadi kalau Anda menghitung empat dropdown di navbar tapi
 // `GROUPS` cuma berisi tiga: itu disengaja, bukan yang terlupa didaftarkan.
 export const PROFIL = {
   Profil: ['Profil Surau', 'Profil Salik'],
@@ -48,14 +47,16 @@ export const NAV = [
   'Infak', 'Artikel', 'Kontak',
 ];
 
-// Bottom bar mobile: lima tab, tiga di antaranya grup ber-popover. Infak
-// tidak punya tab di sini — jalurnya adalah entri teks di burger menu.
+// Bottom bar mobile: lima tab, empat di antaranya grup ber-popover. Infak dan
+// Artikel tidak punya tab di sini — jalurnya adalah entri teks di burger menu.
+// Slot kelima dulu dipakai Artikel, lalu diserahkan ke Profil atas permintaan
+// pengurus; Artikel tetap hidup di navbar/burger.
 export const BB_ITEMS = [
   { label: 'Beranda', icon: 'house' },
   { label: 'Kegiatan', icon: 'calendar-days', children: GROUPS.Kegiatan },
   { label: 'Dakwah', icon: 'megaphone', children: GROUPS.Dakwah },
   { label: 'Sosial', icon: 'heart-handshake', children: GROUPS.Sosial },
-  { label: 'Artikel', icon: 'newspaper' },
+  { label: 'Profil', icon: 'info', children: PROFIL.Profil },
 ];
 
 // Peta halaman <-> slug URL (path bersih, tanpa `#`) supaya navigasi antar

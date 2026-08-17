@@ -28,21 +28,25 @@ describe('struktur grup', () => {
 });
 
 describe('konsistensi antar permukaan navigasi', () => {
-  // Grup Halaman Program wajib identik di kedua permukaan. Grup Profil TIDAK
-  // ikut aturan ini: ia sengaja hadir di navbar saja, bottom bar tetap lima
-  // tab (ADR 0008) -- itulah sebabnya ia tidak jadi anggota `GROUPS`, supaya
-  // assertion `toEqual` di bawah tetap ketat dan bukan sekadar "subset".
-  it('navbar desktop dan bottom bar memakai grup Halaman Program yang sama persis', () => {
+  it('navbar desktop dan bottom bar memakai grup yang sama persis', () => {
     const navGroups = Object.fromEntries(parentsOf(NAV).map(it => [it.label, it.children]));
     const bbGroups = Object.fromEntries(parentsOf(BB_ITEMS).map(it => [it.label, it.children]));
     expect(navGroups).toEqual(ALL_GROUPS);
-    expect(bbGroups).toEqual(GROUPS);
+    expect(bbGroups).toEqual(ALL_GROUPS);
   });
 
-  it('grup Profil ada di navbar tapi tidak di bottom bar', () => {
-    expect(NAV.filter(it => typeof it === 'object').map(it => it.label)).toContain('Profil');
-    expect(BB_ITEMS.map(labelOf)).not.toContain('Profil');
+  it('grup Profil hadir di kedua permukaan, dengan dua anak yang sama', () => {
+    expect(parentsOf(NAV).map(it => it.label)).toContain('Profil');
+    expect(parentsOf(BB_ITEMS).map(it => it.label)).toContain('Profil');
     expect(PROFIL.Profil).toEqual(['Profil Surau', 'Profil Salik']);
+  });
+
+  // Slot kelima bottom bar berpindah dari Artikel ke Profil. Artikel tidak
+  // hilang -- ia tetap punya entri teks di navbar/burger, dan test
+  // "setiap halaman ber-slug bisa dijangkau" di bawah yang menahannya.
+  it('Artikel tidak lagi punya tab bottom bar, tapi tetap ada di navbar', () => {
+    expect(BB_ITEMS.map(labelOf)).not.toContain('Artikel');
+    expect(NAV.map(labelOf)).toContain('Artikel');
   });
 
   it('bottom bar berisi lima tab dan setiap tab punya ikon', () => {
