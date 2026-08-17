@@ -393,7 +393,7 @@ export const SB_DATA = {
     title: 'Silaturahmi & Kerjasama Lembaga',
     gallery: [
       { src: kunjunganLembaga, alt: 'Kunjungan Lembaga UIN IB Imam Bonjol Prodi Tasawuf & Terapi' },
-      { src: kunjunganLembaga1, alt: 'Kunjungan Lembaga UIN IB Imam Bonjol Prodi Tasawuf & Terapi' }
+      { src: kunjunganLembaga2, alt: 'Kunjungan Lembaga UIN IB Imam Bonjol Prodi Tasawuf & Terapi' }
     ],
     // DRAFT — disusun berdasarkan konteks program Dauroh yang sudah ada di
     // situs, menunggu review/edit pengurus surau sebelum dianggap final.
