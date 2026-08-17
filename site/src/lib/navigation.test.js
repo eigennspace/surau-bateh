@@ -1,8 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { GROUPS, NAV, BB_ITEMS, PAGE_SLUGS, LEGACY_SLUGS, pathForPage, routeFromPath } from './navigation.js';
+import { GROUPS, PROFIL, ALL_GROUPS, NAV, BB_ITEMS, PAGE_SLUGS, LEGACY_SLUGS, pathForPage, routeFromPath } from './navigation.js';
 
-const groupLabels = Object.keys(GROUPS);
-const allChildren = Object.values(GROUPS).flat();
+// Aturan "tiap anak punya slug, grup sendiri tidak" berlaku untuk SEMUA grup,
+// termasuk Profil yang sengaja di luar `GROUPS` (ADR 0008) -- karena itu di
+// sini yang dibaca `ALL_GROUPS`, bukan `GROUPS`.
+const groupLabels = Object.keys(ALL_GROUPS);
+const allChildren = Object.values(ALL_GROUPS).flat();
 const labelOf = it => (typeof it === 'string' ? it : it.label);
 const parentsOf = items => items.filter(it => typeof it === 'object');
 
@@ -25,11 +28,21 @@ describe('struktur grup', () => {
 });
 
 describe('konsistensi antar permukaan navigasi', () => {
-  it('navbar desktop dan bottom bar memakai grup yang sama persis', () => {
+  // Grup Halaman Program wajib identik di kedua permukaan. Grup Profil TIDAK
+  // ikut aturan ini: ia sengaja hadir di navbar saja, bottom bar tetap lima
+  // tab (ADR 0008) -- itulah sebabnya ia tidak jadi anggota `GROUPS`, supaya
+  // assertion `toEqual` di bawah tetap ketat dan bukan sekadar "subset".
+  it('navbar desktop dan bottom bar memakai grup Halaman Program yang sama persis', () => {
     const navGroups = Object.fromEntries(parentsOf(NAV).map(it => [it.label, it.children]));
     const bbGroups = Object.fromEntries(parentsOf(BB_ITEMS).map(it => [it.label, it.children]));
-    expect(navGroups).toEqual(GROUPS);
+    expect(navGroups).toEqual(ALL_GROUPS);
     expect(bbGroups).toEqual(GROUPS);
+  });
+
+  it('grup Profil ada di navbar tapi tidak di bottom bar', () => {
+    expect(NAV.filter(it => typeof it === 'object').map(it => it.label)).toContain('Profil');
+    expect(BB_ITEMS.map(labelOf)).not.toContain('Profil');
+    expect(PROFIL.Profil).toEqual(['Profil Surau', 'Profil Salik']);
   });
 
   it('bottom bar berisi lima tab dan setiap tab punya ikon', () => {
@@ -95,6 +108,11 @@ describe('pathForPage / routeFromPath', () => {
 describe('slug lama', () => {
   it('/kajian sampai di Jadwal Kegiatan dan minta URL-nya dikanonikkan', () => {
     expect(routeFromPath('/kajian')).toMatchObject({ page: 'Jadwal Kegiatan', canonicalize: true });
+  });
+
+  it('/profil sampai di Profil Surau — halaman Profil lama kini punya dua saudara', () => {
+    expect(routeFromPath('/profil')).toMatchObject({ page: 'Profil Surau', canonicalize: true });
+    expect(routeFromPath('/profil-surau').canonicalize).toBeUndefined();
   });
 
   it('slug kanonik tidak minta dikanonikkan lagi, supaya tidak ada replaceState berulang', () => {

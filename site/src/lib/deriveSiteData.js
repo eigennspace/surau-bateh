@@ -87,6 +87,9 @@ export function deriveSiteData(rawData, now = new Date()) {
     konseling: rawData.konseling,
     baktiSosial: rawData.baktiSosial,
     silaturahmi: rawData.silaturahmi,
+    // Isi Halaman Profil -- sama halnya, diteruskan apa adanya.
+    profilSurau: rawData.profilSurau,
+    salik: rawData.salik,
     stats: rawData.stats,
     gallery: rawData.gallery,
     khatibJumat: deriveKhatibJumat(rawData.events, now),

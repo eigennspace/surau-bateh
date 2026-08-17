@@ -13,7 +13,8 @@ import logoMark from './design-system/assets/logo-mark.png';
 import HomePage from './pages/HomePage.jsx';
 import AgendaPage from './pages/AgendaPage.jsx';
 import DonatePage from './pages/DonatePage.jsx';
-import ProfilePage from './pages/ProfilePage.jsx';
+import ProfilSurauPage from './pages/ProfilSurauPage.jsx';
+import ProfilSalikPage from './pages/ProfilSalikPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import ArtikelPage from './pages/ArtikelPage.jsx';
 import ArticleDetailPage from './pages/ArticleDetailPage.jsx';
@@ -98,7 +99,8 @@ export default function App() {
       {page === 'Bakti Sosial' ? <BaktiSosialPage site={site} /> : null}
       {page === 'Silaturahmi & Kerjasama Lembaga' ? <SilaturahmiPage site={site} /> : null}
       {page === 'Infak' ? <DonatePage site={site} /> : null}
-      {page === 'Profil' ? <ProfilePage site={site} /> : null}
+      {page === 'Profil Surau' ? <ProfilSurauPage site={site} /> : null}
+      {page === 'Profil Salik' ? <ProfilSalikPage site={site} /> : null}
       {page === 'Kontak' ? <ContactPage site={site} /> : null}
       {page === 'Artikel' ? <ArtikelPage onNavigate={navigate} /> : null}
       {page === 'ArtikelDetail' ? <ArticleDetailPage slug={articleSlug} onNavigate={navigate} /> : null}

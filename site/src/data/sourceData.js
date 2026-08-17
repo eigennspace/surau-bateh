@@ -16,6 +16,10 @@ import kunjunganLembaga from '../design-system/assets/photos/kunjungan-lembaga.j
 import kunjunganLembaga2 from '../design-system/assets/photos/kunjungan-lembaga-2.jpeg';
 import daurahPertama from '../design-system/assets/photos/daurah-pertama.jpeg';
 import daurahFlyer from '../design-system/assets/background-daurah.jpeg';
+import pembangunanSurau from '../design-system/assets/photos/pembangunan-surau.jpg';
+import gotongRoyongBelakang from '../design-system/assets/photos/gotong-royong-belakang.jpg';
+import pengurusSurau from '../design-system/assets/photos/pengurus-surau.jpg';
+import karakterSalik from '../design-system/assets/flyer/karakter-salik.jpeg';
 
 export const SB_DATA = {
   // Koordinat Surau Bateh Lori, Kota Padang -- dipakai peta mini di footer.
@@ -342,6 +346,9 @@ export const SB_DATA = {
     tawajjuh: { name: 'Ustadz Anshor', role: 'Kontak Tawajjuh & Kajian Rutin Ihsan', phone: '081261246706' },
     baktiSosial: { name: 'Ustadz Anshor', role: 'Kontak Program Bakti Sosial', phone: '081261246706' },
     silaturahmi: { name: 'Ustadz Anshor', role: 'Kontak Silaturahmi & Kerjasama Lembaga', phone: '081261246706' },
+    // Kontak Halaman Profil (Profil Salik). Bukan Halaman Program, tapi
+    // memakai kartu kontak yang sama.
+    salik: { name: 'Ustadz Anshor', role: 'Kontak Salik Surau Bateh', phone: '081261246706' },
   },
   // Isi tiap Halaman Program: judul, narasi, dan galeri dokumentasi.
   //
@@ -398,6 +405,65 @@ export const SB_DATA = {
     // DRAFT — disusun berdasarkan konteks program Dauroh yang sudah ada di
     // situs, menunggu review/edit pengurus surau sebelum dianggap final.
     narrative: 'Surau Bateh Lori terbuka untuk bersilaturahmi dan bekerja sama dengan masjid, musholla, pesantren, kampus, lembaga, maupun komunitas di Kota Padang dan sekitarnya. Kerjasama yang sudah berjalan mencakup pengisian dauroh dan kajian di tempat mitra, kegiatan sosial bersama, serta kunjungan silaturahmi antar lembaga.\n \nSurau Bateh siap hadir memenuhi undangan tanpa memungut biaya. Bila lembaga atau komunitas Anda ingin menjalin kerjasama atau mengundang Surau Bateh, silahkan hubungi kontak person di bawah ini:',
+  },
+  // Isi Halaman Profil (lihat istilah "Halaman Profil" di CONTEXT.md). Bukan
+  // Halaman Program: Profil Surau punya tata letak sendiri (tiap fotonya
+  // berpasangan dengan teks di sebelahnya), Profil Salik meminjam
+  // `ProgramSection` tapi tanpa blok jadwal.
+  //
+  // Sama seperti `gallery` program: RASIO dan POSISI foto TIDAK diatur di
+  // sini -- itu keputusan tata letak yang tinggal di komponen halaman. Yang
+  // bisa disunting dari sini adalah isinya: teks, `alt`, `caption`, `meta`,
+  // dan `icon`.
+  profilSurau: {
+    hero: {
+      badge: 'Lori Lubuk Minturun, Kota Padang',
+      title: 'Dibangun bersama, dari halaman yang masih tanah',
+      paragraphs: [
+        'Surau Bateh Lori berdiri di lereng bukit di tepi nagari. Surau ini dikerjakan bertahap oleh jamaah sendiri — dari tiang beton dan tumpukan batu bata sampai ruang shalat berkarpet yang dipakai hari ini.',
+        'Setiap pekan halaman dan lerengnya dibersihkan bergiliran. Pekerjaan itu tidak pernah selesai, dan justru dari situ surau ini hidup.',
+      ],
+      photo: { src: pembangunanSurau, alt: 'Masa pembangunan surau', meta: 'Masa Pembangunan', icon: 'hammer', caption: 'Proses pembangunan surau' },
+    },
+    pengelolaan: {
+      title: 'Dikelola pengurus, dikerjakan jamaah',
+      paragraph: 'Pengurus surau mengatur jadwal kajian & tawajjuh pekanan, dan laporan kas bulanan. Kegiatan hariannya dijalankan bergiliran oleh jamaah sekitar.',
+      photo: { src: gotongRoyongBelakang, alt: 'Membersihkan sisi belakang surau', meta: 'Gotong Royong', icon: 'users', caption: 'Merapikan area surau' },
+    },
+    // Judul seksi silsilah. Isi pohonnya sendiri ada di `ilmuTasawuf` di atas
+    // (begitu juga `ilmuTauhid`/`ilmuFiqh` yang seksinya masih dikomentari di
+    // halaman).
+    silsilah: { overline: 'Silsilah', title: 'Ilmu Tasawuf' },
+    pengurus: {
+      overline: 'Pengurus',
+      title: 'Musyawarah pengurus dan tuanku',
+      photo: { src: pengurusSurau, alt: 'Pengurus surau berfoto bersama', caption: 'Selepas musyawarah pengurus di ruang utama.' },
+    },
+  },
+  // Profil Salik. `bullets` dirender sebagai daftar <ul> di bawah `narrative`,
+  // `closing` sebagai paragraf penutup di bawah daftar itu. Halaman ini
+  // sengaja TIDAK punya blok jadwal -- ia menjelaskan karakter, bukan agenda;
+  // agenda sudah ada di Jadwal Kegiatan.
+  //
+  // DRAFT — ditranskrip dari flyer `assets/flyer/karakter-salik.jpeg`,
+  // menunggu review/edit pengurus surau sebelum dianggap final.
+  salik: {
+    title: 'Karakter Salik Surau Bateh',
+    narrative: 'Salik adalah orang yang menempuh jalan menuju Allah di bawah bimbingan Mursyid — bukan sekadar hadir di majelis, melainkan menjalani prosesnya hari demi hari. Jalan ini bukan cepat, tapi pasti menuju Allah. Surau Bateh Lori merumuskan delapan karakter yang mesti tumbuh dalam diri seorang Salik agar ia menjadi Salik sejati, menuju ridha Ilahi:',
+    bullets: [
+      '**Berakhlakul Karimah** — bersikap dan berperilaku yang baik serta terpuji, sesuai tuntunan Agama Islam.',
+      '**Energik** — memiliki energi dan semangat yang tinggi dalam beribadah, perjuangan dakwah, dan dalam menjalani aktifitas sehari-hari.',
+      '**Zikir Muraqabah Wukuf** — tingkatan zikir (maqam) minimal yang harus dicapai seorang Salik.',
+      '**Istiqomah** — sikap teguh pendirian, konsisten, dan berkesinambungan dalam menempuh jalan spiritual "Ber Ihsan".',
+      '**Paham Rukun Agama** — memahami tentang kedudukan Iman, Islam, dan Ihsan dalam sistematika ajaran Agama Islam.',
+      '**Satu Komando (Qiyadah wal Jundiyah)** — kesatuan komando di mana bawahan (Salik) taat kepada pimpinan (Mursyid) yang bijaksana dan memiliki kapasitas mengarahkan dan membimbing salik-nya menuju Allah SWT.',
+      '**Amar Ma\'ruf Nahi Mungkar** — menyeru orang lain kepada kebaikan, dan mencegah segala bentuk kejahatan/keburukan.',
+      '**Rendah Hati** — tidak menyombongkan diri, tidak angkuh, dan tidak memandang rendah orang lain.',
+    ],
+    closing: 'Kedelapannya bermuara pada satu hal: **Ber Ihsan** — beribadah kepada Allah seakan-akan melihat-Nya; jika tidak mampu, maka yakinlah bahwa Dia selalu melihat kita. Untuk bertanya lebih jauh atau bergabung menempuh jalan ini, silahkan hubungi kontak person di bawah ini:',
+    gallery: [
+      { src: karakterSalik, alt: 'Flyer 8 Karakter Salik Surau Bateh', caption: '8 Karakter Salik Surau Bateh — klik untuk melihat utuh.' },
+    ],
   },
   // Nilai awal `bank` berasal dari `New Surau Bateh Lori Design System/assets/informasi-rekening.md`.
   donation: {
