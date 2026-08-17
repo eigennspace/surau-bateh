@@ -14,7 +14,6 @@ import dokumentasiKhitanan2 from '../design-system/assets/photos/dokumentasi-khi
 import dokumentasiKhitanan3 from '../design-system/assets/photos/dokumentasi-khitanan-3.jpeg';
 import kunjunganLembaga from '../design-system/assets/photos/kunjungan-lembaga.jpeg';
 import kunjunganLembaga2 from '../design-system/assets/photos/kunjungan-lembaga-2.jpeg';
-import dokumentasiKhitanan3 from '../design-system/assets/photos/dokumentasi-khitanan-3.jpeg';
 import daurahPertama from '../design-system/assets/photos/daurah-pertama.jpeg';
 import daurahFlyer from '../design-system/assets/background-daurah.jpeg';
 
