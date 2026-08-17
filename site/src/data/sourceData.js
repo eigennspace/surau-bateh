@@ -12,6 +12,9 @@ import qrisImage from '../design-system/assets/qris-surau-lori.jpg';
 import dokumentasiKhitanan1 from '../design-system/assets/photos/dokumentasi-khitanan-1.jpeg';
 import dokumentasiKhitanan2 from '../design-system/assets/photos/dokumentasi-khitanan-2.jpeg';
 import dokumentasiKhitanan3 from '../design-system/assets/photos/dokumentasi-khitanan-3.jpeg';
+import kunjunganLembaga from '../design-system/assets/photos/kunjungan-lembaga.jpeg';
+import kunjunganLembaga2 from '../design-system/assets/photos/kunjungan-lembaga-2.jpeg';
+import dokumentasiKhitanan3 from '../design-system/assets/photos/dokumentasi-khitanan-3.jpeg';
 import daurahPertama from '../design-system/assets/photos/daurah-pertama.jpeg';
 import daurahFlyer from '../design-system/assets/background-daurah.jpeg';
 
@@ -389,7 +392,10 @@ export const SB_DATA = {
   },
   silaturahmi: {
     title: 'Silaturahmi & Kerjasama Lembaga',
-    gallery: [],
+    gallery: [
+      { src: kunjunganLembaga, alt: 'Kunjungan Lembaga UIN IB Imam Bonjol Prodi Tasawuf & Terapi' },
+      { src: kunjunganLembaga1, alt: 'Kunjungan Lembaga UIN IB Imam Bonjol Prodi Tasawuf & Terapi' }
+    ],
     // DRAFT — disusun berdasarkan konteks program Dauroh yang sudah ada di
     // situs, menunggu review/edit pengurus surau sebelum dianggap final.
     narrative: 'Surau Bateh Lori terbuka untuk bersilaturahmi dan bekerja sama dengan masjid, musholla, pesantren, kampus, lembaga, maupun komunitas di Kota Padang dan sekitarnya. Kerjasama yang sudah berjalan mencakup pengisian dauroh dan kajian di tempat mitra, kegiatan sosial bersama, serta kunjungan silaturahmi antar lembaga.\n \nSurau Bateh siap hadir memenuhi undangan tanpa memungut biaya. Bila lembaga atau komunitas Anda ingin menjalin kerjasama atau mengundang Surau Bateh, silahkan hubungi kontak person di bawah ini:',
