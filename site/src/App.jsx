@@ -41,7 +41,17 @@ export default function App() {
   const mobile = useBreakpoint();
   // `now` dihitung ulang setiap render — cukup murah untuk situs statis ini
   // dan memastikan penanda "kegiatan hari ini" mengikuti tanggal nyata.
-  const rawData = { ...SB_DATA, gallery: sanityContent.gallery };
+  // Seksi video Profil Surau (hasil `resolveVideo`, lihat ADR 0010) DIGABUNG
+  // ke cabang `profilSurau` yang sudah ada di sini -- persis seperti galeri
+  // di atas -- supaya `ProfilSurauPage` tetap membaca satu objek tanpa perlu
+  // tahu bagian mana yang dari Sumber Data dan bagian mana dari Sanity.
+  // `sanityContent.video` bisa `null` (belum di-publish/URL tidak sah), dan
+  // itu diteruskan apa adanya.
+  const rawData = {
+    ...SB_DATA,
+    gallery: sanityContent.gallery,
+    profilSurau: { ...SB_DATA.profilSurau, video: sanityContent.video },
+  };
   const site = deriveSiteData(rawData, new Date());
   // Peta mini di footer -- endpoint `output=embed` tidak butuh API key
   // (beda dari Google Maps Embed API resmi), dibangun dari koordinat

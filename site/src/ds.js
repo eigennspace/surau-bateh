@@ -34,5 +34,6 @@ export { EventItem } from './design-system/components/surau/EventItem.jsx';
 export { PhotoTile } from './design-system/components/surau/PhotoTile.jsx';
 export { StatBlock } from './design-system/components/surau/StatBlock.jsx';
 export { Timeline } from './design-system/components/surau/Timeline.jsx';
+export { VideoEmbed } from './design-system/components/surau/VideoEmbed.jsx';
 
 export const ASSETS_BASE = BASE;

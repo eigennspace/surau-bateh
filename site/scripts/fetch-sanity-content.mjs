@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
 import { createClient } from '@sanity/client';
 import { createImageUrlBuilder } from '@sanity/image-url';
 import { loadDotEnv } from './lib/loadDotEnv.mjs';
-import { resolveArticles, resolveGallery } from '../src/lib/resolveSanityContent.js';
+import { resolveArticles, resolveGallery, resolveVideo } from '../src/lib/resolveSanityContent.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(__dirname, '..');
@@ -55,14 +55,19 @@ async function main() {
 
   let articleDocs = [];
   let galleryDocs = [];
+  let profilSurauDoc = null;
   try {
-    [articleDocs, galleryDocs] = await Promise.all([
+    [articleDocs, galleryDocs, profilSurauDoc] = await Promise.all([
       client.fetch(`*[_type == "article"]{
         title, "slug": slug.current, author, date, excerpt, cover, body
       }`),
       client.fetch(`*[_type == "galleryItem"] | order(coalesce(order, 9999) asc, _createdAt asc){
         image, alt, caption, meta, ratio, wide
       }`),
+      // Singleton -- satu dokumen `_id: "profilSurau"` (lihat structure
+      // kustom di `studio/sanity.config.ts`), `[0]` mengambil satu-satunya
+      // entri atau `null` bila belum pernah di-publish.
+      client.fetch(`*[_type == "profilSurau"][0]{title, description, videoUrl}`),
     ]);
   } catch (err) {
     console.error(`fetch-sanity-content: gagal fetch dari Sanity (project ${projectId}/dataset ${dataset}): ${err.message}`);
@@ -71,11 +76,23 @@ async function main() {
 
   const articles = resolveArticles(urlFor, articleDocs);
   const gallery = resolveGallery(urlFor, galleryDocs);
+  const video = resolveVideo(profilSurauDoc);
+  // Validasi schema di Studio adalah jaring utama (lihat
+  // `studio/schemaTypes/profilSurau.ts`); ini jaring pengaman untuk sisa
+  // kasus yang lolos. Build TETAP berhasil -- satu salah-tempel pada satu
+  // seksi tidak boleh menjatuhkan seluruh situs saat deploy otomatis
+  // berjalan lewat webhook (lihat
+  // `.scratch/video-profil-surau/issues/03-rambu-validasi-studio-dan-peringatan-build.md`).
+  if (profilSurauDoc?.videoUrl && !video) {
+    console.warn(
+      `fetch-sanity-content: URL video Profil Surau ditolak (bukan link video YouTube yang sah), seksi video tidak akan tampil: ${profilSurauDoc.videoUrl}`,
+    );
+  }
 
   mkdirSync(path.dirname(outFile), { recursive: true });
-  writeFileSync(outFile, JSON.stringify({ articles, gallery }, null, 2) + '\n');
+  writeFileSync(outFile, JSON.stringify({ articles, gallery, video }, null, 2) + '\n');
   console.log(
-    `fetch-sanity-content: ${articles.length} artikel, ${gallery.length} foto galeri ditulis ke ${path.relative(siteRoot, outFile)}`,
+    `fetch-sanity-content: ${articles.length} artikel, ${gallery.length} foto galeri, video profil ${video ? 'ada' : 'tidak ada'} ditulis ke ${path.relative(siteRoot, outFile)}`,
   );
 }
 

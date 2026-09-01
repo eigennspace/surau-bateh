@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery } from './resolveSanityContent.js';
+import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractYoutubeVideoId, resolveVideo } from './resolveSanityContent.js';
 
 // `urlFor` palsu -- meniru bentuk builder `@sanity/image-url` (method
 // chaining `.auto()`/`.width()`/`.url()`) tanpa memanggil Sanity sungguhan.
@@ -85,5 +85,60 @@ describe('resolveGallery', () => {
   it('span undefined bila wide falsy', () => {
     const [item] = resolveGallery(fakeUrlFor, [{ image: { asset: { _ref: 'g-2' } } }]);
     expect(item.span).toBeUndefined();
+  });
+});
+
+describe('extractYoutubeVideoId', () => {
+  const ID = 'dQw4w9WgXcQ';
+
+  it('menerima bentuk watch?v=, youtu.be/, dan /embed/ untuk ID video yang sama', () => {
+    expect(extractYoutubeVideoId(`https://www.youtube.com/watch?v=${ID}`)).toBe(ID);
+    expect(extractYoutubeVideoId(`https://youtu.be/${ID}`)).toBe(ID);
+    expect(extractYoutubeVideoId(`https://www.youtube.com/embed/${ID}`)).toBe(ID);
+  });
+
+  it('membuang ekor penanda waktu/playlist dari hasil', () => {
+    expect(extractYoutubeVideoId(`https://www.youtube.com/watch?v=${ID}&t=42s&list=PL123`)).toBe(ID);
+    expect(extractYoutubeVideoId(`https://youtu.be/${ID}?t=42`)).toBe(ID);
+  });
+
+  it('menolak link Shorts', () => {
+    expect(extractYoutubeVideoId(`https://www.youtube.com/shorts/${ID}`)).toBeNull();
+  });
+
+  it('null untuk URL kosong/sembarang/bukan YouTube', () => {
+    expect(extractYoutubeVideoId(undefined)).toBeNull();
+    expect(extractYoutubeVideoId('')).toBeNull();
+    expect(extractYoutubeVideoId('bukan-url')).toBeNull();
+    expect(extractYoutubeVideoId('https://vimeo.com/12345')).toBeNull();
+    expect(extractYoutubeVideoId('https://www.youtube.com/channel/UC123')).toBeNull();
+  });
+});
+
+describe('resolveVideo', () => {
+  const ID = 'dQw4w9WgXcQ';
+  const validDoc = { title: 'Judul video fixture', description: 'Paragraf pengantar fixture.', videoUrl: `https://youtu.be/${ID}` };
+
+  it('null bila dokumen tidak ada, videoUrl kosong, atau URL sembarang', () => {
+    expect(resolveVideo(undefined)).toBeNull();
+    expect(resolveVideo({ title: 'X', videoUrl: '' })).toBeNull();
+    expect(resolveVideo({ title: 'X', videoUrl: 'https://vimeo.com/1' })).toBeNull();
+    expect(resolveVideo({ title: 'X', videoUrl: `https://www.youtube.com/shorts/${ID}` })).toBeNull();
+  });
+
+  it('embedUrl memakai domain youtube-nocookie', () => {
+    const result = resolveVideo(validDoc);
+    expect(result.embedUrl).toBe(`https://www.youtube-nocookie.com/embed/${ID}`);
+  });
+
+  it('thumbnailUrl memakai varian hqdefault dan ID video yang benar', () => {
+    const result = resolveVideo(validDoc);
+    expect(result.thumbnailUrl).toBe(`https://i.ytimg.com/vi/${ID}/hqdefault.jpg`);
+  });
+
+  it('title/description diteruskan apa adanya', () => {
+    const result = resolveVideo(validDoc);
+    expect(result.title).toBe('Judul video fixture');
+    expect(result.description).toBe('Paragraf pengantar fixture.');
   });
 });

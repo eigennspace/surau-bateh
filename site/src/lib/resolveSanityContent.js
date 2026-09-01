@@ -80,6 +80,80 @@ export function resolveArticles(urlFor, articleDocs) {
     });
 }
 
+// ID video (11 karakter) dari URL YouTube -- aturan ini diberlakukan DUA
+// KALI: di sini (jaring pengaman saat build) dan sebagai validasi schema di
+// `studio/schemaTypes/lib/youtubeUrl.ts` (Studio, dikoreksi saat pengurus
+// mengetik). `studio/` dan `site/` adalah paket npm terpisah tanpa modul
+// bersama, jadi duplikasi ini DISENGAJA -- kalau salah satu sisi diubah,
+// cek pasangannya. Lihat
+// `.scratch/video-profil-surau/issues/03-rambu-validasi-studio-dan-peringatan-build.md`.
+const YOUTUBE_ID_RE = /^[A-Za-z0-9_-]{11}$/;
+
+/**
+ * @param {string|undefined|null} url
+ * @returns {string|null} ID video bila `url` bentuk `watch?v=`, `youtu.be/`,
+ *   atau `/embed/` yang sah; `null` untuk bentuk lain -- termasuk Shorts
+ *   (`/shorts/<id>`), ditolak berbasis bentuk karena orientasi 9:16-nya
+ *   merusak bingkai 16:9 seksi ini. Ekor parameter (`t`, `list`, dst) diabaikan
+ *   begitu saja karena tidak ikut dibaca di sini.
+ */
+export function extractYoutubeVideoId(url) {
+  if (!url) return null;
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return null;
+  }
+
+  const host = parsed.hostname.replace(/^www\.|^m\./, '');
+
+  if (host === 'youtu.be') {
+    const id = parsed.pathname.split('/').filter(Boolean)[0];
+    return id && YOUTUBE_ID_RE.test(id) ? id : null;
+  }
+
+  if (host === 'youtube.com') {
+    if (parsed.pathname === '/watch') {
+      const id = parsed.searchParams.get('v');
+      return id && YOUTUBE_ID_RE.test(id) ? id : null;
+    }
+    if (parsed.pathname.startsWith('/embed/')) {
+      const id = parsed.pathname.split('/')[2];
+      return id && YOUTUBE_ID_RE.test(id) ? id : null;
+    }
+    // /shorts/<id> -- lihat komentar di atas fungsi.
+    return null;
+  }
+
+  return null;
+}
+
+/**
+ * @param {{title?: string, description?: string, videoUrl?: string}|undefined} doc
+ *   Dokumen singleton `profilSurau` mentah hasil GROQ.
+ * @returns {{title: string, description?: string, embedUrl: string, thumbnailUrl: string}|null}
+ *   `null` bila dokumen belum di-publish, `videoUrl` kosong, atau URL-nya
+ *   tidak lolos aturan di atas -- pemanggil (`fetch-sanity-content.mjs`)
+ *   yang bertanggung jawab menuliskan peringatan build untuk kasus terakhir,
+ *   supaya fungsi murni ini tidak melakukan I/O.
+ */
+export function resolveVideo(doc) {
+  if (!doc?.videoUrl) return null;
+  const id = extractYoutubeVideoId(doc.videoUrl);
+  if (!id) return null;
+  return {
+    title: doc.title,
+    description: doc.description,
+    // youtube-nocookie.com, bukan youtube.com -- menunda cookie pelacak
+    // YouTube sampai video benar-benar diputar (lihat `VideoEmbed.jsx`).
+    embedUrl: `https://www.youtube-nocookie.com/embed/${id}`,
+    // hqdefault, bukan maxresdefault -- yang terakhir hanya ada bila sumber
+    // videonya minimal 720p dan sebaliknya membalas 404 di browser.
+    thumbnailUrl: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+  };
+}
+
 /**
  * @param {Array<object>} galleryDocs Dokumen `galleryItem` mentah hasil
  *   GROQ (`image`, `alt`, `caption`, `meta`, `ratio`, `wide`).

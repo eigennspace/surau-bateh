@@ -30,6 +30,16 @@ const profilSurau = {
   },
 };
 
+// Fixture video terpisah dari `profilSurau` di atas -- ditambahkan per-test
+// lewat spread, supaya test "video tidak ada" tetap murni `null` tanpa perlu
+// override balik.
+const video = {
+  title: 'Judul video fixture',
+  description: 'Paragraf pengantar video fixture.',
+  embedUrl: 'https://www.youtube-nocookie.com/embed/videofixtureid',
+  thumbnailUrl: 'https://i.ytimg.com/vi/videofixtureid/hqdefault.jpg',
+};
+
 const salik = {
   title: 'Judul salik fixture',
   narrative: 'Narasi salik fixture.',
@@ -38,15 +48,19 @@ const salik = {
   gallery: [{ src: 'flyer.jpg', alt: 'Alt flyer fixture' }],
 };
 
-const rawData = () => baseRawData([], {
-  profilSurau,
+// `videoOverride` default `undefined` -- `profilSurau.video` jadi
+// `undefined` (falsy, sama seperti `null` dari `resolveVideo` saat dokumen
+// belum di-publish/URL tidak sah), sehingga test lain di berkas ini yang
+// tidak menyebut video tetap membuktikan seksi itu absen secara default.
+const rawData = (videoOverride) => baseRawData([], {
+  profilSurau: { ...profilSurau, video: videoOverride },
   salik,
   ilmuTasawuf: [{ title: 'Simpul silsilah fixture' }],
   stats: [{ icon: 'users', value: '>100', label: 'Label stat fixture' }],
   contact: { maps: '', pengurus: [], salik: { name: 'Kontak salik fixture', role: 'Peran salik fixture', phone: '081200000000' } },
 });
 
-const render = Page => renderToStaticMarkup(<Page site={deriveSiteData(rawData(), NOW)} />);
+const render = (Page, videoOverride) => renderToStaticMarkup(<Page site={deriveSiteData(rawData(videoOverride), NOW)} />);
 
 describe('ProfilSurauPage', () => {
   // Inti test ini: memindahkan belasan potong teks dari JSX ke Sumber Data
@@ -81,6 +95,26 @@ describe('ProfilSurauPage', () => {
     const html = render(ProfilSurauPage);
     expect(html).toContain('Simpul silsilah fixture');
     expect(html).toContain('Label stat fixture');
+  });
+
+  // Seksi video (Sanity, lihat ADR 0010) -- dua kasus: ada dan tidak ada.
+  it('video ada -> judul, paragraf, thumbnail, dan teks aksesibilitas muncul', () => {
+    const html = render(ProfilSurauPage, video);
+    expect(html).toContain('Judul video fixture');
+    expect(html).toContain('Paragraf pengantar video fixture.');
+    expect(html).toContain('https://i.ytimg.com/vi/videofixtureid/hqdefault.jpg');
+    expect(html).toContain('Putar video: Judul video fixture');
+  });
+
+  it('video tidak ada -> seksi video absen, seksi lain tetap utuh', () => {
+    const html = render(ProfilSurauPage, null);
+    expect(html).not.toContain('Putar video');
+    expect(html).not.toContain('ytimg.com');
+    // Seksi lain (hero, pengelolaan, silsilah, pengurus) tetap merender.
+    expect(html).toContain('Judul hero fixture');
+    expect(html).toContain('Judul pengelolaan fixture');
+    expect(html).toContain('Judul silsilah fixture');
+    expect(html).toContain('Judul pengurus fixture');
   });
 });
 

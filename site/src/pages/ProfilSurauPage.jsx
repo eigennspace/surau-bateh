@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Card, PhotoTile, SectionHeading, StatBlock, Timeline, useBreakpoint } from '../ds.js';
+import { Badge, Card, PhotoTile, SectionHeading, StatBlock, Timeline, VideoEmbed, useBreakpoint } from '../ds.js';
 
 const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) var(--space-8)');
 
@@ -18,7 +18,7 @@ const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) 
  */
 export default function ProfilSurauPage({ site }) {
   const mobile = useBreakpoint();
-  const { hero, pengelolaan, silsilah, pengurus } = site.profilSurau;
+  const { hero, pengelolaan, silsilah, pengurus, video } = site.profilSurau;
   return (
     <div>
       <section style={{ padding: pad(mobile), background: 'var(--sand-100)' }}>
@@ -34,6 +34,22 @@ export default function ProfilSurauPage({ site }) {
             meta={hero.photo.meta} icon={hero.photo.icon} caption={hero.photo.caption} />
         </div>
       </section>
+      {/* Seksi video profil (Sanity, lihat ADR 0010) -- tepat setelah hero,
+        sebelum seksi pengelolaan. `video` bisa `null` (belum di-publish atau
+        URL-nya tidak sah); tidak dirender sama sekali dalam kasus itu --
+        bukan placeholder, bukan ruang kosong (lihat
+        `.scratch/video-profil-surau/spec.md`). Lebar mengikuti
+        `--container-narrow` yang sama dengan seksi silsilah di bawah, bukan
+        container lebar. */}
+      {video ? (
+        <section style={{ padding: pad(mobile), background: 'var(--sand-200)' }}>
+          <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
+            <SectionHeading title={video.title} description={video.description} />
+            <VideoEmbed embedUrl={video.embedUrl} thumbnailUrl={video.thumbnailUrl} title={video.title}
+              style={{ marginTop: 'var(--space-8)' }} />
+          </div>
+        </section>
+      ) : null}
       <section style={{ background: 'var(--surface-dark)', padding: pad(mobile) }}>
         <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1fr 1fr', gap: mobile ? 'var(--space-8)' : 'var(--space-12)', alignItems: 'center' }}>
           <PhotoTile src={pengelolaan.photo.src} alt={pengelolaan.photo.alt} ratio="4 / 3" position="center 55%"
