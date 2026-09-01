@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../core/Icon.jsx';
+import { useLockBodyScroll } from '../core/useLockBodyScroll.js';
 
 /**
  * Modal foto full-size, independen dari `Dialog` (lihat spec di
@@ -9,6 +10,10 @@ import { Icon } from '../core/Icon.jsx';
  * memakai `Dialog` tidak ikut berubah.
  */
 export function PhotoLightbox({ src, alt = '', caption, meta, onClose }) {
+  // Lihat komentar di `useLockBodyScroll.js` -- mencegah modal ter-render
+  // di posisi yang salah di iOS Safari kalau halaman di baliknya masih
+  // bisa di-scroll saat modal baru terbuka.
+  useLockBodyScroll();
   return (
     <div
       onClick={onClose}

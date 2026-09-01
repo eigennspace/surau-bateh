@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../core/Icon.jsx';
+import { useLockBodyScroll } from '../core/useLockBodyScroll.js';
 
 /**
  * Modal video full-size, independen dari `Dialog` -- meniru pola
@@ -35,6 +36,10 @@ import { Icon } from '../core/Icon.jsx';
  */
 export function VideoLightbox({ embedUrl, title, onClose }) {
   const autoplaySrc = `${embedUrl}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
+  // Lihat komentar di `useLockBodyScroll.js` -- ini yang membuat modal
+  // ter-render di posisi yang salah di iOS Safari kalau halaman di
+  // baliknya masih bisa di-scroll saat modal baru terbuka.
+  useLockBodyScroll();
   return (
     <div
       onClick={onClose}
