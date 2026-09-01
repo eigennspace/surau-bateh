@@ -18,8 +18,23 @@ import { Icon } from '../core/Icon.jsx';
  * `PhotoLightbox`) supaya tidak berpotensi bertumpuk dengan kontrol/ikon
  * bawaan pemutar video yang kerap ditaruh penyedia di pojok kanan-atas
  * iframe (mis. logo/ikon "buka di tab baru").
+ *
+ * `autoplay=1` ditambahkan ke `embedUrl` di sini (bukan di `resolveVideo`
+ * build-time) -- ini keputusan render, bukan parsing URL, jadi tidak
+ * melanggar kontrak "bodoh" komponen. Tujuannya: melewati kartu judul +
+ * atribusi channel YouTube yang tampil begitu iframe dimuat tanpa
+ * autoplay -- pengunjung sudah menyatakan niat menonton lewat klik tombol
+ * play kita sendiri, jadi video langsung diputar tanpa klik kedua di
+ * dalam iframe. `modestbranding=1` mengecilkan logo YouTube yang tetap
+ * tampil di kontrol pemutar selama video diputar -- TIDAK bisa
+ * dihilangkan sepenuhnya, atribusi itu wajib menurut ketentuan Embedded
+ * Player YouTube dan sengaja tidak kita coba tutupi/hilangkan paksa.
+ * `rel=0` membatasi video terkait yang muncul di akhir hanya dari channel
+ * yang sama. `playsinline=1` mencegah iOS Safari memaksa video ke
+ * fullscreen native saat diputar.
  */
 export function VideoLightbox({ embedUrl, title, onClose }) {
+  const autoplaySrc = `${embedUrl}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
   return (
     <div
       onClick={onClose}
@@ -37,7 +52,7 @@ export function VideoLightbox({ embedUrl, title, onClose }) {
           <Icon name="x" size={18} />
         </button>
         <iframe
-          src={embedUrl}
+          src={autoplaySrc}
           title={title}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
