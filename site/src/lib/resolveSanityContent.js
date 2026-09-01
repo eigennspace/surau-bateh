@@ -80,24 +80,25 @@ export function resolveArticles(urlFor, articleDocs) {
     });
 }
 
-// ID berkas dari URL Google Drive -- aturan ini diberlakukan DUA KALI: di
-// sini (jaring pengaman saat build) dan sebagai validasi schema di
-// `studio/schemaTypes/lib/googleDriveUrl.ts` (Studio, dikoreksi saat
-// pengurus mengetik). `studio/` dan `site/` adalah paket npm terpisah tanpa
-// modul bersama, jadi duplikasi ini DISENGAJA -- kalau salah satu sisi
-// diubah, cek pasangannya. Lihat ADR 0011 (men-supersede ADR 0010, yang
-// semula menolak Drive) dan
+// ID video (11 karakter) dari URL YouTube -- aturan ini diberlakukan DUA
+// KALI: di sini (jaring pengaman saat build) dan sebagai validasi schema di
+// `studio/schemaTypes/lib/youtubeUrl.ts` (Studio, dikoreksi saat pengurus
+// mengetik). `studio/` dan `site/` adalah paket npm terpisah tanpa modul
+// bersama, jadi duplikasi ini DISENGAJA -- kalau salah satu sisi diubah,
+// cek pasangannya. Lihat ADR 0012 (men-supersede ADR 0011/Drive, kembali
+// ke keputusan ADR 0010) dan
 // `.scratch/video-profil-surau/issues/03-rambu-validasi-studio-dan-peringatan-build.md`.
-const DRIVE_ID_RE = /^[A-Za-z0-9_-]+$/;
+const YOUTUBE_ID_RE = /^[A-Za-z0-9_-]{11}$/;
 
 /**
  * @param {string|undefined|null} url
- * @returns {string|null} ID berkas bila `url` bentuk `/file/d/<id>/...` atau
- *   `open?id=<id>` (dua bentuk yang dihasilkan tombol Share Google Drive);
- *   `null` untuk bentuk lain -- termasuk link folder, yang tidak punya satu
- *   berkas video untuk di-embed.
+ * @returns {string|null} ID video bila `url` bentuk `watch?v=`, `youtu.be/`,
+ *   atau `/embed/` yang sah; `null` untuk bentuk lain -- termasuk Shorts
+ *   (`/shorts/<id>`), ditolak berbasis bentuk karena orientasi 9:16-nya
+ *   merusak bingkai 16:9 seksi ini. Ekor parameter (`t`, `list`, dst) diabaikan
+ *   begitu saja karena tidak ikut dibaca di sini.
  */
-export function extractGoogleDriveFileId(url) {
+export function extractYoutubeVideoId(url) {
   if (!url) return null;
   let parsed;
   try {
@@ -106,22 +107,26 @@ export function extractGoogleDriveFileId(url) {
     return null;
   }
 
-  const host = parsed.hostname.replace(/^www\./, '');
-  if (host !== 'drive.google.com') return null;
+  const host = parsed.hostname.replace(/^www\.|^m\./, '');
 
-  const fileMatch = parsed.pathname.match(/^\/file\/d\/([^/]+)/);
-  if (fileMatch) {
-    const id = fileMatch[1];
-    return DRIVE_ID_RE.test(id) ? id : null;
+  if (host === 'youtu.be') {
+    const id = parsed.pathname.split('/').filter(Boolean)[0];
+    return id && YOUTUBE_ID_RE.test(id) ? id : null;
   }
 
-  if (parsed.pathname === '/open') {
-    const id = parsed.searchParams.get('id');
-    return id && DRIVE_ID_RE.test(id) ? id : null;
+  if (host === 'youtube.com') {
+    if (parsed.pathname === '/watch') {
+      const id = parsed.searchParams.get('v');
+      return id && YOUTUBE_ID_RE.test(id) ? id : null;
+    }
+    if (parsed.pathname.startsWith('/embed/')) {
+      const id = parsed.pathname.split('/')[2];
+      return id && YOUTUBE_ID_RE.test(id) ? id : null;
+    }
+    // /shorts/<id> -- lihat komentar di atas fungsi.
+    return null;
   }
 
-  // /drive/folders/<id> dan bentuk lain -- ditolak berbasis bentuk, bukan
-  // keterbatasan teknis: link folder tidak menunjuk satu berkas video.
   return null;
 }
 
@@ -136,20 +141,17 @@ export function extractGoogleDriveFileId(url) {
  */
 export function resolveVideo(doc) {
   if (!doc?.videoUrl) return null;
-  const id = extractGoogleDriveFileId(doc.videoUrl);
+  const id = extractYoutubeVideoId(doc.videoUrl);
   if (!id) return null;
   return {
     title: doc.title,
     description: doc.description,
-    // Endpoint /preview Drive resmi bisa di-iframe (mengembalikan 200 tanpa
-    // X-Frame-Options) -- lihat ADR 0011 untuk risiko kuota tayang harian
-    // per berkas yang diterima sadar lewat keputusan ini.
-    embedUrl: `https://drive.google.com/file/d/${id}/preview`,
-    // Endpoint /thumbnail TIDAK didokumentasikan resmi oleh Google (beda
-    // dari hqdefault YouTube yang didokumentasikan) -- dipakai karena tidak
-    // ada alternatif resmi untuk mengambil thumbnail video Drive tanpa
-    // OAuth. Bisa berhenti bekerja tanpa pemberitahuan; lihat ADR 0011.
-    thumbnailUrl: `https://drive.google.com/thumbnail?id=${id}&sz=w1280`,
+    // youtube-nocookie.com, bukan youtube.com -- menunda cookie pelacak
+    // YouTube sampai video benar-benar diputar (lihat `VideoLightbox.jsx`).
+    embedUrl: `https://www.youtube-nocookie.com/embed/${id}`,
+    // hqdefault, bukan maxresdefault -- yang terakhir hanya ada bila sumber
+    // videonya minimal 720p dan sebaliknya membalas 404 di browser.
+    thumbnailUrl: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
   };
 }
 

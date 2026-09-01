@@ -85,7 +85,7 @@ async function main() {
   // `.scratch/video-profil-surau/issues/03-rambu-validasi-studio-dan-peringatan-build.md`).
   if (profilSurauDoc?.videoUrl && !video) {
     console.warn(
-      `fetch-sanity-content: URL video Profil Surau ditolak (bukan link berkas Google Drive yang sah), seksi video tidak akan tampil: ${profilSurauDoc.videoUrl}`,
+      `fetch-sanity-content: URL video Profil Surau ditolak (bukan link video YouTube yang sah), seksi video tidak akan tampil: ${profilSurauDoc.videoUrl}`,
     );
   }
 

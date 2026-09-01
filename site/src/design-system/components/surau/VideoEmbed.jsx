@@ -4,7 +4,7 @@ import { VideoLightbox } from '../feedback/VideoLightbox.jsx';
 
 /**
  * VideoEmbed — klik-untuk-muat: merender thumbnail + tombol play; iframe
- * video (Google Drive, lihat ADR 0011) baru dimuat setelah tombol ditekan,
+ * video (YouTube, lihat ADR 0010/0012) baru dimuat setelah tombol ditekan,
  * di dalam `VideoLightbox` (modal), bukan disisipkan di tempat -- pengunjung
  * yang tidak mengklik tidak pernah mengunduh player videonya sama sekali.
  * Kontraknya sengaja BODOH -- `embedUrl`/`thumbnailUrl` sudah jadi dan
@@ -13,11 +13,11 @@ import { VideoLightbox } from '../feedback/VideoLightbox.jsx';
  * Ini bukan pola baru: `Footer.jsx` sudah merender `<iframe>` peta yang
  * URL-nya dibangun di luar komponen.
  *
- * Modal (bukan swap-di-tempat seperti sebelumnya) dipilih karena kontrol
- * bawaan pemutar Drive (scrubber/timeline) selalu tampil menutupi bagian
- * atas video dan tidak bisa di-restyle (iframe lintas-origin) -- modal
- * memberi videonya kanvas jauh lebih besar sehingga overlay itu terasa jauh
- * lebih kecil secara proporsional. Lihat `VideoLightbox.jsx` untuk detail.
+ * Modal dipertahankan dari percobaan singkat host Google Drive (ADR 0011):
+ * awalnya dibangun karena kontrol bawaan pemutar Drive menutupi video di
+ * kotak kecil, tapi videonya sendiri sekarang lebih nyaman ditonton dalam
+ * kanvas besar+terfokus terlepas dari host-nya, jadi tetap dipakai untuk
+ * YouTube. Lihat `VideoLightbox.jsx` untuk detail.
  *
  * Aksesibilitas seluruhnya diturunkan dari `title`: `alt` thumbnail, `title`
  * iframe, dan `aria-label` tombol play -- tidak ada field a11y terpisah.

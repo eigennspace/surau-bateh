@@ -36,8 +36,8 @@ const profilSurau = {
 const video = {
   title: 'Judul video fixture',
   description: 'Paragraf pengantar video fixture.',
-  embedUrl: 'https://drive.google.com/file/d/videofixtureid/preview',
-  thumbnailUrl: 'https://drive.google.com/thumbnail?id=videofixtureid&sz=w1280',
+  embedUrl: 'https://www.youtube-nocookie.com/embed/videofixtureid',
+  thumbnailUrl: 'https://i.ytimg.com/vi/videofixtureid/hqdefault.jpg',
 };
 
 const salik = {
@@ -102,14 +102,14 @@ describe('ProfilSurauPage', () => {
     const html = render(ProfilSurauPage, video);
     expect(html).toContain('Judul video fixture');
     expect(html).toContain('Paragraf pengantar video fixture.');
-    expect(html).toContain('https://drive.google.com/thumbnail?id=videofixtureid&amp;sz=w1280');
+    expect(html).toContain('https://i.ytimg.com/vi/videofixtureid/hqdefault.jpg');
     expect(html).toContain('Putar video: Judul video fixture');
   });
 
   it('video tidak ada -> seksi video absen, seksi lain tetap utuh', () => {
     const html = render(ProfilSurauPage, null);
     expect(html).not.toContain('Putar video');
-    expect(html).not.toContain('drive.google.com');
+    expect(html).not.toContain('ytimg.com');
     // Seksi lain (hero, pengelolaan, silsilah, pengurus) tetap merender.
     expect(html).toContain('Judul hero fixture');
     expect(html).toContain('Judul pengelolaan fixture');

@@ -7,19 +7,17 @@ import { Icon } from '../core/Icon.jsx';
  * `surface-card`/`radius-xl`/`shadow-lg`) tapi TANPA padding di sekeliling
  * media: video mengisi kartu penuh (edge-to-edge), sedangkan foto di
  * `PhotoLightbox` memang diberi padding karena ada caption/meta di
- * bawahnya. Dipakai `VideoEmbed.jsx` supaya kontrol bawaan pemutar Google
- * Drive (scrubber/timeline yang selalu tampil menutupi bagian atas video --
- * bagian dalam iframe lintas-origin yang tidak bisa kita restyle) mendapat
- * ruang jauh lebih besar daripada kotak 16:9 kecil di dalam halaman,
- * sehingga overlay itu terasa jauh lebih kecil secara proporsional. Ini
- * TIDAK menghilangkan overlay-nya (itu bagian dari desain pemutar Drive,
- * di luar kendali kita) -- pengunjung yang ingin videonya benar-benar bersih
- * dari overlay tetap perlu menekan ikon fullscreen bawaan Drive di pojok
- * kanan-atas video.
+ * bawahnya. Dipakai `VideoEmbed.jsx` supaya video ditonton dalam kanvas
+ * besar dan terfokus, alih-alih kotak 16:9 kecil di tengah halaman --
+ * awalnya dibangun untuk memberi kontrol bawaan pemutar Google Drive lebih
+ * banyak ruang (percobaan singkat host Drive, lihat ADR 0011, di-supersede
+ * ADR 0012), tapi dipertahankan untuk YouTube karena pengalaman menonton
+ * terfokusnya tetap lebih baik.
  *
  * Tombol tutup sengaja di pojok KIRI-atas (bukan kanan seperti
- * `PhotoLightbox`) supaya tidak bertumpuk dengan ikon "buka di tab
- * baru"/fullscreen bawaan Drive yang selalu ada di pojok kanan-atas iframe.
+ * `PhotoLightbox`) supaya tidak berpotensi bertumpuk dengan kontrol/ikon
+ * bawaan pemutar video yang kerap ditaruh penyedia di pojok kanan-atas
+ * iframe (mis. logo/ikon "buka di tab baru").
  */
 export function VideoLightbox({ embedUrl, title, onClose }) {
   return (
