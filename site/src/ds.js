@@ -17,6 +17,7 @@ export { Dialog } from './design-system/components/feedback/Dialog.jsx';
 export { PhotoLightbox } from './design-system/components/feedback/PhotoLightbox.jsx';
 export { Toast } from './design-system/components/feedback/Toast.jsx';
 export { Tooltip } from './design-system/components/feedback/Tooltip.jsx';
+export { VideoLightbox } from './design-system/components/feedback/VideoLightbox.jsx';
 
 export { Checkbox } from './design-system/components/forms/Checkbox.jsx';
 export { Input } from './design-system/components/forms/Input.jsx';
