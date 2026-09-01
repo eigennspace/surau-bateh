@@ -34,7 +34,7 @@ export default function ProfilSurauPage({ site }) {
             meta={hero.photo.meta} icon={hero.photo.icon} caption={hero.photo.caption} />
         </div>
       </section>
-      {/* Seksi video profil (Sanity, lihat ADR 0010) -- tepat setelah hero,
+      {/* Seksi video profil (Sanity, lihat ADR 0011) -- tepat setelah hero,
         sebelum seksi pengelolaan. `video` bisa `null` (belum di-publish atau
         URL-nya tidak sah); tidak dirender sama sekali dalam kasus itu --
         bukan placeholder, bukan ruang kosong (lihat

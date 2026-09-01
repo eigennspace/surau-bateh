@@ -1,5 +1,5 @@
 import {defineField, defineType} from 'sanity'
-import {extractYoutubeVideoId} from './lib/youtubeUrl'
+import {extractGoogleDriveFileId} from './lib/googleDriveUrl'
 
 // profilSurau — singleton PERTAMA di Studio ini (lihat catatan struktur
 // singleton di `sanity.config.ts`): satu dokumen dengan `_id` tetap
@@ -10,11 +10,12 @@ import {extractYoutubeVideoId} from './lib/youtubeUrl'
 // ini ("video profil"), supaya ia jadi pintu masuk wajar bila kelak sisa
 // Halaman Profil Surau ikut pindah ke Sanity.
 //
-// Video di-host di YouTube, BUKAN diunggah sebagai asset Sanity dan BUKAN
-// disematkan dari Google Drive -- lihat ADR 0010 untuk alasan lengkapnya.
-// Tidak ada field yang mengendalikan tata letak (rasio/lebar/warna): itu
-// keputusan kode, konsisten dengan prinsip "kurasi field berisiko" yang
-// dipakai `galleryItem.ts`.
+// Video di-host di Google Drive, BUKAN diunggah sebagai asset Sanity --
+// lihat ADR 0011 (men-supersede ADR 0010, yang semula memilih YouTube dan
+// menolak Drive) untuk alasan lengkap dan risiko kuota tayang harian yang
+// diterima sadar lewat keputusan ini. Tidak ada field yang mengendalikan
+// tata letak (rasio/lebar/warna): itu keputusan kode, konsisten dengan
+// prinsip "kurasi field berisiko" yang dipakai `galleryItem.ts`.
 export const profilSurau = defineType({
   name: 'profilSurau',
   title: 'Profil Surau',
@@ -35,15 +36,15 @@ export const profilSurau = defineType({
     }),
     defineField({
       name: 'videoUrl',
-      title: 'Link video YouTube',
-      description: 'Tempel link dari tombol Share YouTube -- bentuk watch?v=, youtu.be/, atau /embed/ semuanya diterima, dan ekor seperti penanda waktu/playlist tidak perlu dibersihkan. Link Shorts tidak diterima (orientasi videonya tidak cocok dengan bingkai seksi ini).',
+      title: 'Link video Google Drive',
+      description: 'Tempel link dari tombol Share Google Drive (pastikan aksesnya "Anyone with the link can view") -- bentuk /file/d/<id>/view dan open?id=<id> sama-sama diterima. Link folder tidak diterima -- harus menunjuk satu berkas video.',
       type: 'url',
       validation: (Rule) =>
         Rule.required().custom((value) => {
           if (!value) return true // pesan "wajib diisi" sudah ditangani Rule.required()
-          return extractYoutubeVideoId(value)
+          return extractGoogleDriveFileId(value)
             ? true
-            : 'Link ini bukan link video YouTube yang sah. Yang diterima: watch?v=<id>, youtu.be/<id>, atau /embed/<id> -- link Shorts, channel, atau situs lain tidak diterima.'
+            : 'Link ini bukan link berkas Google Drive yang sah. Yang diterima: drive.google.com/file/d/<id>/... atau drive.google.com/open?id=<id> -- link folder atau situs lain tidak diterima.'
         }),
     }),
   ],

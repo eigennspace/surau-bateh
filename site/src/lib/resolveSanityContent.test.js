@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractYoutubeVideoId, resolveVideo } from './resolveSanityContent.js';
+import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractGoogleDriveFileId, resolveVideo } from './resolveSanityContent.js';
 
 // `urlFor` palsu -- meniru bentuk builder `@sanity/image-url` (method
 // chaining `.auto()`/`.width()`/`.url()`) tanpa memanggil Sanity sungguhan.
@@ -88,52 +88,47 @@ describe('resolveGallery', () => {
   });
 });
 
-describe('extractYoutubeVideoId', () => {
-  const ID = 'dQw4w9WgXcQ';
+describe('extractGoogleDriveFileId', () => {
+  const ID = '1a2B3c4D5e6F7g8H9iJ0kL';
 
-  it('menerima bentuk watch?v=, youtu.be/, dan /embed/ untuk ID video yang sama', () => {
-    expect(extractYoutubeVideoId(`https://www.youtube.com/watch?v=${ID}`)).toBe(ID);
-    expect(extractYoutubeVideoId(`https://youtu.be/${ID}`)).toBe(ID);
-    expect(extractYoutubeVideoId(`https://www.youtube.com/embed/${ID}`)).toBe(ID);
+  it('menerima bentuk /file/d/<id>/... dan open?id=<id> untuk ID berkas yang sama', () => {
+    expect(extractGoogleDriveFileId(`https://drive.google.com/file/d/${ID}/view?usp=sharing`)).toBe(ID);
+    expect(extractGoogleDriveFileId(`https://drive.google.com/file/d/${ID}/preview`)).toBe(ID);
+    expect(extractGoogleDriveFileId(`https://drive.google.com/open?id=${ID}`)).toBe(ID);
   });
 
-  it('membuang ekor penanda waktu/playlist dari hasil', () => {
-    expect(extractYoutubeVideoId(`https://www.youtube.com/watch?v=${ID}&t=42s&list=PL123`)).toBe(ID);
-    expect(extractYoutubeVideoId(`https://youtu.be/${ID}?t=42`)).toBe(ID);
+  it('menolak link folder', () => {
+    expect(extractGoogleDriveFileId(`https://drive.google.com/drive/folders/${ID}`)).toBeNull();
   });
 
-  it('menolak link Shorts', () => {
-    expect(extractYoutubeVideoId(`https://www.youtube.com/shorts/${ID}`)).toBeNull();
-  });
-
-  it('null untuk URL kosong/sembarang/bukan YouTube', () => {
-    expect(extractYoutubeVideoId(undefined)).toBeNull();
-    expect(extractYoutubeVideoId('')).toBeNull();
-    expect(extractYoutubeVideoId('bukan-url')).toBeNull();
-    expect(extractYoutubeVideoId('https://vimeo.com/12345')).toBeNull();
-    expect(extractYoutubeVideoId('https://www.youtube.com/channel/UC123')).toBeNull();
+  it('null untuk URL kosong/sembarang/bukan Drive', () => {
+    expect(extractGoogleDriveFileId(undefined)).toBeNull();
+    expect(extractGoogleDriveFileId('')).toBeNull();
+    expect(extractGoogleDriveFileId('bukan-url')).toBeNull();
+    expect(extractGoogleDriveFileId('https://vimeo.com/12345')).toBeNull();
+    expect(extractGoogleDriveFileId('https://www.youtube.com/watch?v=dQw4w9WgXcQ')).toBeNull();
   });
 });
 
 describe('resolveVideo', () => {
-  const ID = 'dQw4w9WgXcQ';
-  const validDoc = { title: 'Judul video fixture', description: 'Paragraf pengantar fixture.', videoUrl: `https://youtu.be/${ID}` };
+  const ID = '1a2B3c4D5e6F7g8H9iJ0kL';
+  const validDoc = { title: 'Judul video fixture', description: 'Paragraf pengantar fixture.', videoUrl: `https://drive.google.com/file/d/${ID}/view?usp=sharing` };
 
   it('null bila dokumen tidak ada, videoUrl kosong, atau URL sembarang', () => {
     expect(resolveVideo(undefined)).toBeNull();
     expect(resolveVideo({ title: 'X', videoUrl: '' })).toBeNull();
     expect(resolveVideo({ title: 'X', videoUrl: 'https://vimeo.com/1' })).toBeNull();
-    expect(resolveVideo({ title: 'X', videoUrl: `https://www.youtube.com/shorts/${ID}` })).toBeNull();
+    expect(resolveVideo({ title: 'X', videoUrl: `https://drive.google.com/drive/folders/${ID}` })).toBeNull();
   });
 
-  it('embedUrl memakai domain youtube-nocookie', () => {
+  it('embedUrl memakai endpoint /preview Drive', () => {
     const result = resolveVideo(validDoc);
-    expect(result.embedUrl).toBe(`https://www.youtube-nocookie.com/embed/${ID}`);
+    expect(result.embedUrl).toBe(`https://drive.google.com/file/d/${ID}/preview`);
   });
 
-  it('thumbnailUrl memakai varian hqdefault dan ID video yang benar', () => {
+  it('thumbnailUrl memakai endpoint /thumbnail dan ID berkas yang benar', () => {
     const result = resolveVideo(validDoc);
-    expect(result.thumbnailUrl).toBe(`https://i.ytimg.com/vi/${ID}/hqdefault.jpg`);
+    expect(result.thumbnailUrl).toBe(`https://drive.google.com/thumbnail?id=${ID}&sz=w1280`);
   });
 
   it('title/description diteruskan apa adanya', () => {

@@ -41,7 +41,7 @@ export default function App() {
   const mobile = useBreakpoint();
   // `now` dihitung ulang setiap render — cukup murah untuk situs statis ini
   // dan memastikan penanda "kegiatan hari ini" mengikuti tanggal nyata.
-  // Seksi video Profil Surau (hasil `resolveVideo`, lihat ADR 0010) DIGABUNG
+  // Seksi video Profil Surau (hasil `resolveVideo`, lihat ADR 0011) DIGABUNG
   // ke cabang `profilSurau` yang sudah ada di sini -- persis seperti galeri
   // di atas -- supaya `ProfilSurauPage` tetap membaca satu objek tanpa perlu
   // tahu bagian mana yang dari Sumber Data dan bagian mana dari Sanity.

@@ -3,9 +3,9 @@ import { Icon } from '../core/Icon.jsx';
 
 /**
  * VideoEmbed — klik-untuk-muat: awalnya merender thumbnail + tombol play,
- * iframe YouTube baru disisipkan ke DOM setelah tombol ditekan (pengunjung
- * yang tidak mengklik tidak pernah mengunduh player YouTube atau memasang
- * cookie-nya). Kontraknya sengaja BODOH -- `embedUrl`/`thumbnailUrl` sudah
+ * iframe video (Google Drive, lihat ADR 0011) baru disisipkan ke DOM
+ * setelah tombol ditekan -- pengunjung yang tidak mengklik tidak pernah
+ * mengunduh player videonya. Kontraknya sengaja BODOH -- `embedUrl`/`thumbnailUrl` sudah
  * jadi dan diterima sebagai prop, tidak ada parsing URL apa pun di sini
  * (parsing terjadi saat build, lihat `resolveVideo` di
  * `resolveSanityContent.js`). Ini bukan pola baru: `Footer.jsx` sudah
