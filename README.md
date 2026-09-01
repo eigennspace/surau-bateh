@@ -9,14 +9,14 @@
 
 Repo ini punya dua bagian: [`site/`](site/) — situs publik surau, dibangun
 dengan Vite + React sebagai static export dan di-deploy ke GitHub Pages —
-dan `New Surau Bateh Lori Design System/`, sumber desain yang di-vendor
-ke situs. `site/` independen: bisa di-build tanpa folder design system
-hadir di sebelahnya. Komponen visual, token CSS, dan aset yang dipakai
-disalin (vendor) ke `site/src/design-system/` lewat `npm run sync-ds`
-(dijalankan dari dalam `site/`; lihat `site/scripts/sync-design-system.mjs`
-dan ADR [0003](docs/adr/0003-site-vendors-design-system-snapshot.md)) —
-bukan diimpor langsung. Jalankan `npm run sync-ds` saat desain sumber
-berubah dan situs perlu ditarik ke versi terbaru.
+dan `New Surau Bateh Lori Design System/`, skill desain tempat brand,
+guidelines, dan prototype tinggal. `site/` independen: bisa di-build tanpa
+folder design system hadir di sebelahnya. Komponen visual, token CSS, dan
+aset yang dipakai situs tinggal di `site/src/design-system/` dan diedit
+langsung di sana (ADR [0003](docs/adr/0003-site-vendors-design-system-snapshot.md)
+dan [0009](docs/adr/0009-hapus-skrip-sync-ds.md)) — bukan diimpor dari
+folder design system, dan sejak ADR 0009 tidak ada lagi skrip sync yang
+menyalin dari sana.
 
 ## Tech stack
 
@@ -35,10 +35,11 @@ Tidak ada backend, database, atau panel admin — situs murni statis, dibangun u
 
 ## Design system
 
-Desain situs bersumber dari **New Surau Bateh Lori Design System** (folder
+Desain situs berasal dari **New Surau Bateh Lori Design System** (folder
 terpisah di root repo, di luar `site/`) dan *tidak* diimpor langsung —
-disalin sebagai snapshot ke `site/src/design-system/` lewat `npm run sync-ds`
-(ADR [0003](docs/adr/0003-site-vendors-design-system-snapshot.md)).
+komponen, token, dan aset yang dipakai situs hidup di
+`site/src/design-system/` (ADR [0003](docs/adr/0003-site-vendors-design-system-snapshot.md),
+[0009](docs/adr/0009-hapus-skrip-sync-ds.md)).
 Titik impor tunggal untuk komponen & hook ada di [`site/src/ds.js`](site/src/ds.js).
 
 **Design tokens** (`site/src/design-system/tokens/`, di-`@import` lewat
@@ -63,10 +64,11 @@ Titik impor tunggal untuk komponen & hook ada di [`site/src/ds.js`](site/src/ds.
 | Navigation | `BottomBar`, `Footer`, `NavBar`, `Tabs` |
 | Domain (surau) | `ArabicVerse`, `EventItem`, `PhotoTile`, `StatBlock`, `Timeline` |
 
-⚠️ **Jangan edit `site/src/design-system/` dengan tangan** — folder ini adalah
-snapshot hasil sync, perubahan akan tertimpa saat `npm run sync-ds`
-dijalankan lagi. Perubahan desain dilakukan di
-`New Surau Bateh Lori Design System/` lalu ditarik ke sini lewat sync.
+`site/src/design-system/` **diedit langsung** — sejak ADR
+[0009](docs/adr/0009-hapus-skrip-sync-ds.md) tidak ada lagi skrip sync yang
+bisa menimpanya. Konsekuensinya perubahan di sini tidak mengalir balik ke
+`New Surau Bateh Lori Design System/`: folder itu perlahan menua sebagai
+potret desain, jadi periksa dulu sebelum memakainya sebagai contoh.
 
 ## Mengubah konten situs
 
@@ -91,7 +93,6 @@ npm run dev      # server pengembangan
 npm test         # unit test untuk deriveSiteData, model navigasi & halaman
 npm run lint     # oxlint
 npm run build    # static export ke dist/
-npm run sync-ds  # tarik ulang komponen/token/aset dari New Surau Bateh Lori Design System/
 ```
 
 ## Struktur
@@ -105,9 +106,8 @@ npm run sync-ds  # tarik ulang komponen/token/aset dari New Surau Bateh Lori Des
   Kegiatan/Dakwah/Sosial, daftar entri tiap permukaan (navbar, burger, bottom
   bar), peta halaman↔slug, dan slug lama yang masih dilayani. Diuji di
   `site/src/lib/navigation.test.js`.
-- `site/src/design-system/` — snapshot komponen, token, dan aset design
-  system, disalin lewat `npm run sync-ds`. Jangan diedit tangan — perubahan
-  akan tertimpa saat sync berikutnya.
+- `site/src/design-system/` — komponen, token, dan aset design system yang
+  dipakai situs. Sumbernya ada di sini dan diedit langsung (ADR 0009).
 - `site/src/ds.js` — titik impor tunggal untuk komponen & hook design system.
 - `site/src/pages/*` — enam halaman situs (Beranda dirakit dari
   `site/src/components/*`).

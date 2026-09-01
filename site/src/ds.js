@@ -1,8 +1,8 @@
-// Titik impor tunggal untuk komponen visual & token design system —
-// disalin dari `New Surau Bateh Lori Design System/components/` ke
-// `src/design-system/components/` via `npm run sync-ds` (lihat ADR
-// 0003-site-vendors-design-system-snapshot). Situs tidak lagi mengimpor
-// langsung folder design system di luar `site/`.
+// Titik impor tunggal untuk komponen visual & token design system, yang
+// hidup di `src/design-system/components/` dan diedit langsung di sana
+// (lihat ADR 0003-site-vendors-design-system-snapshot dan
+// 0009-hapus-skrip-sync-ds). Situs tidak mengimpor folder design system di
+// luar `site/`, dan tidak ada lagi skrip yang menyalin dari sana.
 const BASE = './design-system/components';
 
 export { Badge } from './design-system/components/core/Badge.jsx';

@@ -10,8 +10,7 @@
     "fetch-sanity-content": "node scripts/fetch-sanity-content.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
-    "test": "vitest run",
-    "sync-ds": "node scripts/sync-design-system.mjs"
+    "test": "vitest run"
   },
   "dependencies": {
     "@portabletext/react": "^7.0.1",

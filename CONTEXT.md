@@ -9,7 +9,7 @@ Satu berkas (gaya `data.js`) yang menjadi sumber konten yang bisa berubah dan ma
 _Avoid_: memperlakukan galeri/artikel sebagai bagian Sumber Data (sudah tidak lagi sejak ADR 0006); Database/backend/panel-admin custom untuk konten yang tetap di sini (silsilah, lokasi, info rekening, dst — keputusan "avoid CMS" ADR 0001 tetap berlaku untuk konten ini)
 
 **Situs Produksi**:
-Folder terpisah dari `New Surau Bateh Lori Design System/` di dalam repo yang sama, yang benar-benar tayang untuk pengunjung (build Vite + React, static export, di-deploy ke GitHub Pages). Bisa di-build secara independen — tidak butuh folder design system hadir saat build/deploy. Komponen, token, dan aset design system yang dipakai situs disalin (vendor) ke `site/src/design-system/` lewat `npm run sync-ds`, bukan diimpor langsung dari folder design system (lihat ADR 0003-site-vendors-design-system-snapshot, yang menggantikan ADR 0002). Selisih visual bisa muncul di antara dua kali sync — pemelihara menjalankan `sync-ds` secara sengaja untuk menarik pembaruan desain. Selain jeda sync itu, satu-satunya hal lain yang boleh berbeda antar situs dan design system adalah isi Sumber Data.
+Folder terpisah dari `New Surau Bateh Lori Design System/` di dalam repo yang sama, yang benar-benar tayang untuk pengunjung (build Vite + React, static export, di-deploy ke GitHub Pages). Bisa di-build secara independen — tidak butuh folder design system hadir saat build/deploy. Komponen, token, dan aset design system yang dipakai situs hidup di `site/src/design-system/` dan diedit langsung di sana, bukan diimpor dari folder design system (lihat ADR 0003-site-vendors-design-system-snapshot, yang menggantikan ADR 0002). Sejak ADR [0009](docs/adr/0009-hapus-skrip-sync-ds.md) tidak ada lagi skrip `sync-ds` yang menyalin dari folder design system ke situs — kedua sisi boleh berbeda, dan folder design system berperan sebagai skill desain (brand, guidelines, prototype), bukan sumber kode situs.
 _Avoid_: Prototype (istilah ini khusus untuk berkas di `ui_kits/website/`, bukan situs produksi)
 
 **Kampanye Donasi**:
@@ -27,6 +27,10 @@ _Avoid_: menyebut Profil Surau/Profil Salik sebagai Halaman Program; menganggap 
 **Salik**:
 Orang yang menempuh jalan (suluk) di bawah bimbingan Mursyid di Surau Bateh — bukan sekadar jamaah yang hadir di majelis. Surau mendata Salik-nya secara terpisah (lihat pengumuman pendataan di Sumber Data), punya kegiatan khusus untuk Salik baru, dan merumuskan delapan karakter yang dituntut dari seorang Salik.
 _Avoid_: menyamakan Salik dengan jamaah/pengunjung majelis
+
+**Cabang Silsilah**:
+Tokoh yang berguru pada satu mata rantai silsilah tetapi sanad **tidak** diteruskan lewatnya — misalnya Imam Al Ghazali, murid Asy Syekh Al Farimadi, sementara sanad tarekat berlanjut ke Abu Yakub Al-Hamadani. Karena itu Cabang bukan mata rantai: ia berada di luar urutan sanad, dan sebuah Cabang boleh punya Cabang lagi (silsilah Ilmu Fiqh bercabang sampai enam tingkat). Ketiga pohon silsilah (Tauhid, Fiqh, Tasawuf) memakai bentuk yang sama, meski untuk saat ini hanya Tasawuf yang tayang.
+_Avoid_: menyebut Cabang sebagai mata rantai; memberi Cabang nomor urut sanad
 
 **Jadwal Kegiatan**:
 Halaman agenda tunggal berisi seluruh `events` surau dengan filter hari dan blok pengumuman — pandangan menyeluruh "apa yang terjadi di surau", lawan dari Halaman Program yang memandang satu program saja. Dulu bernama "Kajian"; diganti karena bertabrakan dengan Halaman Program "Tawajjuh & Kajian Rutin Ihsan". Slug lamanya (`/kajian`) tetap hidup dan menulis ulang URL ke slug baru supaya tautan yang sudah tersebar tidak mati.

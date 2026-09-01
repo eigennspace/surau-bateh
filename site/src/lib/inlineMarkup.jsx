@@ -4,10 +4,11 @@ import React from 'react';
  * Mengurai `**tebal**` dan `*miring*` di dalam satu baris teks jadi node
  * React.
  *
- * Ini SENGAJA menggandakan `parseInline` yang ada di dalam
- * `design-system/components/core/SectionHeading.jsx`: berkas itu di-vendor
- * dari folder design system lewat `npm run sync-ds` (ADR 0003), jadi apa pun
- * yang diekspor dari sana akan hilang pada sync berikutnya. Markup yang
+ * Ini menggandakan `parseInline` yang ada di dalam
+ * `design-system/components/core/SectionHeading.jsx`. Alasan aslinya sudah
+ * gugur: berkas itu dulu bisa tertimpa `npm run sync-ds`, yang sekarang tidak
+ * ada lagi (ADR 0009). Yang tetap berlaku adalah batas lapisannya — komponen
+ * design system tidak mengimpor helper situs, dan sebaliknya. Markup yang
  * dipahami keduanya harus tetap sama, supaya pengurus tidak perlu tahu teks
  * mana yang dirender lewat jalur yang mana.
  */

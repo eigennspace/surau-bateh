@@ -192,10 +192,13 @@ export const SB_DATA = {
     },
     {
       title: 'Al Arif Billah Asy Syekh Abu Ali Al-Fadhal bin Muhammad Ath Thusi Al Farimadi',
+      branches: [
+        { title: 'Imam Muhammad bin Muhammad Al Ghazali' }
+      ],
       order: 8
     },
     {
-      title: 'Abu Yakub Yusuf Al-Hamadani bin Ayyub, Imam Muhammad bin Muhammad Al Ghazali',
+      title: 'Abu Yakub Yusuf Al-Hamadani bin Ayyub',
       order: 9
     },
     {

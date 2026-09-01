@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// Token CSS: disalin dari design system via `npm run sync-ds` (ADR 0003).
+// Token CSS design system, sumbernya di `src/design-system/` (ADR 0003, 0009).
 import './design-system/styles.css';
 import './global.css';
 import App from './App.jsx';
