@@ -18,7 +18,10 @@ export function VideoEmbed({ embedUrl, thumbnailUrl, title, style }) {
   const [loaded, setLoaded] = React.useState(false);
 
   return (
-    <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-dark)', boxShadow: 'var(--shadow-sm)', ...style }}>
+    // `minWidth: 0` -- perlu saat komponen ini duduk sebagai kolom grid
+    // (lihat `ProfilSurauPage.jsx`): tanpa itu grid item lebar-otomatis bisa
+    // menolak menciut di bawah lebar intrinsik kontennya di layar sempit.
+    <div style={{ position: 'relative', width: '100%', minWidth: 0, aspectRatio: '16 / 9', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-dark)', boxShadow: 'var(--shadow-sm)', ...style }}>
       {loaded ? (
         <iframe
           src={embedUrl}
@@ -32,7 +35,11 @@ export function VideoEmbed({ embedUrl, thumbnailUrl, title, style }) {
           type="button"
           onClick={() => setLoaded(true)}
           aria-label={`Putar video: ${title}`}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 0, cursor: 'pointer', background: 'none' }}
+          // appearance/font/margin di-reset eksplisit -- beberapa browser
+          // mobile (khususnya Safari iOS) menambahkan styling bawaan
+          // (padding, radius, warna teks) pada elemen <button> yang tidak
+          // ikut ditimpa hanya dengan `background`/`border`.
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', margin: 0, padding: 0, border: 0, borderRadius: 'inherit', cursor: 'pointer', background: 'none', font: 'inherit', WebkitAppearance: 'none', appearance: 'none', touchAction: 'manipulation' }}
         >
           <img src={thumbnailUrl} alt={title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
           <span aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'rgba(15, 23, 42, 0.25)' }}>

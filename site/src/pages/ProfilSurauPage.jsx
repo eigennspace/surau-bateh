@@ -5,10 +5,11 @@ const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) 
 
 /**
  * Profil Surau — Halaman Profil (lihat CONTEXT.md). Sengaja TIDAK memakai
- * `ProgramSection` seperti Profil Salik: tiap fotonya berpasangan dengan teks
+ * `ProgramSection` seperti Profil Salik: tiap media berpasangan dengan teks
  * di sebelahnya (foto pembangunan bersanding dengan cerita pembangunannya,
- * foto gotong royong dengan kalimat tentang siapa yang mengerjakan), sesuatu
- * yang hilang kalau ketiganya dicabut jadi grid dokumentasi seragam.
+ * foto gotong royong dengan kalimat tentang siapa yang mengerjakan, video
+ * profil dengan judul/paragraf pengantarnya), sesuatu yang hilang kalau
+ * keempatnya dicabut jadi grid dokumentasi seragam.
  *
  * Seluruh teks dan `alt`/`caption`/`meta`/`icon` foto dibaca dari
  * `site.profilSurau` (Sumber Data) sehingga bisa disunting pengurus. Yang
@@ -38,15 +39,22 @@ export default function ProfilSurauPage({ site }) {
         sebelum seksi pengelolaan. `video` bisa `null` (belum di-publish atau
         URL-nya tidak sah); tidak dirender sama sekali dalam kasus itu --
         bukan placeholder, bukan ruang kosong (lihat
-        `.scratch/video-profil-surau/spec.md`). Lebar mengikuti
-        `--container-narrow` yang sama dengan seksi silsilah di bawah, bukan
-        container lebar. */}
+        `.scratch/video-profil-surau/spec.md`). Tata letak dibuat SERAGAM
+        dengan pola "foto berpasangan dengan teks" yang dipakai hero/
+        pengelolaan (container-max, grid 2 kolom, teks + media sejajar) --
+        bukan pola heading-di-atas-konten yang dipakai silsilah/pengurus.
+        Video berada di kolom kanan seperti foto hero, supaya alurnya
+        text-kiri/media-kanan konsisten dengan section tepat sebelumnya. */}
       {video ? (
         <section style={{ padding: pad(mobile), background: 'var(--sand-200)' }}>
-          <div style={{ maxWidth: 'var(--container-narrow)', margin: '0 auto' }}>
-            <SectionHeading title={video.title} description={video.description} />
-            <VideoEmbed embedUrl={video.embedUrl} thumbnailUrl={video.thumbnailUrl} title={video.title}
-              style={{ marginTop: 'var(--space-8)' }} />
+          <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', display: 'grid', gridTemplateColumns: mobile ? 'minmax(0,1fr)' : '1fr 1fr', gap: mobile ? 'var(--space-8)' : 'var(--space-12)', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+              <h2 style={{ margin: 0, font: 'var(--text-h2)', color: 'var(--text-strong)', textWrap: 'balance' }}>{video.title}</h2>
+              {video.description ? (
+                <p style={{ margin: 0, font: 'var(--text-body-default)', color: 'var(--text-muted)', maxWidth: 460, textWrap: 'pretty' }}>{video.description}</p>
+              ) : null}
+            </div>
+            <VideoEmbed embedUrl={video.embedUrl} thumbnailUrl={video.thumbnailUrl} title={video.title} />
           </div>
         </section>
       ) : null}
