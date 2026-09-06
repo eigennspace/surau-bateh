@@ -47,7 +47,14 @@ export function EventItem({ day, month, dayName, title, speaker, time, place, ca
         <div style={{ width: 62, height: 66, flex: '0 0 auto', display: 'grid', placeItems: 'center', gap: 0,
           background: 'var(--surface-brand-soft)', border: '1px solid var(--maroon-100)', borderRadius: 'var(--radius-md)' }}>
           <span style={{ font: 'var(--text-h3)', color: 'var(--maroon-700)', lineHeight: 1 }}>{day}</span>
-          <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--maroon-600)', textAlign: 'center' }}>{month}</span>
+          {/* Kegiatan sekali-jalan (oneOffEvent) menampilkan singkatan hari
+              di sini ("KAM"), bukan singkatan bulan ("AGS") -- pengunjung
+              lebih perlu tahu hari kegiatan (buat rencana pekanan) daripada
+              bulannya (tanggal lengkap "13 Kamis · 13 · Ags" tetap ada di
+              baris di bawah/modal detail). `dayName.slice(0, 3)` kebetulan
+              menghasilkan singkatan yang sama persis dengan yang dipakai
+              `recurringEvent`/filter hari (Sen/Sel/Rab/Kam/Jum/Sab/Min). */}
+          <span style={{ fontSize: 'var(--fs-overline)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--maroon-600)', textAlign: 'center' }}>{dayName ? dayName.slice(0, 3) : month}</span>
         </div>
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
           {(category || isToday) ? (
