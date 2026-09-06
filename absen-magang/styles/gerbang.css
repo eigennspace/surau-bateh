@@ -158,17 +158,24 @@
 @media (max-width: 860px) {
   .gerbang-shell {
     grid-template-columns: 1fr;
+    /* Baris pertama (foto header) hanya sebesar kontennya sendiri; baris
+       kedua (form) mengambil SISA tinggi viewport. Tanpa ini, align-content
+       default grid ("normal" == stretch saat ada sisa ruang dari
+       min-height:100vh di atas) meregangkan KEDUA baris secara tidak
+       proporsional -- foto jadi lebih tinggi dari perlu dan form ikut
+       "digeser", membuat form terlihat tidak center atas-bawah. */
+    grid-template-rows: auto 1fr;
   }
 
   .gerbang-shell__panel-kiri {
     position: relative;
     top: auto;
     height: auto;
-    min-height: 160px;
+    min-height: 120px;
   }
 
   .gerbang-shell__brand {
-    padding: var(--space-5);
+    padding: var(--space-4) var(--space-5);
   }
 
   .gerbang-shell__nama {
@@ -176,7 +183,7 @@
   }
 
   .gerbang-shell__panel-kanan {
-    padding: var(--space-6) var(--space-4) var(--space-10);
+    padding: var(--space-6) var(--space-4);
   }
 }
 
