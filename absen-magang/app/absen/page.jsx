@@ -129,6 +129,12 @@ function LokasiModal({ status, onMinta, onTutup }) {
 }
 
 export default function AbsenPage() {
+  // Peserta memilih dulu mau Check-in atau Check-out ('checkin'/'checkout')
+  // sebelum form field yang relevan muncul -- null berarti masih di layar
+  // pilihan. Memisahkan form per tipe supaya Peserta check-in tidak
+  // disodori field "catatan aktivitas" yang memang cuma relevan saat
+  // check-out.
+  const [tipe, setTipe] = useState(null);
   const [pin, setPin] = useState('');
   const [catatanAktivitas, setCatatanAktivitas] = useState('');
   const [pesan, setPesan] = useState(null);
@@ -140,6 +146,13 @@ export default function AbsenPage() {
   // "aktif" di badge bawah.
   const [modalDitutup, setModalDitutup] = useState(false);
 
+  function pilihTipe(tipeBaru) {
+    setTipe(tipeBaru);
+    setPesan(null);
+    setPin('');
+    setCatatanAktivitas('');
+  }
+
   async function mintaLokasi() {
     const lokasi = await ambilLokasi();
     // getCurrentPosition sendiri sudah memicu dialog izin browser (kalau
@@ -150,7 +163,7 @@ export default function AbsenPage() {
     if (lokasi) setModalDitutup(false); // biar notif "sudah aktif" sempat tampil
   }
 
-  async function submit(tipe) {
+  async function submit() {
     setPending(true);
     setPesan(null);
     try {
@@ -203,31 +216,49 @@ export default function AbsenPage() {
           )}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-          <Input
-            label="PIN"
-            id="pin"
-            value={pin}
-            onChange={e => setPin(e.target.value)}
-            inputMode="numeric"
-            maxLength={6}
-            required
-          />
-
-          <Input
-            as="textarea"
-            label="Catatan aktivitas (diisi saat check-out)"
-            id="catatanAktivitas"
-            rows={3}
-            value={catatanAktivitas}
-            onChange={e => setCatatanAktivitas(e.target.value)}
-          />
-
-          <div className="gerbang-shell__btn-row">
-            <Button fullWidth disabled={pending || !pin} onClick={() => submit('checkin')}>Check-in</Button>
-            <Button tone="secondary" fullWidth disabled={pending || !pin} onClick={() => submit('checkout')}>Check-out</Button>
+        {tipe === null ? (
+          // Layar pilihan: Peserta pilih dulu mau Check-in atau Check-out
+          // sebelum melihat field yang relevan saja untuk tipe itu.
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            <p style={{ margin: '0 0 var(--space-2)', color: 'var(--text-muted)' }}>
+              Mau Check-in atau Check-out?
+            </p>
+            <Button size="lg" fullWidth onClick={() => pilihTipe('checkin')}>Check-in</Button>
+            <Button tone="secondary" size="lg" fullWidth onClick={() => pilihTipe('checkout')}>Check-out</Button>
           </div>
-        </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <button type="button" onClick={() => pilihTipe(null)} className="gerbang-shell__ganti-pilihan">
+              ← Ganti pilihan ({tipe === 'checkin' ? 'Check-in' : 'Check-out'})
+            </button>
+
+            <Input
+              label="PIN"
+              id="pin"
+              value={pin}
+              onChange={e => setPin(e.target.value)}
+              inputMode="numeric"
+              maxLength={6}
+              required
+              autoFocus
+            />
+
+            {tipe === 'checkout' && (
+              <Input
+                as="textarea"
+                label="Catatan aktivitas"
+                id="catatanAktivitas"
+                rows={3}
+                value={catatanAktivitas}
+                onChange={e => setCatatanAktivitas(e.target.value)}
+              />
+            )}
+
+            <Button fullWidth disabled={pending || !pin} onClick={submit}>
+              {tipe === 'checkin' ? 'Check-in' : 'Check-out'}
+            </Button>
+          </div>
+        )}
       </Card>
 
       <div className="gerbang-shell__nav-silang">
