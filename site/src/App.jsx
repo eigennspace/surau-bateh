@@ -50,12 +50,27 @@ export default function App() {
   // `resolveNews`, lihat ADR 0013) DIGABUNG dengan pola yang sama --
   // `deriveSiteData.js` tetap menerima bentuk `events`/`news` yang sama
   // persis seperti sebelum migrasi, jadi tidak perlu diubah.
+  // Narasi/galeri/kontak person keenam Halaman Program, kontak umum, dan
+  // Profil Salik (hasil `resolveProgram`/`resolveContact`/`resolveSalik`,
+  // lihat ADR 0013 dan
+  // `.scratch/halaman-program-kontak-salik-via-sanity/spec.md`) DIGABUNG
+  // dengan pola yang sama seperti `gallery`/`events`/`news` di atas --
+  // `deriveSiteData.js` meneruskan key-key ini apa adanya, jadi tidak perlu
+  // diubah sama sekali.
   const rawData = {
     ...SB_DATA,
     gallery: sanityContent.gallery,
     profilSurau: { ...SB_DATA.profilSurau, video: sanityContent.video },
     events: sanityContent.events,
     news: sanityContent.news,
+    khitanan: sanityContent.khitanan,
+    dauroh: sanityContent.dauroh,
+    tawajjuh: sanityContent.tawajjuh,
+    konseling: sanityContent.konseling,
+    baktiSosial: sanityContent.baktiSosial,
+    silaturahmi: sanityContent.silaturahmi,
+    contact: sanityContent.contact,
+    salik: sanityContent.salik,
   };
   const site = deriveSiteData(rawData, new Date());
   // Peta mini di footer -- endpoint `output=embed` tidak butuh API key

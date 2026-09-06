@@ -9,7 +9,7 @@ export default function SilaturahmiPage({ site }) {
       title={site.silaturahmi?.title || 'Silaturahmi & Kerjasama Lembaga'}
       narrative={site.silaturahmi?.narrative}
       events={events}
-      person={site.contact?.silaturahmi}
+      person={site.silaturahmi?.person}
       whatsappMessage="Assalamu'alaikum, saya ingin menjajaki kerjasama dengan Surau Bateh Lori"
       contactHeading="Ingin menjalin kerjasama dengan Surau Bateh?"
       gallery={site.silaturahmi?.gallery}

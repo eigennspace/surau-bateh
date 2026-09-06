@@ -15,7 +15,7 @@ export default function ProfilSalikPage({ site }) {
       narrative={site.salik?.narrative}
       bullets={site.salik?.bullets}
       closing={site.salik?.closing}
-      person={site.contact?.salik}
+      person={site.salik?.person}
       contactHeading="Ingin menempuh jalan ini?"
       whatsappMessage="Assalamu'alaikum, saya ingin bertanya soal kesalikan di Surau Bateh Lori"
       gallery={site.salik?.gallery}

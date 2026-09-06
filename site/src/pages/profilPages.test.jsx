@@ -45,6 +45,10 @@ const salik = {
   narrative: 'Narasi salik fixture.',
   bullets: ['**Karakter satu** — penjelasan satu fixture.', '**Karakter dua** — penjelasan dua fixture.'],
   closing: 'Penutup salik fixture.',
+  // Kontak person Profil Salik sekarang bagian dokumen `salik` itu sendiri
+  // (field `person`), bukan lagi `SB_DATA.contact.salik` -- lihat
+  // `studio/schemaTypes/salik.ts`.
+  person: { name: 'Kontak salik fixture', role: 'Peran salik fixture', phone: '081200000000' },
   gallery: [{ src: 'flyer.jpg', alt: 'Alt flyer fixture' }],
 };
 
@@ -57,7 +61,7 @@ const rawData = (videoOverride) => baseRawData([], {
   salik,
   ilmuTasawuf: [{ title: 'Simpul silsilah fixture' }],
   stats: [{ icon: 'users', value: '>100', label: 'Label stat fixture' }],
-  contact: { maps: '', pengurus: [], salik: { name: 'Kontak salik fixture', role: 'Peran salik fixture', phone: '081200000000' } },
+  contact: { maps: '', pengurus: [] },
 });
 
 const render = (Page, videoOverride) => renderToStaticMarkup(<Page site={deriveSiteData(rawData(videoOverride), NOW)} />);

@@ -14,7 +14,7 @@ export default function DaurohPage({ site }) {
       title={site.dauroh?.title || 'Dauroh'}
       narrative={site.dauroh?.narrative}
       events={events}
-      person={site.contact?.dauroh}
+      person={site.dauroh?.person}
       whatsappMessage="Assalamu'alaikum, saya ingin bertanya soal program Dauroh di Surau Bateh Lori"
       gallery={site.dauroh?.gallery}
     />
