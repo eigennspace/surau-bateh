@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 export function Card({ children, tone = 'default', padding = 'var(--gutter-card)', interactive = false, style }) {

@@ -2,6 +2,9 @@
 
 import { useActionState, useState } from 'react';
 import { simpanJendelaAbsen } from './actions.js';
+import { Card } from '../../../components/ds/Card.jsx';
+import { Input } from '../../../components/ds/Input.jsx';
+import { Button } from '../../../components/ds/Button.jsx';
 
 const initialState = { status: 'idle' };
 
@@ -64,75 +67,102 @@ export default function JendelaAbsenForm({ jendelaAbsen }) {
   const bisaLihatPeta = latitude !== '' && longitude !== '';
 
   return (
-    <form action={formAction} className="card">
-      {state.status === 'error' && <div className="error">{state.pesan}</div>}
-      {state.status === 'sukses' && <div className="success">Jendela Absen tersimpan.</div>}
+    <Card>
+      <form action={formAction}>
+        {state.status === 'error' && <div className="error">{state.pesan}</div>}
+        {state.status === 'sukses' && <div className="success">Jendela Absen tersimpan.</div>}
 
-      <div style={{ marginBottom: 'var(--space-4)' }}>
-        <button type="button" className="secondary" onClick={pakaiLokasiSaya} disabled={lokasiSaya.status === 'mencari'}>
-          {lokasiSaya.status === 'mencari' ? 'Mengambil lokasi…' : '📍 Pakai lokasi saya sekarang'}
-        </button>
-        {lokasiSaya.status === 'error' && <div className="error" style={{ marginTop: 'var(--space-2)' }}>{lokasiSaya.pesan}</div>}
-      </div>
+        <div style={{ marginBottom: 'var(--space-4)' }}>
+          <Button type="button" tone="secondary" icon="map-pin" onClick={pakaiLokasiSaya} disabled={lokasiSaya.status === 'mencari'}>
+            {lokasiSaya.status === 'mencari' ? 'Mengambil lokasi…' : 'Pakai lokasi saya sekarang'}
+          </Button>
+          {lokasiSaya.status === 'error' && <div className="error" style={{ marginTop: 'var(--space-2)' }}>{lokasiSaya.pesan}</div>}
+        </div>
 
-      <label htmlFor="tempelMaps">Atau tempel link Google Maps</label>
-      <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'flex-start' }}>
-        <input
-          id="tempelMaps"
-          value={tempelMaps}
-          onChange={e => setTempelMaps(e.target.value)}
-          placeholder="https://maps.app.goo.gl/... atau -0.9, 100.4"
-          style={{ flex: 1 }}
-        />
-        <button type="button" className="secondary" onClick={ambilDariMaps} disabled={resolveMaps.status === 'mencari' || !tempelMaps.trim()}>
-          {resolveMaps.status === 'mencari' ? 'Membaca…' : 'Ambil koordinat'}
-        </button>
-      </div>
-      {resolveMaps.status === 'error' && <div className="error" style={{ marginTop: 'var(--space-2)' }}>{resolveMaps.pesan}</div>}
-      <p style={{ color: 'var(--text-muted)', fontSize: 'var(--fs-caption)', marginTop: 'var(--space-1)', marginBottom: 'var(--space-4)' }}>
-        Buka lokasi surau di Google Maps, ketuk "Bagikan", salin link-nya, lalu tempel di sini.
-      </p>
-
-      <label htmlFor="latitude">Latitude</label>
-      <input
-        id="latitude"
-        name="latitude"
-        type="number"
-        step="any"
-        value={latitude}
-        onChange={e => setLatitude(e.target.value)}
-        required
-      />
-
-      <label htmlFor="longitude">Longitude</label>
-      <input
-        id="longitude"
-        name="longitude"
-        type="number"
-        step="any"
-        value={longitude}
-        onChange={e => setLongitude(e.target.value)}
-        required
-      />
-
-      {bisaLihatPeta && (
-        <p style={{ marginTop: `calc(var(--space-4) * -1)`, marginBottom: 'var(--space-4)' }}>
-          <a href={`https://www.google.com/maps?q=${latitude},${longitude}`} target="_blank" rel="noreferrer">
-            Lihat titik ini di peta ↗
-          </a>
+        <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'flex-end', marginBottom: 'var(--space-1)' }}>
+          <Input
+            id="tempelMaps"
+            label="Atau tempel link Google Maps"
+            value={tempelMaps}
+            onChange={e => setTempelMaps(e.target.value)}
+            placeholder="https://maps.app.goo.gl/... atau -0.9, 100.4"
+            style={{ flex: 1 }}
+          />
+          <Button type="button" tone="secondary" onClick={ambilDariMaps} disabled={resolveMaps.status === 'mencari' || !tempelMaps.trim()}>
+            {resolveMaps.status === 'mencari' ? 'Membaca…' : 'Ambil koordinat'}
+          </Button>
+        </div>
+        {resolveMaps.status === 'error' && <div className="error" style={{ marginTop: 'var(--space-2)' }}>{resolveMaps.pesan}</div>}
+        <p style={{ color: 'var(--text-muted)', fontSize: 'var(--fs-caption)', marginTop: 'var(--space-1)', marginBottom: 'var(--space-4)' }}>
+          Buka lokasi surau di Google Maps, ketuk "Bagikan", salin link-nya, lalu tempel di sini.
         </p>
-      )}
 
-      <label htmlFor="radiusMeter">Radius (meter)</label>
-      <input id="radiusMeter" name="radiusMeter" type="number" step="any" min="1" defaultValue={jendelaAbsen?.radiusMeter ?? ''} required />
+        <Input
+          id="latitude"
+          name="latitude"
+          label="Latitude"
+          type="number"
+          step="any"
+          value={latitude}
+          onChange={e => setLatitude(e.target.value)}
+          required
+          style={{ marginBottom: 'var(--space-4)' }}
+        />
 
-      <label htmlFor="jamMulai">Jam kerja — mulai</label>
-      <input id="jamMulai" name="jamMulai" type="time" defaultValue={jendelaAbsen?.jamMulai ?? ''} required />
+        <Input
+          id="longitude"
+          name="longitude"
+          label="Longitude"
+          type="number"
+          step="any"
+          value={longitude}
+          onChange={e => setLongitude(e.target.value)}
+          required
+          style={{ marginBottom: 'var(--space-4)' }}
+        />
 
-      <label htmlFor="jamSelesai">Jam kerja — selesai</label>
-      <input id="jamSelesai" name="jamSelesai" type="time" defaultValue={jendelaAbsen?.jamSelesai ?? ''} required />
+        {bisaLihatPeta && (
+          <p style={{ marginTop: `calc(var(--space-4) * -1)`, marginBottom: 'var(--space-4)' }}>
+            <a href={`https://www.google.com/maps?q=${latitude},${longitude}`} target="_blank" rel="noreferrer">
+              Lihat titik ini di peta ↗
+            </a>
+          </p>
+        )}
 
-      <button type="submit" disabled={pending}>{pending ? 'Menyimpan…' : 'Simpan Jendela Absen'}</button>
-    </form>
+        <Input
+          id="radiusMeter"
+          name="radiusMeter"
+          label="Radius (meter)"
+          type="number"
+          step="any"
+          min="1"
+          defaultValue={jendelaAbsen?.radiusMeter ?? ''}
+          required
+          style={{ marginBottom: 'var(--space-4)' }}
+        />
+
+        <Input
+          id="jamMulai"
+          name="jamMulai"
+          label="Jam kerja — mulai"
+          type="time"
+          defaultValue={jendelaAbsen?.jamMulai ?? ''}
+          required
+          style={{ marginBottom: 'var(--space-4)' }}
+        />
+
+        <Input
+          id="jamSelesai"
+          name="jamSelesai"
+          label="Jam kerja — selesai"
+          type="time"
+          defaultValue={jendelaAbsen?.jamSelesai ?? ''}
+          required
+          style={{ marginBottom: 'var(--space-5)' }}
+        />
+
+        <Button type="submit" disabled={pending} fullWidth>{pending ? 'Menyimpan…' : 'Simpan Jendela Absen'}</Button>
+      </form>
+    </Card>
   );
 }

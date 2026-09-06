@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import '../styles/gerbang.css';
+import '../styles/dashboard.css';
 
 export const metadata = {
   title: 'Absen Magang — Surau Bateh Lori',
