@@ -154,14 +154,20 @@ describe('resolveEvents', () => {
     });
   });
 
-  it('oneOffEvent -> day/month dari `date` dalam bentuk yang dikenali deriveKhatibJumat/deriveEventsWithToday', () => {
+  it('oneOffEvent -> day/month dari `date` dalam bentuk yang dikenali deriveKhatibJumat/deriveEventsWithToday, ditambah dayName', () => {
     const oneOffDocs = [
       { date: '2026-08-13', timeLabel: "Ba'da Maghrib", title: 'Daurah Aswaja', speaker: 'Tuan Guru', place: 'Musholla Al Mukmin Berok', category: 'Dauroh' },
     ];
     const [event] = resolveEvents([], oneOffDocs);
     expect(event).toEqual({
-      day: '13', month: 'Ags', title: 'Daurah Aswaja', speaker: 'Tuan Guru', time: "Ba'da Maghrib", place: 'Musholla Al Mukmin Berok', category: 'Dauroh',
+      day: '13', month: 'Ags', dayName: 'Kamis', title: 'Daurah Aswaja', speaker: 'Tuan Guru', time: "Ba'da Maghrib", place: 'Musholla Al Mukmin Berok', category: 'Dauroh',
     });
+  });
+
+  it('oneOffEvent dayName cocok dengan hari-dalam-minggu tanggalnya', () => {
+    // 2026-08-16 adalah hari Minggu.
+    const [event] = resolveEvents([], [{ date: '2026-08-16', timeLabel: 'Pagi', title: 'Kegiatan Minggu', category: 'Kajian' }]);
+    expect(event.dayName).toBe('Minggu');
   });
 
   it('menggabungkan recurringEvent + oneOffEvent jadi satu array', () => {

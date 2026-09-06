@@ -3,7 +3,7 @@ import { Icon } from '../core/Icon.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { Dialog } from '../feedback/Dialog.jsx';
 
-function EventDetail({ day, month, title, speaker, time, place, category, isToday, backgroundImage }) {
+function EventDetail({ day, month, dayName, title, speaker, time, place, category, isToday, backgroundImage }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
       {backgroundImage ? (
@@ -18,7 +18,7 @@ function EventDetail({ day, month, title, speaker, time, place, category, isToda
       ) : null}
       <h3 style={{ margin: 0, font: 'var(--text-h3)', color: 'var(--text-strong)' }}>{title}</h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', fontSize: 'var(--fs-body)', color: 'var(--text-muted)' }}>
-        {(day || month) ? <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icon name="calendar" size={16} />{[day, month].filter(Boolean).join(' · ')}</span> : null}
+        {(day || month || dayName) ? <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icon name="calendar" size={16} />{[dayName, day, month].filter(Boolean).join(' · ')}</span> : null}
         {speaker ? <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icon name="mic" size={16} />{speaker}</span> : null}
         {time ? <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icon name="clock" size={16} />{time}</span> : null}
         {place ? <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icon name="map-pin" size={16} />{place}</span> : null}
@@ -27,7 +27,7 @@ function EventDetail({ day, month, title, speaker, time, place, category, isToda
   );
 }
 
-export function EventItem({ day, month, title, speaker, time, place, category, isToday, backgroundImage, style }) {
+export function EventItem({ day, month, dayName, title, speaker, time, place, category, isToday, backgroundImage, style }) {
   const [hover, setHover] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const textColor = backgroundImage ? 'var(--white)' : 'var(--text-strong)';
@@ -58,6 +58,7 @@ export function EventItem({ day, month, title, speaker, time, place, category, i
           ) : null}
           <h4 style={{ margin: 0, font: 'var(--text-h4)', fontWeight: 'var(--fw-bold)', color: textColor }}>{title}</h4>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)', fontSize: 'var(--fs-body-sm)', color: mutedColor }}>
+            {dayName ? <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="calendar" size={14} />{dayName}</span> : null}
             {speaker ? <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="mic" size={14} />{speaker}</span> : null}
             {time ? <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="clock" size={14} />{time}</span> : null}
             {place ? <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><Icon name="map-pin" size={14} />{place}</span> : null}
@@ -66,7 +67,7 @@ export function EventItem({ day, month, title, speaker, time, place, category, i
         <Icon name="chevron-right" size={18} style={{ color: chevronColor }} />
       </article>
       <Dialog open={open} onClose={() => setOpen(false)} closeOnBackdropClick>
-        <EventDetail day={day} month={month} title={title} speaker={speaker} time={time} place={place}
+        <EventDetail day={day} month={month} dayName={dayName} title={title} speaker={speaker} time={time} place={place}
           category={category} isToday={isToday} backgroundImage={backgroundImage} />
       </Dialog>
     </>

@@ -198,6 +198,15 @@ import { parseIsoDate } from './parseIsoDate.js';
 // `events` yang sudah jadi).
 const MONTH_ABBR_ID = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'];
 
+// Nama hari lengkap (bukan singkatan seperti `day` -- `day` untuk
+// `oneOffEvent` sudah dipakai untuk angka tanggal-di-bulan, lihat di
+// bawah), diindeks `Date#getDay()` (Minggu = 0). Dipakai untuk `dayName` --
+// `oneOffEvent` (event sekali-jalan bertanggal) tidak punya hari-dalam-minggu
+// tersurat di dokumennya sendiri seperti `recurringEvent.dayOfWeek`, jadi
+// diturunkan dari `date` supaya pengunjung tetap tahu "Kamis, 13 Ags" tanpa
+// harus menghitung sendiri dari kalender.
+const DAY_NAMES_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
 /**
  * @param {Array<object>} recurringDocs Dokumen `recurringEvent` mentah
  *   (`dayOfWeek`, `timeLabel`, `title`, `speaker`, `place`, `category`).
@@ -210,11 +219,16 @@ const MONTH_ABBR_ID = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', '
  *   lama `month`+`time`); `oneOffEvent` -> `day`/`month` diisi
  *   tanggal-di-bulan + singkatan bulan 3-huruf dari `date`, bentuk yang
  *   sama persis yang sudah dikenali `deriveKhatibJumat`/
- *   `deriveEventsWithToday` di `deriveSiteData.js`. Event sekali-jalan yang
- *   tanggalnya sudah lewat TETAP ditampilkan (tidak ada expiry) -- persis
- *   perilaku data lama (entri "Daurah Aswaja" nongkrong terus di
- *   `sourceData.js` tanpa expiry apa pun), supaya migrasi ini tidak
- *   diam-diam mengubah perilaku tampilan (lihat "Out of Scope" di
+ *   `deriveEventsWithToday` di `deriveSiteData.js`, DITAMBAH `dayName`
+ *   (nama hari lengkap, mis. "Kamis") supaya `EventItem`/`EventDetail`
+ *   (`site/src/design-system/components/surau/EventItem.jsx`) bisa
+ *   menampilkan hari kegiatan sekali-jalan, bukan cuma tanggal-di-bulannya.
+ *   `recurringEvent` TIDAK diisi `dayName` -- `day`-nya sendiri sudah
+ *   singkatan hari, jadi sudah cukup. Event sekali-jalan yang tanggalnya
+ *   sudah lewat TETAP ditampilkan (tidak ada expiry) -- persis perilaku
+ *   data lama (entri "Daurah Aswaja" nongkrong terus di `sourceData.js`
+ *   tanpa expiry apa pun), supaya migrasi ini tidak diam-diam mengubah
+ *   perilaku tampilan (lihat "Out of Scope" di
  *   `.scratch/jadwal-pengumuman-via-sanity/spec.md`).
  */
 export function resolveEvents(recurringDocs, oneOffDocs) {
@@ -234,6 +248,7 @@ export function resolveEvents(recurringDocs, oneOffDocs) {
     .map(({ doc, parsed }) => ({
       day: String(parsed.getDate()),
       month: MONTH_ABBR_ID[parsed.getMonth()],
+      dayName: DAY_NAMES_ID[parsed.getDay()],
       title: doc.title,
       speaker: doc.speaker,
       time: doc.timeLabel,
