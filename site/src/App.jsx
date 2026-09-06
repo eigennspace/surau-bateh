@@ -46,11 +46,16 @@ export default function App() {
   // di atas -- supaya `ProfilSurauPage` tetap membaca satu objek tanpa perlu
   // tahu bagian mana yang dari Sumber Data dan bagian mana dari Sanity.
   // `sanityContent.video` bisa `null` (belum di-publish/URL tidak sah), dan
-  // itu diteruskan apa adanya.
+  // itu diteruskan apa adanya. `events`/`news` (hasil `resolveEvents`/
+  // `resolveNews`, lihat ADR 0013) DIGABUNG dengan pola yang sama --
+  // `deriveSiteData.js` tetap menerima bentuk `events`/`news` yang sama
+  // persis seperti sebelum migrasi, jadi tidak perlu diubah.
   const rawData = {
     ...SB_DATA,
     gallery: sanityContent.gallery,
     profilSurau: { ...SB_DATA.profilSurau, video: sanityContent.video },
+    events: sanityContent.events,
+    news: sanityContent.news,
   };
   const site = deriveSiteData(rawData, new Date());
   // Peta mini di footer -- endpoint `output=embed` tidak butuh API key

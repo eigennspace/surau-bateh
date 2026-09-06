@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
 import { createClient } from '@sanity/client';
 import { createImageUrlBuilder } from '@sanity/image-url';
 import { loadDotEnv } from './lib/loadDotEnv.mjs';
-import { resolveArticles, resolveGallery, resolveVideo } from '../src/lib/resolveSanityContent.js';
+import { resolveArticles, resolveGallery, resolveVideo, resolveEvents, resolveNews } from '../src/lib/resolveSanityContent.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(__dirname, '..');
@@ -56,8 +56,11 @@ async function main() {
   let articleDocs = [];
   let galleryDocs = [];
   let profilSurauDoc = null;
+  let recurringEventDocs = [];
+  let oneOffEventDocs = [];
+  let newsDocs = [];
   try {
-    [articleDocs, galleryDocs, profilSurauDoc] = await Promise.all([
+    [articleDocs, galleryDocs, profilSurauDoc, recurringEventDocs, oneOffEventDocs, newsDocs] = await Promise.all([
       client.fetch(`*[_type == "article"]{
         title, "slug": slug.current, author, date, excerpt, cover, body
       }`),
@@ -68,6 +71,15 @@ async function main() {
       // kustom di `studio/sanity.config.ts`), `[0]` mengambil satu-satunya
       // entri atau `null` bila belum pernah di-publish.
       client.fetch(`*[_type == "profilSurau"][0]{title, description, videoUrl}`),
+      client.fetch(`*[_type == "recurringEvent"]{
+        dayOfWeek, timeLabel, title, speaker, place, category
+      }`),
+      client.fetch(`*[_type == "oneOffEvent"]{
+        date, timeLabel, title, speaker, place, category
+      }`),
+      client.fetch(`*[_type == "news"] | order(date desc){
+        tag, title, date, link, description
+      }`),
     ]);
   } catch (err) {
     console.error(`fetch-sanity-content: gagal fetch dari Sanity (project ${projectId}/dataset ${dataset}): ${err.message}`);
@@ -77,6 +89,8 @@ async function main() {
   const articles = resolveArticles(urlFor, articleDocs);
   const gallery = resolveGallery(urlFor, galleryDocs);
   const video = resolveVideo(profilSurauDoc);
+  const events = resolveEvents(recurringEventDocs, oneOffEventDocs);
+  const news = resolveNews(newsDocs);
   // Validasi schema di Studio adalah jaring utama (lihat
   // `studio/schemaTypes/profilSurau.ts`); ini jaring pengaman untuk sisa
   // kasus yang lolos. Build TETAP berhasil -- satu salah-tempel pada satu
@@ -90,9 +104,9 @@ async function main() {
   }
 
   mkdirSync(path.dirname(outFile), { recursive: true });
-  writeFileSync(outFile, JSON.stringify({ articles, gallery, video }, null, 2) + '\n');
+  writeFileSync(outFile, JSON.stringify({ articles, gallery, video, events, news }, null, 2) + '\n');
   console.log(
-    `fetch-sanity-content: ${articles.length} artikel, ${gallery.length} foto galeri, video profil ${video ? 'ada' : 'tidak ada'} ditulis ke ${path.relative(siteRoot, outFile)}`,
+    `fetch-sanity-content: ${articles.length} artikel, ${gallery.length} foto galeri, video profil ${video ? 'ada' : 'tidak ada'}, ${events.length} kegiatan, ${news.length} pengumuman ditulis ke ${path.relative(siteRoot, outFile)}`,
   );
 }
 

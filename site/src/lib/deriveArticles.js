@@ -11,8 +11,7 @@
 // objek tanpa Sanity sungguhan (lihat `articlesTestFixtures.js`).
 
 import { MONTH_NAMES_ID } from './monthNamesId.js';
-
-const ISO_DATE_RE = /^(\d{4})-(\d{2})-(\d{2})/;
+import { parseIsoDate } from './parseIsoDate.js';
 
 /**
  * Label tanggal Masehi Indonesia (mis. "12 Agustus 2026") untuk tampilan
@@ -21,18 +20,15 @@ const ISO_DATE_RE = /^(\d{4})-(\d{2})-(\d{2})/;
  * tanggalnya kurang rapi.
  *
  * `date` berbentuk string tanggal polos (`YYYY-MM-DD`, tanpa jam/zona
- * waktu, field `date` Sanity) diparsing lewat regex, bukan
- * `new Date(dateStr)` -- `new Date` menafsirkan string semacam itu sebagai
- * UTC tengah malam, yang bisa mundur satu hari saat ditampilkan di zona
- * waktu di belakang UTC.
+ * waktu, field `date` Sanity) diparsing lewat `parseIsoDate` (dipakai
+ * bersama `resolveSanityContent.js`), bukan `new Date(dateStr)` langsung --
+ * lihat komentar di `parseIsoDate.js` untuk alasannya. Bentuk lain (bukan
+ * `YYYY-MM-DD` di awal string) dicoba lagi lewat `new Date(dateStr)` biasa
+ * sebagai fallback longgar.
  */
 export function formatArticleDate(dateStr) {
-  const isoMatch = ISO_DATE_RE.exec(dateStr || '');
-  if (isoMatch) {
-    const [, year, month, day] = isoMatch;
-    const monthName = MONTH_NAMES_ID[Number(month) - 1];
-    if (monthName) return `${Number(day)} ${monthName} ${year}`;
-  }
+  const parsed = parseIsoDate(dateStr);
+  if (parsed) return `${parsed.getDate()} ${MONTH_NAMES_ID[parsed.getMonth()]} ${parsed.getFullYear()}`;
   const d = new Date(dateStr);
   if (Number.isNaN(d.getTime())) return dateStr;
   return `${d.getDate()} ${MONTH_NAMES_ID[d.getMonth()]} ${d.getFullYear()}`;

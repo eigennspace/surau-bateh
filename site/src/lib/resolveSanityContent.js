@@ -178,3 +178,90 @@ export function resolveGallery(urlFor, galleryDocs) {
       };
     });
 }
+
+// resolveEvents/resolveNews -- Fase 2 migrasi Sumber Data ke Sanity (ADR
+// 0013, `.scratch/jadwal-pengumuman-via-sanity/spec.md`). `events` di
+// `deriveSiteData.js`/`AgendaSection.jsx`/`ProgramSection.jsx` masih
+// mengharapkan SATU bentuk datar lama (`{day, month, title, speaker, time,
+// place, category}`) -- di sini dua tipe dokumen Sanity baru
+// (`recurringEvent`/`oneOffEvent`, yang memperbaiki hack lama tempat
+// `day`/`month` di-overload untuk dua makna berbeda) DINORMALKAN BALIK ke
+// bentuk itu, supaya ketiga modul itu tidak perlu diubah sama sekali.
+
+import { MONTH_NAMES_ID } from './monthNamesId.js';
+import { parseIsoDate } from './parseIsoDate.js';
+
+// Sama abstraksinya dengan `MONTHS_ID` di `deriveSiteData.js` (dibalik: index
+// -> singkatan, bukan singkatan -> index) -- sengaja diduplikasi, bukan
+// diimpor bersama, supaya `deriveSiteData.js` tidak perlu tahu apa pun
+// tentang lapisan resolve Sanity (fungsi murni itu hanya menerima bentuk
+// `events` yang sudah jadi).
+const MONTH_ABBR_ID = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'];
+
+/**
+ * @param {Array<object>} recurringDocs Dokumen `recurringEvent` mentah
+ *   (`dayOfWeek`, `timeLabel`, `title`, `speaker`, `place`, `category`).
+ * @param {Array<object>} oneOffDocs Dokumen `oneOffEvent` mentah (`date`
+ *   ISO, `timeLabel`, `title`, `speaker`, `place`, `category`).
+ * @returns {Array<object>} Satu array datar bentuk lama yang sudah
+ *   dikonsumsi `deriveSiteData.js`/`AgendaSection.jsx`/`ProgramSection.jsx`
+ *   -- `recurringEvent` -> `day` diisi `dayOfWeek` (`month` dikosongkan,
+ *   sudah tidak ada makna terpisah sejak `timeLabel` menggantikan gabungan
+ *   lama `month`+`time`); `oneOffEvent` -> `day`/`month` diisi
+ *   tanggal-di-bulan + singkatan bulan 3-huruf dari `date`, bentuk yang
+ *   sama persis yang sudah dikenali `deriveKhatibJumat`/
+ *   `deriveEventsWithToday` di `deriveSiteData.js`. Event sekali-jalan yang
+ *   tanggalnya sudah lewat TETAP ditampilkan (tidak ada expiry) -- persis
+ *   perilaku data lama (entri "Daurah Aswaja" nongkrong terus di
+ *   `sourceData.js` tanpa expiry apa pun), supaya migrasi ini tidak
+ *   diam-diam mengubah perilaku tampilan (lihat "Out of Scope" di
+ *   `.scratch/jadwal-pengumuman-via-sanity/spec.md`).
+ */
+export function resolveEvents(recurringDocs, oneOffDocs) {
+  const recurring = (recurringDocs || []).map(doc => ({
+    day: doc.dayOfWeek,
+    month: '',
+    title: doc.title,
+    speaker: doc.speaker,
+    time: doc.timeLabel,
+    place: doc.place,
+    category: doc.category,
+  }));
+
+  const oneOff = (oneOffDocs || [])
+    .map(doc => ({ doc, parsed: parseIsoDate(doc.date) }))
+    .filter(({ parsed }) => parsed)
+    .map(({ doc, parsed }) => ({
+      day: String(parsed.getDate()),
+      month: MONTH_ABBR_ID[parsed.getMonth()],
+      title: doc.title,
+      speaker: doc.speaker,
+      time: doc.timeLabel,
+      place: doc.place,
+      category: doc.category,
+    }));
+
+  return [...recurring, ...oneOff];
+}
+
+/**
+ * @param {Array<object>} newsDocs Dokumen `news` mentah (`tag`, `title`,
+ *   `date` ISO, `link`, `description`).
+ * @returns {Array<object>} Pengumuman siap-render `AgendaSection.jsx`
+ *   (`NewsItem`) -- `date` diformat jadi string tanggal Indonesia (mis. "8
+ *   Agustus 2026"), sama persis format yang sudah ada di data lama;
+ *   `tag`/`title` diteruskan apa adanya, `link`/`description` kosong
+ *   ditangani dengan wajar (jadi `undefined`, bukan string kosong).
+ */
+export function resolveNews(newsDocs) {
+  return (newsDocs || []).map(doc => {
+    const parsed = parseIsoDate(doc.date);
+    return {
+      tag: doc.tag,
+      title: doc.title,
+      date: parsed ? `${parsed.getDate()} ${MONTH_NAMES_ID[parsed.getMonth()]} ${parsed.getFullYear()}` : doc.date,
+      link: doc.link || undefined,
+      description: doc.description || undefined,
+    };
+  });
+}

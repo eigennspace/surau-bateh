@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractYoutubeVideoId, resolveVideo } from './resolveSanityContent.js';
+import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractYoutubeVideoId, resolveVideo, resolveEvents, resolveNews } from './resolveSanityContent.js';
 
 // `urlFor` palsu -- meniru bentuk builder `@sanity/image-url` (method
 // chaining `.auto()`/`.width()`/`.url()`) tanpa memanggil Sanity sungguhan.
@@ -140,5 +140,65 @@ describe('resolveVideo', () => {
     const result = resolveVideo(validDoc);
     expect(result.title).toBe('Judul video fixture');
     expect(result.description).toBe('Paragraf pengantar fixture.');
+  });
+});
+
+describe('resolveEvents', () => {
+  it('recurringEvent -> day = dayOfWeek, month dikosongkan, timeLabel jadi time', () => {
+    const recurringDocs = [
+      { dayOfWeek: 'Sel', timeLabel: "Ba'da Maghrib", title: 'Tawajjuh', speaker: 'Tuan Guru', place: 'Ruang utama', category: 'Tawajjuh' },
+    ];
+    const [event] = resolveEvents(recurringDocs, []);
+    expect(event).toEqual({
+      day: 'Sel', month: '', title: 'Tawajjuh', speaker: 'Tuan Guru', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh',
+    });
+  });
+
+  it('oneOffEvent -> day/month dari `date` dalam bentuk yang dikenali deriveKhatibJumat/deriveEventsWithToday', () => {
+    const oneOffDocs = [
+      { date: '2026-08-13', timeLabel: "Ba'da Maghrib", title: 'Daurah Aswaja', speaker: 'Tuan Guru', place: 'Musholla Al Mukmin Berok', category: 'Dauroh' },
+    ];
+    const [event] = resolveEvents([], oneOffDocs);
+    expect(event).toEqual({
+      day: '13', month: 'Ags', title: 'Daurah Aswaja', speaker: 'Tuan Guru', time: "Ba'da Maghrib", place: 'Musholla Al Mukmin Berok', category: 'Dauroh',
+    });
+  });
+
+  it('menggabungkan recurringEvent + oneOffEvent jadi satu array', () => {
+    const recurringDocs = [{ dayOfWeek: 'Sab', timeLabel: "Ba'da Isya", title: 'Latihan Silat', category: 'Silat' }];
+    const oneOffDocs = [{ date: '2026-08-13', timeLabel: "Ba'da Maghrib", title: 'Daurah Aswaja', category: 'Dauroh' }];
+    const result = resolveEvents(recurringDocs, oneOffDocs);
+    expect(result).toHaveLength(2);
+    expect(result.map(e => e.title)).toEqual(['Latihan Silat', 'Daurah Aswaja']);
+  });
+
+  it('oneOffEvent yang tanggalnya sudah lewat TETAP ditampilkan (tidak ada expiry -- persis perilaku data lama)', () => {
+    const oneOffDocs = [{ date: '2020-01-01', timeLabel: 'Siang', title: 'Sudah lama lewat', category: 'Dauroh' }];
+    const result = resolveEvents([], oneOffDocs);
+    expect(result).toHaveLength(1);
+  });
+
+  it('array kosong untuk recurringDocs/oneOffDocs kosong/undefined', () => {
+    expect(resolveEvents(undefined, undefined)).toEqual([]);
+  });
+});
+
+describe('resolveNews', () => {
+  it('memformat date ISO jadi string tanggal Indonesia, meneruskan tag/title apa adanya', () => {
+    const docs = [{ tag: 'Pengumuman', title: 'Pendataan Data Salik', date: '2026-08-08', link: 'https://forms.gle/x', description: 'Deskripsi.' }];
+    const result = resolveNews(docs);
+    expect(result).toEqual([
+      { tag: 'Pengumuman', title: 'Pendataan Data Salik', date: '8 Agustus 2026', link: 'https://forms.gle/x', description: 'Deskripsi.' },
+    ]);
+  });
+
+  it('link/description kosong jadi undefined, bukan string kosong', () => {
+    const [result] = resolveNews([{ tag: 'Pengumuman', title: 'X', date: '2026-08-08' }]);
+    expect(result.link).toBeUndefined();
+    expect(result.description).toBeUndefined();
+  });
+
+  it('array kosong untuk newsDocs kosong/undefined', () => {
+    expect(resolveNews(undefined)).toEqual([]);
   });
 });
