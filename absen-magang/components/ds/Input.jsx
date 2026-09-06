@@ -16,6 +16,12 @@ export function Input({
   inputMode, min, max, rows, as = 'input', style,
 }) {
   const [focus, setFocus] = React.useState(false);
+  // Toggle "reveal password" -- hanya relevan untuk type="password". `visible`
+  // menukar type jadi "text" saat aktif; ikon mata di kanan field jadi
+  // pemicunya (lihat spec: reveal password di Login Pengurus).
+  const [visible, setVisible] = React.useState(false);
+  const isPassword = type === 'password';
+  const resolvedType = isPassword && visible ? 'text' : type;
   const inputId = id || 'in-' + (label || placeholder || name || 'field').replace(/\s+/g, '-').toLowerCase();
   const Field = as === 'textarea' ? 'textarea' : 'input';
   const fieldProps = {
@@ -50,7 +56,7 @@ export function Input({
   if (as === 'textarea') {
     fieldProps.rows = rows || 3;
   } else {
-    fieldProps.type = type;
+    fieldProps.type = resolvedType;
     fieldProps.maxLength = maxLength;
     fieldProps.inputMode = inputMode;
     fieldProps.min = min;
@@ -66,6 +72,18 @@ export function Input({
         boxShadow: focus ? '0 0 0 3px rgba(220,201,69,.35)' : 'var(--shadow-xs)', transition: 'var(--transition-control)' }}>
         {icon ? <Icon name={icon} size={16} style={{ color: 'var(--text-faint)', marginTop: as === 'textarea' ? 2 : 0 }} /> : null}
         <Field {...fieldProps} />
+        {isPassword ? (
+          <button
+            type="button"
+            onClick={() => setVisible((v) => !v)}
+            aria-label={visible ? 'Sembunyikan password' : 'Tampilkan password'}
+            aria-pressed={visible}
+            tabIndex={-1}
+            style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', padding: 0, margin: 0, cursor: 'pointer', color: 'var(--text-faint)' }}
+          >
+            <Icon name={visible ? 'eye-off' : 'eye'} size={16} />
+          </button>
+        ) : null}
       </div>
       {(hint || error) ? <span style={{ fontSize: 'var(--fs-caption)', color: error ? 'var(--status-danger)' : 'var(--text-muted)' }}>{error || hint}</span> : null}
     </div>

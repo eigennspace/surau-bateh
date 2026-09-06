@@ -55,6 +55,8 @@ function PinReveal({ pin }) {
   return (
     <div className="success" style={{ marginTop: 4 }}>
       PIN: <strong>{pin}</strong> — sampaikan ke Peserta secara manual
+      <br />
+      Simpan PIN ini sekarang — PIN hanya ditampilkan sekali dan tidak bisa dilihat lagi setelah halaman ditutup.
     </div>
   );
 }
