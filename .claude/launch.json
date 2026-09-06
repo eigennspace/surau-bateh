@@ -7,6 +7,12 @@
       "runtimeArgs": ["--prefix", "site", "run", "dev", "--", "--host"],
       "port": 5173,
       "autoPort": true
+    },
+    {
+      "name": "absen-magang",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "absen-magang", "run", "dev"],
+      "port": 3000
     }
   ]
 }
