@@ -88,3 +88,25 @@ nav.dashboard-nav a { font: var(--text-label); }
 .status-badge.menunggu, .status-badge.ditinjau { background: var(--status-next-soft); color: var(--gold-800); }
 .status-badge.disetujui, .status-badge.normal { background: var(--status-active-soft); color: var(--status-active); }
 .status-badge.ditolak { background: var(--status-danger-soft); color: var(--status-danger); }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 100;
+}
+
+.modal-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+  max-width: var(--container-narrow);
+  width: 100%;
+}
+
+.modal-card p { color: var(--text-body); margin: 0 0 var(--space-4); }
