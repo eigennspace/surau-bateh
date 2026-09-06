@@ -20,12 +20,11 @@ export const SB_DATA = {
   // direvisi (dipecah dari berkas ini supaya bisa diimpor tanpa menarik
   // dependency aset/React -- lihat komentar di `location.js`).
   location: LOCATION,
-  programs: [
-    { icon: 'mic', title: 'Kajian dan Tawajjuh', desc: 'Tafsir dan tawajjuh bersama Guru Surau Bateh', meta: 'Selasa, Kamis, Sabtu, Minggu · Ba’da Maghrib' },
-    { icon: 'swords', title: 'Silat Tradisi', desc: 'Sasaran silat untuk remaja dan dewasa di Lapangan.', meta: 'Malam pekanan · Ba’da Isya' },
-    // { icon: 'users', title: 'Tahsin Dewasa', desc: 'Perbaikan bacaan Al-Qur’an untuk jamaah dewasa, kelompok kecil.', meta: 'Rabu · Ba’da Isya' },
-    // { icon: 'heart-handshake', title: 'Santunan Anak Yatim', desc: 'Penyaluran bulanan dari infak jamaah untuk anak yatim sekitar surau.', meta: 'Setiap Jumat pertama' },
-  ],
+  // `programs`/`stats` DIHAPUS dari sini sejak ADR 0013 (cutover Fase 4,
+  // `.scratch/beranda-hero-program-stats-via-sanity/issues/04-cutover-hapus-programs-stats-hero-lama.md`)
+  // -- Program Beranda/Statistik Beranda sekarang sepenuhnya berasal dari
+  // dokumen singleton Sanity `beranda` (lihat `resolveBeranda` di
+  // `src/lib/resolveSanityContent.js`).
   ilmuTauhid: [
     {
       title: 'Rasulullah SAW',
@@ -364,12 +363,8 @@ export const SB_DATA = {
     bank: { name: 'Bank Syariah Indonesia (BSI)', account: '7771 806 168', holder: 'PONPES RIBATH AS SA ADY' },
     campaign: { active: false, title: 'Renovasi Atap Surau', description: 'Menunggu dana infak jamaah terkumpul untuk tahap renovasi atap.' },
   },
-  // Angka statistik: field manual, diisi berdasarkan pengamatan pengurus — bukan hitungan otomatis.
-  stats: [
-    { icon: 'users', value: '>100', label: 'Jamaah rutin' },
-    { icon: 'mic', value: '>10', label: 'Kajian per bulan' },
-    { icon: 'calendar-days', value: 'Tiap pekan', label: 'Gotong royong halaman' },
-  ],
+  // `stats` DIHAPUS dari sini sejak ADR 0013 (cutover Fase 4, lihat komentar
+  // `programs` di atas) -- sekarang berasal dari dokumen Sanity `beranda`.
   // `gallery` DIHAPUS dari sini sejak ADR 0006 (cutover tiket 06) -- galeri
   // foto sekarang sepenuhnya berasal dari Sanity (dokumen `galleryItem`),
   // ditarik build-time oleh `scripts/fetch-sanity-content.mjs` dan

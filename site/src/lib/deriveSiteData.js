@@ -90,6 +90,12 @@ export function deriveSiteData(rawData, now = new Date()) {
     // Isi Halaman Profil -- sama halnya, diteruskan apa adanya.
     profilSurau: rawData.profilSurau,
     salik: rawData.salik,
+    // Hero Beranda (badge lokasi/tagline/label CTA/foto background/
+    // highlights, hasil `resolveBeranda`, Fase 4) -- diteruskan apa adanya,
+    // tidak ada turunan yang perlu dihitung di sini. Bisa `undefined` bila
+    // dokumen `beranda` belum pernah di-publish; `Hero.jsx` menangani itu
+    // dengan wajar.
+    hero: rawData.hero,
     stats: rawData.stats,
     gallery: rawData.gallery,
     khatibJumat: deriveKhatibJumat(rawData.events, now),

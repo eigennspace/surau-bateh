@@ -1,6 +1,7 @@
 import {article} from './article'
 import {galleryItem} from './galleryItem'
 import {profilSurau} from './profilSurau'
+import {beranda} from './beranda'
 import {recurringEvent} from './recurringEvent'
 import {oneOffEvent} from './oneOffEvent'
 import {news} from './news'
@@ -28,4 +29,5 @@ export const schemaTypes = [
   silaturahmi,
   contact,
   salik,
+  beranda,
 ]

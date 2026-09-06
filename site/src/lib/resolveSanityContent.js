@@ -371,3 +371,54 @@ export function resolveSalik(urlFor, doc) {
     gallery: resolveProgramGallery(urlFor, doc.gallery),
   };
 }
+
+// resolveBeranda -- Fase 4 migrasi Sumber Data ke Sanity (ADR 0013,
+// `.scratch/beranda-hero-program-stats-via-sanity/spec.md`). Seksi Hero
+// (sebagian besar hardcode di `Hero.jsx`), `SB_DATA.programs`, dan
+// `SB_DATA.stats` pindah ke satu dokumen singleton baru `beranda` -- fungsi
+// di sini menormalkan bentuknya jadi bentuk yang dikonsumsi
+// `Hero.jsx`/`ProgramsSection.jsx`/`StatsSection.jsx` lewat
+// `deriveSiteData.js` (`site.hero`/`site.programs`/`site.stats`), sama
+// persis bentuk yang sudah ada sekarang, supaya ketiga komponen itu (selain
+// `Hero.jsx`, lihat tiket 03) tidak perlu diubah.
+
+/**
+ * @param {{locationBadge?, tagline?, ctaLabel?, backgroundImage?, highlights?: Array}|undefined} hero
+ *   Sub-objek `hero` dari dokumen `beranda` mentah hasil GROQ.
+ * @returns {{locationBadge, tagline, ctaLabel, backgroundImage: {url,position}|null, highlights: Array}|null}
+ *   `null` bila `hero` sendiri belum diisi (dokumen `beranda` sudah pernah
+ *   di-publish tapi bagian Hero-nya kosong) -- `Hero.jsx` menangani `null`
+ *   dengan wajar, tidak crash.
+ */
+function resolveBerandaHero(urlFor, hero) {
+  if (!hero) return null;
+  return {
+    locationBadge: hero.locationBadge,
+    tagline: hero.tagline,
+    ctaLabel: hero.ctaLabel,
+    backgroundImage: resolveImage(urlFor, hero.backgroundImage, { width: 1600 }),
+    highlights: hero.highlights || [],
+  };
+}
+
+/**
+ * @param {Function} urlFor Lihat `resolveImage`.
+ * @param {{hero?, programs?: Array, stats?: Array}|null} doc Dokumen
+ *   singleton `beranda` mentah hasil GROQ.
+ * @returns {{hero, programs: Array, stats: Array}|null} `programs`/`stats`
+ *   selalu array (fallback `[]`), tidak pernah error saat kosong/`undefined`
+ *   -- pola sama seperti `gallery` di `resolveProgram`/`resolveSalik`.
+ *   `null` bila dokumen `beranda` belum pernah di-publish sama sekali.
+ */
+export function resolveBeranda(urlFor, doc) {
+  if (!doc) return null;
+  return {
+    hero: resolveBerandaHero(urlFor, doc.hero),
+    programs: doc.programs || [],
+    // `showInHero` dinormalkan ke boolean tegas (`undefined` -> `false`) --
+    // `Hero.jsx` mencari `stats.find(s => s.showInHero)`, dan nilai
+    // falsy-tapi-bukan-`false` (mis. `undefined` pada dokumen lama sebelum
+    // field ini ada) tidak boleh bikin `.find` salah berperilaku.
+    stats: (doc.stats || []).map(s => ({ ...s, showInHero: Boolean(s.showInHero) })),
+  };
+}

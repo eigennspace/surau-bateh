@@ -7,6 +7,7 @@ function baseRawData(overrides = {}) {
     programs: [{ title: 'Program A' }],
     news: [{ title: 'Berita A' }],
     contact: { maps: 'https://maps.example', pengurus: [] },
+    hero: { locationBadge: 'Badge fixture', tagline: 'Tagline fixture', ctaLabel: 'CTA fixture', highlights: [] },
     stats: [{ icon: 'users', value: '180', label: 'Jamaah rutin Subuh' }],
     gallery: [{ src: 'foto.jpg', alt: 'Foto', ratio: '4 / 3' }],
     donation: {
@@ -87,7 +88,7 @@ describe('deriveSiteData — donation', () => {
 });
 
 describe('deriveSiteData — field pass-through', () => {
-  it('meneruskan programs, news, contact, stats, gallery tanpa mutasi', () => {
+  it('meneruskan programs, news, contact, hero, stats, gallery tanpa mutasi', () => {
     const raw = baseRawData();
     const now = new Date(2026, 7, 10, 10, 0);
     const result = deriveSiteData(raw, now);
@@ -95,6 +96,7 @@ describe('deriveSiteData — field pass-through', () => {
     expect(result.programs).toBe(raw.programs);
     expect(result.news).toBe(raw.news);
     expect(result.contact).toBe(raw.contact);
+    expect(result.hero).toBe(raw.hero);
     expect(result.stats).toBe(raw.stats);
     expect(result.gallery).toBe(raw.gallery);
 

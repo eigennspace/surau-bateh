@@ -57,6 +57,11 @@ export default function App() {
   // dengan pola yang sama seperti `gallery`/`events`/`news` di atas --
   // `deriveSiteData.js` meneruskan key-key ini apa adanya, jadi tidak perlu
   // diubah sama sekali.
+  // Hero/Program Beranda/Statistik Beranda (hasil `resolveBeranda`, Fase 4,
+  // lihat `.scratch/beranda-hero-program-stats-via-sanity/spec.md`) DIGABUNG
+  // dengan pola yang sama -- `sanityContent.beranda` bisa `null` (dokumen
+  // belum pernah di-publish), jadi tiap key dibaca lewat optional chaining,
+  // sama seperti `sanityContent.video`/`.contact`/`.salik` di atas.
   const rawData = {
     ...SB_DATA,
     gallery: sanityContent.gallery,
@@ -71,6 +76,13 @@ export default function App() {
     silaturahmi: sanityContent.silaturahmi,
     contact: sanityContent.contact,
     salik: sanityContent.salik,
+    // `?? []`/`?? null`, bukan cuma `?.` -- `resolveBeranda` mengembalikan
+    // `null` untuk SELURUH dokumen (bukan `{hero: null, programs: [], stats: []}`)
+    // bila belum pernah di-publish, dan `ProgramsSection.jsx`/`StatsSection.jsx`
+    // memanggil `.map`/`.length` pada `site.programs`/`site.stats` tanpa null-check.
+    hero: sanityContent.beranda?.hero ?? null,
+    programs: sanityContent.beranda?.programs ?? [],
+    stats: sanityContent.beranda?.stats ?? [],
   };
   const site = deriveSiteData(rawData, new Date());
   // Peta mini di footer -- endpoint `output=embed` tidak butuh API key

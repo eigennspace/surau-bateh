@@ -30,6 +30,7 @@ const SINGLETONS = [
   {type: 'silaturahmi', id: 'silaturahmi', title: 'Halaman Program — Silaturahmi & Kerjasama Lembaga'},
   {type: 'contact', id: 'contact', title: 'Kontak Umum'},
   {type: 'salik', id: 'salik', title: 'Profil Salik'},
+  {type: 'beranda', id: 'beranda', title: 'Beranda'},
 ]
 const SINGLETON_TYPES = new Set(SINGLETONS.map((s) => s.type))
 

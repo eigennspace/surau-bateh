@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractYoutubeVideoId, resolveVideo, resolveEvents, resolveNews, resolveProgram, resolveContact, resolveSalik } from './resolveSanityContent.js';
+import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractYoutubeVideoId, resolveVideo, resolveEvents, resolveNews, resolveProgram, resolveContact, resolveSalik, resolveBeranda } from './resolveSanityContent.js';
 
 // `urlFor` palsu -- meniru bentuk builder `@sanity/image-url` (method
 // chaining `.auto()`/`.width()`/`.url()`) tanpa memanggil Sanity sungguhan.
@@ -344,5 +344,74 @@ describe('resolveSalik', () => {
   it('null bila dokumen belum pernah di-publish', () => {
     expect(resolveSalik(fakeUrlFor, null)).toBeNull();
     expect(resolveSalik(fakeUrlFor, undefined)).toBeNull();
+  });
+});
+
+describe('resolveBeranda', () => {
+  it('mengembalikan bentuk lengkap untuk dokumen dengan hero/programs/stats terisi', () => {
+    const doc = {
+      hero: {
+        locationBadge: 'Lori Lubuk Minturun, Kota Padang',
+        tagline: 'Ber-IHSAN Bersama Surau Bateh Lori Kota Padang',
+        ctaLabel: 'Lihat Agenda',
+        backgroundImage: { asset: { _ref: 'hero-1' }, hotspot: { x: 0.5, y: 0.58 } },
+        highlights: [{ icon: 'mic', text: 'Kajian 4 kali sepekan' }],
+      },
+      programs: [{ icon: 'mic', title: 'Kajian dan Tawajjuh', desc: 'Deskripsi fixture', meta: 'Selasa · Ba\'da Maghrib' }],
+      stats: [{ icon: 'users', value: '>100', label: 'Jamaah rutin', showInHero: true }],
+    };
+    const result = resolveBeranda(fakeUrlFor, doc);
+    expect(result.hero.locationBadge).toBe('Lori Lubuk Minturun, Kota Padang');
+    expect(result.hero.tagline).toBe('Ber-IHSAN Bersama Surau Bateh Lori Kota Padang');
+    expect(result.hero.ctaLabel).toBe('Lihat Agenda');
+    expect(result.hero.backgroundImage).toEqual({ url: 'https://cdn.example.test/hero-1?w=1600', position: '50% 58%' });
+    expect(result.hero.highlights).toEqual([{ icon: 'mic', text: 'Kajian 4 kali sepekan' }]);
+    expect(result.programs).toEqual(doc.programs);
+    expect(result.stats).toEqual([{ icon: 'users', value: '>100', label: 'Jamaah rutin', showInHero: true }]);
+  });
+
+  it('highlights/programs/stats kosong atau undefined tidak error, selalu jadi array kosong', () => {
+    const doc = { hero: { locationBadge: 'A', tagline: 'B', ctaLabel: 'C', backgroundImage: { asset: { _ref: 'x' } } } };
+    const result = resolveBeranda(fakeUrlFor, doc);
+    expect(result.hero.highlights).toEqual([]);
+    expect(result.programs).toEqual([]);
+    expect(result.stats).toEqual([]);
+
+    const resultWithEmptyArrays = resolveBeranda(fakeUrlFor, { ...doc, programs: [], stats: [] });
+    expect(resultWithEmptyArrays.programs).toEqual([]);
+    expect(resultWithEmptyArrays.stats).toEqual([]);
+  });
+
+  it('hero null bila sub-objek hero belum diisi (dokumen beranda ada tapi bagian Hero kosong)', () => {
+    const result = resolveBeranda(fakeUrlFor, { programs: [], stats: [] });
+    expect(result.hero).toBeNull();
+  });
+
+  it('meresolve hero.backgroundImage lewat resolveImage (url + object-position dari hotspot)', () => {
+    const doc = {
+      hero: {
+        locationBadge: 'A', tagline: 'B', ctaLabel: 'C',
+        backgroundImage: { asset: { _ref: 'hero-2' }, hotspot: { x: 0.3, y: 0.7 } },
+      },
+    };
+    const result = resolveBeranda(fakeUrlFor, doc);
+    expect(result.hero.backgroundImage).toEqual({ url: 'https://cdn.example.test/hero-2?w=1600', position: '30% 70%' });
+  });
+
+  it('meneruskan showInHero per item stats apa adanya (true/false/undefined -> false)', () => {
+    const doc = {
+      stats: [
+        { icon: 'users', value: '1', label: 'A', showInHero: true },
+        { icon: 'mic', value: '2', label: 'B', showInHero: false },
+        { icon: 'calendar-days', value: '3', label: 'C' },
+      ],
+    };
+    const result = resolveBeranda(fakeUrlFor, doc);
+    expect(result.stats.map(s => s.showInHero)).toEqual([true, false, false]);
+  });
+
+  it('null bila dokumen belum pernah di-publish', () => {
+    expect(resolveBeranda(fakeUrlFor, null)).toBeNull();
+    expect(resolveBeranda(fakeUrlFor, undefined)).toBeNull();
   });
 });
