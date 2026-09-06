@@ -96,6 +96,27 @@
   flex-wrap: wrap;
 }
 
+/* Autofill browser (mis. Chrome) mengecat background input dengan warna
+   biru pucat miliknya sendiri, menimpa background transparan `Input` yang
+   divendor -- kotak biru itu juga bersudut tajam sementara pilnya
+   membulat, jadi keliatan norak/berantakan begitu browser mengisi
+   otomatis. Trik `-webkit-box-shadow` inset ini "melukis ulang" area
+   dalam input dengan warna kartu kita sendiri agar autofill tidak lagi
+   kelihatan beda dari input kosong; `-webkit-text-fill-color` menjaga
+   warna teksnya tetap `--text-strong`, bukan warna default autofill.
+   Delay transisi panjang mencegah kedipan warna saat autofill baru masuk.
+   Discope ke .gerbang-shell supaya form lama /dashboard tidak tersentuh. */
+.gerbang-shell input:-webkit-autofill,
+.gerbang-shell input:-webkit-autofill:hover,
+.gerbang-shell input:-webkit-autofill:focus,
+.gerbang-shell input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text-strong);
+  -webkit-box-shadow: 0 0 0 1000px var(--white) inset;
+  box-shadow: 0 0 0 1000px var(--white) inset;
+  caret-color: var(--text-strong);
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
 /* Link navigasi silang kecil di panel kanan (bukan tombol besar). */
 .gerbang-shell__nav-silang {
   margin-top: var(--space-6);
