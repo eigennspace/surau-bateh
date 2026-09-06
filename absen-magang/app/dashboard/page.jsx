@@ -33,7 +33,7 @@ export default async function DashboardHome() {
         <StatCard
           label="Peserta aktif"
           value={pesertaAktif.length}
-          href="/dashboard/pendaftaran"
+          href="/dashboard/peserta"
           icon="users"
         />
       </div>
