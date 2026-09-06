@@ -10,13 +10,13 @@ Selain itu, `CONTEXT.md` kini memuat klaim yang tidak lagi sepenuhnya benar dan 
 
 **Blocked by:** 01 — Seksi video profil tayang dari Sanity.
 
-- [ ] ADR baru bernomor berikutnya mencatat keputusan meng-host video di YouTube, bukan sebagai asset Sanity
-- [ ] ADR menyebut alternatif yang ditolak beserta alasannya: Google Drive (kuota tayang harian per berkas, di luar kendali kita) dan asset file Sanity (tanpa adaptive bitrate, dan video adalah cara tercepat menghabiskan kuota bandwidth asset)
-- [ ] ADR mencatat bahwa Sanity menyimpan link, bukan berkas — sehingga mengganti video tidak melibatkan maintainer
-- [ ] Entri **Sumber Data** di `CONTEXT.md` diperbaiki: klaim tentang seluruh teks dan caption foto Halaman Profil tidak lagi berlaku sepenuhnya
-- [ ] Entri **Halaman Profil** menyebutkan seksi video di Profil Surau dan bahwa isinya berasal dari Sanity
-- [ ] Entri **Dataset Sanity** menambahkan tipe dokumen baru ke daftar tipe yang disimpannya
-- [ ] Tidak ada istilah glosarium baru yang ditambahkan
-- [ ] Prasyarat operasional dicatat: video perlu diunggah ke channel YouTube milik surau, bukan akun pribadi seseorang, karena link yang tayang ikut nasib akun itu
+- [x] ADR baru bernomor berikutnya mencatat keputusan meng-host video di YouTube, bukan sebagai asset Sanity
+- [x] ADR menyebut alternatif yang ditolak beserta alasannya: Google Drive (kuota tayang harian per berkas, di luar kendali kita) dan asset file Sanity (tanpa adaptive bitrate, dan video adalah cara tercepat menghabiskan kuota bandwidth asset)
+- [x] ADR mencatat bahwa Sanity menyimpan link, bukan berkas — sehingga mengganti video tidak melibatkan maintainer
+- [x] Entri **Sumber Data** di `CONTEXT.md` diperbaiki: klaim tentang seluruh teks dan caption foto Halaman Profil tidak lagi berlaku sepenuhnya
+- [x] Entri **Halaman Profil** menyebutkan seksi video di Profil Surau dan bahwa isinya berasal dari Sanity
+- [x] Entri **Dataset Sanity** menambahkan tipe dokumen baru ke daftar tipe yang disimpannya
+- [x] Tidak ada istilah glosarium baru yang ditambahkan
+- [x] Prasyarat operasional dicatat: video perlu diunggah ke channel YouTube milik surau, bukan akun pribadi seseorang, karena link yang tayang ikut nasib akun itu
 
-**Status:** ready-for-agent
+**Status:** done — sudah terimplementasi & tergabung di main (lihat riwayat git); label ready-for-agent sebelumnya usang

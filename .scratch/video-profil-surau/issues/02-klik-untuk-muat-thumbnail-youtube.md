@@ -10,15 +10,15 @@ Varian thumbnail yang dipakai adalah `hqdefault`, bukan `maxresdefault`: yang te
 
 **Blocked by:** 01 — Seksi video profil tayang dari Sanity.
 
-- [ ] URL thumbnail masuk ke kontrak fungsi resolve, diturunkan dari ID video yang sama
-- [ ] URL thumbnail memakai varian `hqdefault`
-- [ ] Seksi video merender gambar thumbnail dan tombol play; iframe tidak ada di markup awal halaman
-- [ ] Menekan tombol play menyisipkan iframe dan videonya bisa diputar
-- [ ] Membuka halaman tanpa menekan play tidak memuat player YouTube sama sekali
-- [ ] Teks alternatif thumbnail, label tombol play, dan judul bingkai video semuanya diturunkan dari judul dokumen — tidak ada field aksesibilitas terpisah di Studio
-- [ ] Thumbnail tetap bekerja untuk video berstatus Unlisted maupun Public, tanpa perubahan kode
-- [ ] Tes di seam modul resolve mencakup URL thumbnail: varian dan ID video yang benar
-- [ ] Tes di seam halaman membuktikan thumbnail dan teks aksesibilitasnya ada di markup saat video tersedia
-- [ ] Interaksi klik tidak dites — seam halaman merender markup statis, dan satu tombol tidak sepadan dengan memperkenalkan alat baru ke suite
+- [x] URL thumbnail masuk ke kontrak fungsi resolve, diturunkan dari ID video yang sama
+- [x] URL thumbnail memakai varian `hqdefault`
+- [x] Seksi video merender gambar thumbnail dan tombol play; iframe tidak ada di markup awal halaman
+- [x] Menekan tombol play menyisipkan iframe dan videonya bisa diputar
+- [x] Membuka halaman tanpa menekan play tidak memuat player YouTube sama sekali
+- [x] Teks alternatif thumbnail, label tombol play, dan judul bingkai video semuanya diturunkan dari judul dokumen — tidak ada field aksesibilitas terpisah di Studio
+- [x] Thumbnail tetap bekerja untuk video berstatus Unlisted maupun Public, tanpa perubahan kode
+- [x] Tes di seam modul resolve mencakup URL thumbnail: varian dan ID video yang benar
+- [x] Tes di seam halaman membuktikan thumbnail dan teks aksesibilitasnya ada di markup saat video tersedia
+- [x] Interaksi klik tidak dites — seam halaman merender markup statis, dan satu tombol tidak sepadan dengan memperkenalkan alat baru ke suite
 
-**Status:** ready-for-agent
+**Status:** done — sudah terimplementasi & tergabung di main (lihat riwayat git); label ready-for-agent sebelumnya usang

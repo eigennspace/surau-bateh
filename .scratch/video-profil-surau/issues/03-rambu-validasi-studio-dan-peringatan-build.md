@@ -8,11 +8,11 @@ Aturan link yang sama berlaku di dua tempat — validasi Studio dan penerjemahan
 
 **Blocked by:** 01 — Seksi video profil tayang dari Sanity.
 
-- [ ] Field link di Studio menolak URL yang bukan link video YouTube yang sah, dengan pesan yang menyebutkan bentuk yang diterima
-- [ ] Link Shorts ditolak di Studio dengan alasan yang bisa dipahami pengurus (orientasi videonya tidak cocok dengan seksi ini)
-- [ ] Link berekor penanda waktu atau playlist tetap **diterima** di Studio — pengurus tidak perlu membersihkan URL hasil tombol Share
-- [ ] URL yang ditolak saat build menghasilkan peringatan di log yang menyebut URL penyebabnya
-- [ ] Peringatan itu tidak mengubah exit code; build dan deploy tetap berhasil, seksi video saja yang hilang
-- [ ] Kedua tempat yang memuat aturan link punya komentar yang menunjuk ke pasangannya, menandai duplikasi sebagai keputusan sadar beserta alasannya
+- [x] Field link di Studio menolak URL yang bukan link video YouTube yang sah, dengan pesan yang menyebutkan bentuk yang diterima
+- [x] Link Shorts ditolak di Studio dengan alasan yang bisa dipahami pengurus (orientasi videonya tidak cocok dengan seksi ini)
+- [x] Link berekor penanda waktu atau playlist tetap **diterima** di Studio — pengurus tidak perlu membersihkan URL hasil tombol Share
+- [x] URL yang ditolak saat build menghasilkan peringatan di log yang menyebut URL penyebabnya
+- [x] Peringatan itu tidak mengubah exit code; build dan deploy tetap berhasil, seksi video saja yang hilang
+- [x] Kedua tempat yang memuat aturan link punya komentar yang menunjuk ke pasangannya, menandai duplikasi sebagai keputusan sadar beserta alasannya
 
-**Status:** ready-for-agent
+**Status:** done — sudah terimplementasi & tergabung di main (lihat riwayat git); label ready-for-agent sebelumnya usang

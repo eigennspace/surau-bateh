@@ -4,11 +4,11 @@
 
 **Blocked by:** 02 (Program Beranda via Sanity), 03 (Hero Beranda via Sanity) — keduanya (beserta 01 secara transitif) harus sudah live dan terverifikasi di produksi sebelum jalur lamanya dihapus.
 
-**Status:** ready-for-agent
+**Status:** done — sudah terimplementasi & tergabung di main (lihat riwayat git); label ready-for-agent sebelumnya usang
 
-- [ ] Field `programs` dan `stats` dihapus dari `SB_DATA` di `sourceData.js`.
-- [ ] Import `foto-surau.jpg` di `Hero.jsx` dihapus (bila belum dihapus di tiket 03); file asetnya boleh tetap ada di `design-system/assets/` (masih dipakai sebagai referensi desain), tidak wajib dihapus dari repo.
-- [ ] Skrip migrasi satu-kali `scripts/migrate-beranda-to-sanity.mjs` (dipakai tiket 01/02/03) dihapus — sudah dipakai & dibuktikan, tidak bisa lagi jalan begitu field sumbernya dihapus dari `sourceData.js`.
-- [ ] Test yang mereferensikan `SB_DATA.programs`/`.stats` langsung dari `sourceData.js` (bukan dari `deriveSiteData`/`resolveSanityContent`) diperiksa dan diperbarui bila perlu — perilaku yang ditest (rendering Hero/`ProgramsSection`/`StatsSection`) tidak berubah.
-- [ ] `CONTEXT.md` diperbarui: entri "Sumber Data" mencatat Hero/`programs`/`stats` Beranda sudah pindah ke Sanity (field lama dihapus); entri "Dataset Sanity" menambah tipe dokumen `beranda` ke daftar tipe dokumen yang disebutkan.
-- [ ] `npm test`/`npm run build` lulus penuh tanpa modifikasi ekspektasi yang melemahkan cakupan.
+- [x] Field `programs` dan `stats` dihapus dari `SB_DATA` di `sourceData.js`.
+- [x] Import `foto-surau.jpg` di `Hero.jsx` dihapus (bila belum dihapus di tiket 03); file asetnya boleh tetap ada di `design-system/assets/` (masih dipakai sebagai referensi desain), tidak wajib dihapus dari repo.
+- [x] Skrip migrasi satu-kali `scripts/migrate-beranda-to-sanity.mjs` (dipakai tiket 01/02/03) dihapus — sudah dipakai & dibuktikan, tidak bisa lagi jalan begitu field sumbernya dihapus dari `sourceData.js`.
+- [x] Test yang mereferensikan `SB_DATA.programs`/`.stats` langsung dari `sourceData.js` (bukan dari `deriveSiteData`/`resolveSanityContent`) diperiksa dan diperbarui bila perlu — perilaku yang ditest (rendering Hero/`ProgramsSection`/`StatsSection`) tidak berubah.
+- [x] `CONTEXT.md` diperbarui: entri "Sumber Data" mencatat Hero/`programs`/`stats` Beranda sudah pindah ke Sanity (field lama dihapus); entri "Dataset Sanity" menambah tipe dokumen `beranda` ke daftar tipe dokumen yang disebutkan.
+- [x] `npm test`/`npm run build` lulus penuh tanpa modifikasi ekspektasi yang melemahkan cakupan.

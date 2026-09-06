@@ -4,14 +4,16 @@
 
 **Blocked by:** None — bisa mulai sekarang
 
-- [ ] `sourceData.js` (Sumber Data) punya entri kontak baru: Khitanan → Angku Bosa, `081374720759`; Dauroh → Muhammad Galang, `082171136418` — bentuk field mengikuti pola `contact.pengurus[]` yang sudah ada (`{ name, role, phone }`).
-- [ ] `sourceData.js` punya field narasi teks untuk Khitanan dan Dauroh (judul + paragraf penjelasan program), diisi draft berdasarkan konteks kajian yang sudah ada di situs — bukan hardcode di komponen halaman.
-- [ ] Kategori event `'Daurah'` yang sudah ada di `SB_DATA.events` (entri "Daurah Aswaja", 13 Agustus 2026) diselaraskan ejaannya jadi `'Dauroh'` (atau filter menerima kedua ejaan) — halaman `/dauroh` baru harus benar-benar menampilkan event ini.
-- [ ] Routing (`App.jsx`): `PAGE_SLUGS`/`SLUG_PAGES`/`pathForPage`/`routeFromPath` diperluas dengan slug flat satu-level baru: `Khitanan → 'khitanan'`, `Dauroh → 'dauroh'`. Slug `Kajian → 'kajian'` tidak berubah.
-- [ ] Halaman baru `KhitananPage` dan `DaurohPage` dirender saat `page === 'Khitanan'`/`'Dauroh'`, masing-masing menampilkan narasi, kartu kontak (reuse `ContactCard`/`openWhatsApp`), dan blok jadwal terfilter kategori `Khitanan`/`Dauroh` dari `site.events` (mengikuti pola tampilan `AgendaSection`/`EventItem`).
-- [ ] Blok jadwal menampilkan pesan **"Kegiatan akan segera hadir"** ketika tidak ada event dengan kategori yang sesuai.
-- [ ] Membuka `/khitanan` atau `/dauroh` langsung lewat URL (refresh/deep-link) menampilkan halaman yang benar, bukan Beranda.
-- [ ] Halaman `/kajian` yang sudah ada tidak berubah konten/layout-nya.
-- [ ] Test page-render (`renderToStaticMarkup` + fixture `deriveSiteData`, pola `SchedulePage.test.jsx`) untuk `KhitananPage`/`DaurohPage`: narasi muncul, kontak+nomor benar muncul, event kategori yang sesuai muncul, event kategori lain (mis. `Kajian`) tidak ikut bocor, fixture kosong → pesan "Kegiatan akan segera hadir" muncul.
-- [ ] Test data-invariant (pola `sourceData.test.js`): kontak Khitanan/Dauroh ada & nomor telepon terisi; kategori event `Khitanan`/`Dauroh` konsisten penulisannya di `SB_DATA.events`.
-- [ ] Test suite yang sudah ada (`SchedulePage.test.jsx`, `deriveSiteData.test.js`, `sourceData.test.js`, dll) tetap lulus tanpa modifikasi.
+**Status:** done — sudah terimplementasi & tergabung di main (lihat riwayat git, mis. `8da1230 Restrukturisasi navigasi jadi grup Kegiatan/Dakwah/Sosial`)
+
+- [x] `sourceData.js` (Sumber Data) punya entri kontak baru: Khitanan → Angku Bosa, `081374720759`; Dauroh → Muhammad Galang, `082171136418` — bentuk field mengikuti pola `contact.pengurus[]` yang sudah ada (`{ name, role, phone }`).
+- [x] `sourceData.js` punya field narasi teks untuk Khitanan dan Dauroh (judul + paragraf penjelasan program), diisi draft berdasarkan konteks kajian yang sudah ada di situs — bukan hardcode di komponen halaman.
+- [x] Kategori event `'Daurah'` yang sudah ada di `SB_DATA.events` (entri "Daurah Aswaja", 13 Agustus 2026) diselaraskan ejaannya jadi `'Dauroh'` (atau filter menerima kedua ejaan) — halaman `/dauroh` baru harus benar-benar menampilkan event ini.
+- [x] Routing (`App.jsx`): `PAGE_SLUGS`/`SLUG_PAGES`/`pathForPage`/`routeFromPath` diperluas dengan slug flat satu-level baru: `Khitanan → 'khitanan'`, `Dauroh → 'dauroh'`. Slug `Kajian → 'kajian'` tidak berubah.
+- [x] Halaman baru `KhitananPage` dan `DaurohPage` dirender saat `page === 'Khitanan'`/`'Dauroh'`, masing-masing menampilkan narasi, kartu kontak (reuse `ContactCard`/`openWhatsApp`), dan blok jadwal terfilter kategori `Khitanan`/`Dauroh` dari `site.events` (mengikuti pola tampilan `AgendaSection`/`EventItem`).
+- [x] Blok jadwal menampilkan pesan **"Kegiatan akan segera hadir"** ketika tidak ada event dengan kategori yang sesuai.
+- [x] Membuka `/khitanan` atau `/dauroh` langsung lewat URL (refresh/deep-link) menampilkan halaman yang benar, bukan Beranda.
+- [x] Halaman `/kajian` yang sudah ada tidak berubah konten/layout-nya.
+- [x] Test page-render (`renderToStaticMarkup` + fixture `deriveSiteData`, pola `SchedulePage.test.jsx`) untuk `KhitananPage`/`DaurohPage`: narasi muncul, kontak+nomor benar muncul, event kategori yang sesuai muncul, event kategori lain (mis. `Kajian`) tidak ikut bocor, fixture kosong → pesan "Kegiatan akan segera hadir" muncul.
+- [x] Test data-invariant (pola `sourceData.test.js`): kontak Khitanan/Dauroh ada & nomor telepon terisi; kategori event `Khitanan`/`Dauroh` konsisten penulisannya di `SB_DATA.events`.
+- [x] Test suite yang sudah ada (`SchedulePage.test.jsx`, `deriveSiteData.test.js`, `sourceData.test.js`, dll) tetap lulus tanpa modifikasi.
