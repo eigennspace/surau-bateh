@@ -5,12 +5,13 @@ import { usePathname } from 'next/navigation';
 import { Sidebar } from './ds/Sidebar.jsx';
 import { Icon } from './ds/Icon.jsx';
 
-// Lima menu dashboard -- `href`/`label` dipakai nav (sidebar + drawer),
-// `title` dipakai top bar mobile, dipetakan langsung dari <h1> tiap halaman
-// (lihat spec.md, Implementation Decisions: "Judul halaman untuk top bar").
+// Menu dashboard -- `href`/`label` dipakai nav (sidebar + drawer), `title`
+// dipakai top bar mobile, dipetakan langsung dari <h1> tiap halaman (lihat
+// spec.md, Implementation Decisions: "Judul halaman untuk top bar").
 const NAV_LINKS = [
   { href: '/dashboard', label: 'Beranda', title: 'Dashboard Pengurus', icon: 'layout-dashboard' },
   { href: '/dashboard/pendaftaran', label: 'Pendaftaran', title: 'Pendaftaran Menunggu', icon: 'user-plus' },
+  { href: '/dashboard/peserta', label: 'Daftar Peserta', title: 'Daftar Peserta', icon: 'users' },
   { href: '/dashboard/jendela-absen', label: 'Jendela Absen', title: 'Jendela Absen', icon: 'map-pin' },
   { href: '/dashboard/kehadiran', label: 'Kehadiran Ditinjau', title: 'Kehadiran Ditinjau', icon: 'clipboard-check' },
   { href: '/dashboard/laporan', label: 'Laporan', title: 'Generate Laporan', icon: 'file-text' },
