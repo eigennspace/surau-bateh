@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getPool } from '../../../lib/db.js';
 import { generateLaporan } from '../../../lib/absen/index.js';
+import { statusUntukError } from '../../../lib/absen/httpError.js';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -22,6 +23,6 @@ export async function GET(request) {
       },
     });
   } catch (error) {
-    return NextResponse.json({ error: error.message ?? 'Gagal membuat Laporan' }, { status: 400 });
+    return NextResponse.json({ error: error.message ?? 'Gagal membuat Laporan' }, { status: statusUntukError(error) });
   }
 }

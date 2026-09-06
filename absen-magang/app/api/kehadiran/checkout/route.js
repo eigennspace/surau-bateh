@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getPool } from '../../../../lib/db.js';
-import { catatKehadiran, AbsenError } from '../../../../lib/absen/index.js';
+import { catatKehadiran } from '../../../../lib/absen/index.js';
+import { statusUntukError } from '../../../../lib/absen/httpError.js';
 
 export async function POST(request) {
   const body = await request.json();
@@ -15,7 +16,6 @@ export async function POST(request) {
     });
     return NextResponse.json({ kehadiran });
   } catch (error) {
-    const status = error instanceof AbsenError ? 400 : 500;
-    return NextResponse.json({ error: error.message ?? 'Gagal check-out' }, { status });
+    return NextResponse.json({ error: error.message ?? 'Gagal check-out' }, { status: statusUntukError(error) });
   }
 }

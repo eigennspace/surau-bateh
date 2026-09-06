@@ -80,6 +80,35 @@ describe('setujuiPendaftaran', () => {
     expect(d1.pin).not.toBe(d2.pin);
   });
 
+  it('generate ulang PIN bila tabrakan UNIQUE terjadi saat commit (race condition)', async () => {
+    // Membungkus db supaya UPDATE pertama gagal dengan error UNIQUE
+    // violation Postgres (kode 23505), meniru dua approval berdekatan yang
+    // lolos pemeriksaan generatePinUnik dengan PIN sama sebelum salah satu
+    // commit -- setujuiPendaftaran harus generate ulang, bukan gagal total.
+    let updateDipanggil = 0;
+    const dbDenganTabrakanSekali = {
+      query: (sql, params) => {
+        if (sql.startsWith('UPDATE peserta SET status_pendaftaran')) {
+          updateDipanggil += 1;
+          if (updateDipanggil === 1) {
+            const error = new Error('duplicate key value violates unique constraint "peserta_pin_key"');
+            error.code = '23505';
+            error.constraint = 'peserta_pin_key';
+            throw error;
+          }
+        }
+        return db.query(sql, params);
+      },
+    };
+
+    const peserta = await ajukanPendaftaran(db, dataPeserta());
+    const disetujui = await setujuiPendaftaran(dbDenganTabrakanSekali, peserta.id);
+
+    expect(updateDipanggil).toBe(2);
+    expect(disetujui.statusPendaftaran).toBe('disetujui');
+    expect(disetujui.pin).toMatch(/^\d{6}$/);
+  });
+
   it('Peserta yang belum disetujui tidak bisa catatKehadiran', async () => {
     const peserta = await ajukanPendaftaran(db, dataPeserta());
     await expect(

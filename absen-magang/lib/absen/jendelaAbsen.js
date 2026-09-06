@@ -1,8 +1,31 @@
-// Evaluasi Jendela Absen: satu pengaturan global (lokasi + jam kerja) yang
+// Jendela Absen: satu pengaturan global (lokasi + jam kerja) yang
 // menentukan apakah sebuah Kehadiran dianggap `normal` atau `ditinjau`.
 // Lihat absen/CONTEXT.md di root repo untuk definisi istilah.
 
+import { jendelaAbsenFromRow } from './mappers.js';
+
 const BUMI_RADIUS_METER = 6371000;
+
+export async function getJendelaAbsen(db) {
+  const { rows } = await db.query('SELECT * FROM jendela_absen WHERE id = $1', ['default']);
+  return jendelaAbsenFromRow(rows[0]);
+}
+
+export async function setJendelaAbsen(db, { latitude, longitude, radiusMeter, jamMulai, jamSelesai }) {
+  const { rows } = await db.query(
+    `INSERT INTO jendela_absen (id, latitude, longitude, radius_meter, jam_mulai, jam_selesai)
+     VALUES ('default', $1, $2, $3, $4, $5)
+     ON CONFLICT (id) DO UPDATE SET
+       latitude = EXCLUDED.latitude,
+       longitude = EXCLUDED.longitude,
+       radius_meter = EXCLUDED.radius_meter,
+       jam_mulai = EXCLUDED.jam_mulai,
+       jam_selesai = EXCLUDED.jam_selesai
+     RETURNING *`,
+    [latitude, longitude, radiusMeter, jamMulai, jamSelesai],
+  );
+  return jendelaAbsenFromRow(rows[0]);
+}
 
 // Jarak antara dua titik koordinat (formula haversine), dalam meter.
 export function jarakMeter(a, b) {
