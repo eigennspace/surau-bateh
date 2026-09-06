@@ -6,11 +6,23 @@ const pad = m => (m ? 'var(--space-12) var(--space-5)' : 'var(--gutter-section) 
 const WEEKDAY_ORDER = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
 const ALL_DAY = 'Semua Hari';
 
+/**
+ * Singkatan hari-dalam-minggu untuk keperluan filter, berlaku sama untuk
+ * kegiatan mingguan (`day` sudah singkatan hari, mis. "Sel") maupun
+ * kegiatan sekali-jalan bertanggal (`day` adalah angka tanggal-di-bulan,
+ * mis. "13" -- singkatan harinya diturunkan dari `dayName`, nama hari
+ * lengkap hasil `resolveEvents`, mis. "Kamis" -> "Kam"). Dengan begitu
+ * filter tab tetap murni "Hari" (Sen/Sel/Rab/Kam/Jum/Sab/Min), bukan
+ * tanggal, dan kegiatan sekali-jalan tetap ikut tersaring saat tab hari
+ * yang cocok dipilih.
+ */
+function weekdayFilterKey(event) {
+  return event.dayName ? event.dayName.slice(0, 3) : event.day;
+}
+
 function deriveDays(events) {
-  const present = [...new Set(events.map(e => e.day).filter(Boolean))];
-  const known = WEEKDAY_ORDER.filter(d => present.includes(d));
-  const unknown = present.filter(d => !WEEKDAY_ORDER.includes(d));
-  return [ALL_DAY, ...known, ...unknown];
+  const present = new Set(events.map(weekdayFilterKey).filter(Boolean));
+  return [ALL_DAY, ...WEEKDAY_ORDER.filter(d => present.has(d))];
 }
 
 function NewsItem({ n }) {
@@ -61,7 +73,7 @@ export default function AgendaSection({ site, compact, onNavigate }) {
   const mobile = useBreakpoint();
   const [dayFilter, setDayFilter] = React.useState(ALL_DAY);
   const days = React.useMemo(() => deriveDays(site.events), [site.events]);
-  const list = site.events.filter(e => dayFilter === ALL_DAY || e.day === dayFilter);
+  const list = site.events.filter(e => dayFilter === ALL_DAY || weekdayFilterKey(e) === dayFilter);
 
   const emptyMessage = dayFilter === ALL_DAY
     ? 'Belum ada agenda.'

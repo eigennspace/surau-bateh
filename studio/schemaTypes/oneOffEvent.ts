@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {eventFields} from './lib/eventFields'
+import {weekdayName} from './lib/weekdayName'
 
 // oneOffEvent — event sekali-jalan bertanggal (mis. "Daurah Aswaja" tanggal
 // tertentu), berbeda dari kegiatan mingguan berulang (`recurringEvent.ts`).
@@ -23,9 +24,13 @@ export const oneOffEvent = defineType({
   ],
   preview: {
     select: {title: 'title', date: 'date', timeLabel: 'timeLabel'},
+    // Hari (mis. "Kamis") ditampilkan di depan tanggal -- pengurus melihat
+    // hari kegiatan langsung di daftar dokumen tanpa harus menghitungnya
+    // sendiri dari tanggal, konsisten dengan preview `recurringEvent.ts`
+    // yang sudah menampilkan hari (`dayOfWeek`) apa adanya.
     prepare: ({title, date, timeLabel}) => ({
       title,
-      subtitle: [date, timeLabel].filter(Boolean).join(' · '),
+      subtitle: [weekdayName(date), date, timeLabel].filter(Boolean).join(' · '),
     }),
   },
 })
