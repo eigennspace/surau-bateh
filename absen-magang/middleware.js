@@ -16,8 +16,7 @@ export async function middleware(request) {
 }
 
 export const config = {
-  // /api/laporan juga dilindungi -- satu-satunya route API yang dipanggil
-  // langsung dari dashboard Pengurus (form GET, bukan fetch), bukan dari
-  // Peserta publik.
-  matcher: ['/dashboard/:path*', '/api/laporan'],
+  // /api/laporan dan /api/resolve-lokasi juga dilindungi -- keduanya
+  // dipanggil dari dashboard Pengurus, bukan dari Peserta publik.
+  matcher: ['/dashboard/:path*', '/api/laporan', '/api/resolve-lokasi'],
 };
