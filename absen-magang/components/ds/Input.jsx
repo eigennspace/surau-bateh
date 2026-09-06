@@ -32,6 +32,17 @@ export function Input({
       flex: 1, border: 'none', outline: 'none', background: 'transparent',
       font: 'var(--text-body-default)', color: 'var(--text-strong)', minWidth: 0,
       resize: as === 'textarea' ? 'vertical' : undefined,
+      // Reset eksplisit -- globals.css punya rule lama `input, select,
+      // textarea { padding/margin-bottom/width/border-radius/border }` untuk
+      // form polos /dashboard. Karena style di atas tidak menyentuh properti
+      // itu, rule elemen-selector itu ikut kepakai di sini (spesifisitasnya
+      // lebih rendah dari inline style, tapi inline style yang tidak
+      // menyebut properti tidak membatalkannya) -- padding 12px + margin-
+      // bottom 16px dari sana membuat kotak <input> lebih tinggi dari
+      // pembungkusnya (44px) dan geser ke bawah, sehingga kursor terlihat
+      // tidak di tengah/hampir keluar dari pil. Reset di sini membuat
+      // Input yang divendor betul-betul mandiri dari rule lama tsb.
+      padding: 0, margin: 0, width: '100%', borderRadius: 0, height: as === 'textarea' ? 'auto' : '100%',
     },
   };
   if (as === 'textarea') {
