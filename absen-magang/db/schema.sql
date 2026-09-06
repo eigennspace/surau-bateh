@@ -30,6 +30,14 @@ CREATE TABLE IF NOT EXISTS kehadiran (
   tanggal DATE NOT NULL,
   jam_masuk TIMESTAMPTZ,
   jam_pulang TIMESTAMPTZ,
+  -- Lokasi GPS yang dikirim Peserta saat check-in/check-out (nullable --
+  -- browser bisa menolak izin lokasi). Disimpan supaya Pengurus bisa lihat
+  -- kenapa sebuah Kehadiran ditandai `ditinjau` (di luar radius vs di luar
+  -- jam kerja), bukan cuma dievaluasi sekali lalu dibuang.
+  lokasi_masuk_lat DOUBLE PRECISION,
+  lokasi_masuk_lng DOUBLE PRECISION,
+  lokasi_pulang_lat DOUBLE PRECISION,
+  lokasi_pulang_lng DOUBLE PRECISION,
   catatan_aktivitas TEXT,
   status TEXT NOT NULL DEFAULT 'normal'
     CHECK (status IN ('normal', 'ditinjau', 'ditolak')),
@@ -37,6 +45,11 @@ CREATE TABLE IF NOT EXISTS kehadiran (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   UNIQUE (peserta_id, tanggal)
 );
+
+ALTER TABLE kehadiran ADD COLUMN IF NOT EXISTS lokasi_masuk_lat DOUBLE PRECISION;
+ALTER TABLE kehadiran ADD COLUMN IF NOT EXISTS lokasi_masuk_lng DOUBLE PRECISION;
+ALTER TABLE kehadiran ADD COLUMN IF NOT EXISTS lokasi_pulang_lat DOUBLE PRECISION;
+ALTER TABLE kehadiran ADD COLUMN IF NOT EXISTS lokasi_pulang_lng DOUBLE PRECISION;
 
 -- Satu baris tunggal (id = 'default'): pengaturan global, bukan per-peserta/per-hari.
 CREATE TABLE IF NOT EXISTS jendela_absen (

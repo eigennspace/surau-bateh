@@ -10,6 +10,28 @@ function toLocalInputValue(waktu) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+// Satu baris lokasi (check-in atau check-out): jarak dari titik Jendela
+// Absen + tautan peta, atau keterangan kalau Peserta tidak mengirim lokasi
+// sama sekali (izin GPS ditolak browser) -- itu juga alasan sah kenapa
+// sebuah Kehadiran ditandai ditinjau, bukan cuma "di luar radius".
+function BarisLokasi({ label, lokasi, jarakMeter, radiusMeter }) {
+  if (!lokasi) {
+    return <div>{label}: <span className="status-badge ditinjau">lokasi tidak terkirim</span></div>;
+  }
+  const diLuarRadius = radiusMeter != null && jarakMeter > radiusMeter;
+  return (
+    <div>
+      {label}:{' '}
+      <a href={`https://www.google.com/maps?q=${lokasi.latitude},${lokasi.longitude}`} target="_blank" rel="noreferrer">
+        peta
+      </a>
+      {jarakMeter != null && (
+        <> — <span className={diLuarRadius ? 'status-badge ditinjau' : 'status-badge normal'}>{jarakMeter}m dari titik</span></>
+      )}
+    </div>
+  );
+}
+
 export default function KehadiranRow({ kehadiran }) {
   const [keputusan, setKeputusan] = useState(null);
   const [koreksi, setKoreksi] = useState(false);
@@ -22,7 +44,7 @@ export default function KehadiranRow({ kehadiran }) {
       <tr>
         <td>{kehadiran.pesertaNama}</td>
         <td>{kehadiran.tanggal}</td>
-        <td colSpan={3}><span className={`status-badge ${keputusan}`}>{keputusan}</span></td>
+        <td colSpan={4}><span className={`status-badge ${keputusan}`}>{keputusan}</span></td>
       </tr>
     );
   }
@@ -44,6 +66,20 @@ export default function KehadiranRow({ kehadiran }) {
         ) : (
           kehadiran.jamPulang ? new Date(kehadiran.jamPulang).toLocaleString('id-ID') : '-'
         )}
+      </td>
+      <td>
+        <BarisLokasi
+          label="Masuk"
+          lokasi={kehadiran.lokasiMasuk}
+          jarakMeter={kehadiran.jarakMasukMeter}
+          radiusMeter={kehadiran.jendelaRadiusMeter}
+        />
+        <BarisLokasi
+          label="Pulang"
+          lokasi={kehadiran.lokasiPulang}
+          jarakMeter={kehadiran.jarakPulangMeter}
+          radiusMeter={kehadiran.jendelaRadiusMeter}
+        />
       </td>
       <td>
         {koreksi ? (

@@ -29,6 +29,10 @@ export function pesertaFromRow(row) {
   };
 }
 
+function lokasiOpsional(lat, lng) {
+  return lat != null && lng != null ? { latitude: lat, longitude: lng } : null;
+}
+
 export function kehadiranFromRow(row) {
   if (!row) return null;
   return {
@@ -37,6 +41,8 @@ export function kehadiranFromRow(row) {
     tanggal: tanggalKeString(row.tanggal),
     jamMasuk: row.jam_masuk,
     jamPulang: row.jam_pulang,
+    lokasiMasuk: lokasiOpsional(row.lokasi_masuk_lat, row.lokasi_masuk_lng),
+    lokasiPulang: lokasiOpsional(row.lokasi_pulang_lat, row.lokasi_pulang_lng),
     catatanAktivitas: row.catatan_aktivitas,
     status: row.status,
   };

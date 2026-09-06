@@ -6,6 +6,7 @@ import {
   setJendelaAbsen,
   catatKehadiran,
   daftarKehadiranDitinjau,
+  daftarKehadiranDitinjauDenganPeserta,
   setujuiKehadiranDitinjau,
   tolakKehadiranDitinjau,
   koreksiJamKehadiran,
@@ -83,6 +84,45 @@ describe('check-in di luar radius lokasi', () => {
       ...jauh,
     });
     expect(kehadiran.status).toBe('ditinjau');
+  });
+});
+
+describe('lokasi check-in/check-out tersimpan pada Kehadiran', () => {
+  it('lokasi normal (dalam radius) tersimpan dan bisa diambil kembali', async () => {
+    const kehadiran = await catatKehadiran(db, {
+      pin: peserta.pin,
+      tipe: 'checkin',
+      waktu: new Date('2026-02-01T08:00:00'),
+      ...LOKASI_SURAU,
+    });
+
+    expect(kehadiran.lokasiMasuk).toEqual(LOKASI_SURAU);
+  });
+
+  it('lokasi check-out di luar radius tersimpan, dan tersedia untuk peninjauan Pengurus', async () => {
+    await catatKehadiran(db, { pin: peserta.pin, tipe: 'checkin', waktu: new Date('2026-02-01T08:00:00'), ...LOKASI_SURAU });
+
+    const jauh = { latitude: LOKASI_SURAU.latitude + 1, longitude: LOKASI_SURAU.longitude + 1 };
+    await catatKehadiran(db, { pin: peserta.pin, tipe: 'checkout', waktu: new Date('2026-02-01T15:00:00'), ...jauh });
+
+    const [ditinjau] = await daftarKehadiranDitinjauDenganPeserta(db);
+    expect(ditinjau.lokasiMasuk).toEqual(LOKASI_SURAU);
+    expect(ditinjau.lokasiPulang).toEqual(jauh);
+    expect(ditinjau.jarakMasukMeter).toBeLessThanOrEqual(200);
+    expect(ditinjau.jarakPulangMeter).toBeGreaterThan(200);
+  });
+
+  it('lokasi tidak terkirim (izin GPS ditolak) tetap tercatat sebagai ditinjau, lokasiMasuk null', async () => {
+    const kehadiran = await catatKehadiran(db, {
+      pin: peserta.pin,
+      tipe: 'checkin',
+      waktu: new Date('2026-02-01T08:00:00'),
+      latitude: undefined,
+      longitude: undefined,
+    });
+
+    expect(kehadiran.status).toBe('ditinjau');
+    expect(kehadiran.lokasiMasuk).toBeNull();
   });
 });
 

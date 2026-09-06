@@ -4,7 +4,7 @@
 // instance PGlite di test. Lihat absen/CONTEXT.md di root repo.
 
 import { randomUUID } from 'node:crypto';
-import { getJendelaAbsen, evaluasiJendela } from './jendelaAbsen.js';
+import { getJendelaAbsen, evaluasiJendela, jarakMeter } from './jendelaAbsen.js';
 import { kehadiranFromRow } from './mappers.js';
 import { notFound, invalid } from './errors.js';
 
@@ -52,10 +52,10 @@ export async function catatKehadiran(db, { pin, tipe, waktu = new Date(), latitu
     const id = randomUUID();
     const status = sesuaiJendela ? 'normal' : 'ditinjau';
     const { rows } = await db.query(
-      `INSERT INTO kehadiran (id, peserta_id, tanggal, jam_masuk, status)
-       VALUES ($1, $2, $3, $4, $5)
+      `INSERT INTO kehadiran (id, peserta_id, tanggal, jam_masuk, lokasi_masuk_lat, lokasi_masuk_lng, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
        RETURNING *`,
-      [id, peserta.id, tanggal, waktu, status],
+      [id, peserta.id, tanggal, waktu, latitude ?? null, longitude ?? null, status],
     );
     return kehadiranFromRow(rows[0]);
   }
@@ -73,10 +73,12 @@ export async function catatKehadiran(db, { pin, tipe, waktu = new Date(), latitu
   // meski check-in tadi normal.
   const status = existing.status === 'ditinjau' || !sesuaiJendela ? 'ditinjau' : 'normal';
   const { rows } = await db.query(
-    `UPDATE kehadiran SET jam_pulang = $2, catatan_aktivitas = $3, status = $4, updated_at = now()
+    `UPDATE kehadiran
+     SET jam_pulang = $2, lokasi_pulang_lat = $3, lokasi_pulang_lng = $4,
+         catatan_aktivitas = $5, status = $6, updated_at = now()
      WHERE id = $1
      RETURNING *`,
-    [existing.id, waktu, catatanAktivitas ?? null, status],
+    [existing.id, waktu, latitude ?? null, longitude ?? null, catatanAktivitas ?? null, status],
   );
   return kehadiranFromRow(rows[0]);
 }
@@ -88,8 +90,11 @@ export async function daftarKehadiranDitinjau(db) {
   return rows.map(kehadiranFromRow);
 }
 
-// Sama seperti daftarKehadiranDitinjau, ditambah nama Peserta -- dipakai
-// tampilan dashboard supaya Pengurus tahu Kehadiran itu milik siapa.
+// Sama seperti daftarKehadiranDitinjau, ditambah nama Peserta dan jarak
+// lokasi check-in/check-out ke titik Jendela Absen -- dipakai tampilan
+// dashboard supaya Pengurus tahu Kehadiran itu milik siapa dan KENAPA
+// ditandai ditinjau (di luar radius vs di luar jam kerja vs lokasi tidak
+// terkirim sama sekali), bukan cuma status mentah tanpa konteks.
 export async function daftarKehadiranDitinjauDenganPeserta(db) {
   const { rows } = await db.query(
     `SELECT kehadiran.*, peserta.nama AS peserta_nama
@@ -98,7 +103,23 @@ export async function daftarKehadiranDitinjauDenganPeserta(db) {
      WHERE kehadiran.status = 'ditinjau'
      ORDER BY kehadiran.tanggal ASC`,
   );
-  return rows.map(row => ({ ...kehadiranFromRow(row), pesertaNama: row.peserta_nama }));
+  const jendelaAbsen = await getJendelaAbsen(db);
+
+  return rows.map(row => {
+    const kehadiran = kehadiranFromRow(row);
+    return {
+      ...kehadiran,
+      pesertaNama: row.peserta_nama,
+      jarakMasukMeter: jarakDariJendela(kehadiran.lokasiMasuk, jendelaAbsen),
+      jarakPulangMeter: jarakDariJendela(kehadiran.lokasiPulang, jendelaAbsen),
+      jendelaRadiusMeter: jendelaAbsen?.radiusMeter ?? null,
+    };
+  });
+}
+
+function jarakDariJendela(lokasi, jendelaAbsen) {
+  if (!lokasi || !jendelaAbsen) return null;
+  return Math.round(jarakMeter(lokasi, jendelaAbsen));
 }
 
 async function ambilKehadiran(db, kehadiranId) {

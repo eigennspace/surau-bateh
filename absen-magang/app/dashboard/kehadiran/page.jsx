@@ -20,6 +20,7 @@ export default async function KehadiranDitinjauPage() {
               <th>Tanggal</th>
               <th>Jam masuk</th>
               <th>Jam pulang</th>
+              <th>Lokasi</th>
               <th>Keputusan</th>
             </tr>
           </thead>
