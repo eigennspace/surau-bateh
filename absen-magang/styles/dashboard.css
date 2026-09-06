@@ -303,3 +303,25 @@
   color: var(--text-strong);
   margin-bottom: 0;
 }
+
+/* Skeleton loading (components/ds/Skeleton.jsx), dipakai halaman
+   app/dashboard/**\/loading.jsx bawaan Next.js. Shimmer gradasi
+   slate-100/slate-200 supaya terasa "hidup" tanpa mencolok di atas
+   surface-card putih. */
+.skeleton {
+  background: linear-gradient(90deg, var(--slate-100) 25%, var(--slate-200) 37%, var(--slate-100) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: var(--slate-100);
+  }
+}
