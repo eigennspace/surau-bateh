@@ -9,9 +9,13 @@ import { renderLaporanPdf } from './pdf.js';
 // membongkar isi PDF -- lihat renderLaporanPdf di ./pdf.js).
 export async function ambilDataLaporan(db, { pesertaId, tanggalMulai, tanggalSelesai }) {
   const peserta = await ambilPeserta(db, pesertaId);
+  // Kehadiran `ditolak` sengaja dikecualikan -- tidak dihitung sebagai
+  // kehadiran sah (lihat ticket 04). `ditinjau` yang belum diputuskan
+  // Pengurus tetap ikut apa adanya (lihat ticket 05: Laporan tidak perlu
+  // menunggu peninjauan selesai).
   const { rows } = await db.query(
     `SELECT * FROM kehadiran
-     WHERE peserta_id = $1 AND tanggal >= $2 AND tanggal <= $3
+     WHERE peserta_id = $1 AND tanggal >= $2 AND tanggal <= $3 AND status != 'ditolak'
      ORDER BY tanggal ASC`,
     [pesertaId, tanggalMulai, tanggalSelesai],
   );

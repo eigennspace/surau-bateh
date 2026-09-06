@@ -1,6 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createTestDb } from './testDb.js';
-import { ajukanPendaftaran, setujuiPendaftaran, catatKehadiran, ambilDataLaporan, generateLaporan } from './index.js';
+import {
+  ajukanPendaftaran,
+  setujuiPendaftaran,
+  catatKehadiran,
+  tolakKehadiranDitinjau,
+  ambilDataLaporan,
+  generateLaporan,
+} from './index.js';
 
 let db;
 let peserta;
@@ -58,6 +65,27 @@ describe('ambilDataLaporan', () => {
     });
 
     expect(data.kehadiran).toHaveLength(0);
+  });
+
+  it('Kehadiran yang ditolak Pengurus tidak muncul, tidak dihitung sebagai kehadiran sah', async () => {
+    // 2026-02-01 dan 2026-02-05 tersimpan di beforeEach tanpa Jendela
+    // Absen diatur -> keduanya ditinjau, bisa ditolak lewat
+    // tolakKehadiranDitinjau (lihat ticket 04).
+    const [ditinjau] = await ambilDataLaporan(db, {
+      pesertaId: peserta.id,
+      tanggalMulai: '2026-02-01',
+      tanggalSelesai: '2026-02-01',
+    }).then(d => d.kehadiran);
+    await tolakKehadiranDitinjau(db, ditinjau.id);
+
+    const data = await ambilDataLaporan(db, {
+      pesertaId: peserta.id,
+      tanggalMulai: '2026-02-01',
+      tanggalSelesai: '2026-02-28',
+    });
+
+    expect(data.kehadiran).toHaveLength(1);
+    expect(data.kehadiran.every(k => k.status !== 'ditolak')).toBe(true);
   });
 });
 
