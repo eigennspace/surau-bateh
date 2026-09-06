@@ -1,6 +1,18 @@
 // Baris database (snake_case, Date dari driver Postgres) <-> objek domain
 // (camelCase) yang dipakai fungsi lib/absen dan lapisan UI.
 
+// Kolom DATE (tanpa jam) dikembalikan `pg` sebagai objek Date (tengah
+// malam waktu lokal), sedangkan PGlite -- dan test yang menulis literal
+// '2026-01-01' -- sering mengembalikan/menerima string. Dinormalkan jadi
+// string YYYY-MM-DD supaya konsisten di seluruh app dan aman dirender
+// langsung sebagai children JSX (Date bukan children React yang valid).
+function tanggalKeString(value) {
+  if (!value || typeof value === 'string') return value;
+  const d = value instanceof Date ? value : new Date(value);
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 export function pesertaFromRow(row) {
   if (!row) return null;
   return {
@@ -10,8 +22,8 @@ export function pesertaFromRow(row) {
     jurusan: row.jurusan,
     nim: row.nim,
     noWhatsapp: row.no_whatsapp,
-    periodeMulai: row.periode_mulai,
-    periodeSelesai: row.periode_selesai,
+    periodeMulai: tanggalKeString(row.periode_mulai),
+    periodeSelesai: tanggalKeString(row.periode_selesai),
     statusPendaftaran: row.status_pendaftaran,
     pin: row.pin,
   };
@@ -22,7 +34,7 @@ export function kehadiranFromRow(row) {
   return {
     id: row.id,
     pesertaId: row.peserta_id,
-    tanggal: row.tanggal,
+    tanggal: tanggalKeString(row.tanggal),
     jamMasuk: row.jam_masuk,
     jamPulang: row.jam_pulang,
     catatanAktivitas: row.catatan_aktivitas,
