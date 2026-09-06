@@ -9,17 +9,9 @@
 
 import { LOCATION } from './location.js';
 import qrisImage from '../design-system/assets/qris-surau-lori.jpg';
-import dokumentasiKhitanan1 from '../design-system/assets/photos/dokumentasi-khitanan-1.jpeg';
-import dokumentasiKhitanan2 from '../design-system/assets/photos/dokumentasi-khitanan-2.jpeg';
-import dokumentasiKhitanan3 from '../design-system/assets/photos/dokumentasi-khitanan-3.jpeg';
-import kunjunganLembaga from '../design-system/assets/photos/kunjungan-lembaga.jpeg';
-import kunjunganLembaga2 from '../design-system/assets/photos/kunjungan-lembaga-2.jpeg';
-import daurahPertama from '../design-system/assets/photos/daurah-pertama.jpeg';
-import daurahFlyer from '../design-system/assets/background-daurah.jpeg';
 import pembangunanSurau from '../design-system/assets/photos/pembangunan-surau.jpg';
 import gotongRoyongBelakang from '../design-system/assets/photos/gotong-royong-belakang.jpg';
 import pengurusSurau from '../design-system/assets/photos/pengurus-surau.jpg';
-import karakterSalik from '../design-system/assets/flyer/karakter-salik.jpeg';
 
 export const SB_DATA = {
   // Koordinat Surau Bateh Lori, Kota Padang -- dipakai peta mini di footer.
@@ -319,81 +311,15 @@ export const SB_DATA = {
       order: 42
     }
   ],
-  contact: {
-    maps: 'https://maps.app.goo.gl/bVQSzRjYxisicxUq6?g_st=ic',
-    address: 'Jl. Lori Lubuk Minturun, Lubuk Minturun, Kec. Koto Tangah, Kota Padang, Sumatera Barat 25586',
-    pengurus: [{ name: 'Ustadz Anshor', role: 'Pengurus surau', phone: '081261246706' }],
-    // Kontak person khusus per-Halaman Program (bukan pengurus umum surau) --
-    // ditampilkan di kartu kontak halaman program masing-masing. Nomor
-    // Ustadz Anshor sengaja ditulis ulang di tiga entri, bukan menunjuk ke
-    // `pengurus[0]`, supaya kontak satu program bisa diganti tanpa ikut
-    // mengubah program lain.
-    dauroh: { name: 'Angku Bosa', role: 'Kontak Program Dauroh', phone: '081374720759' },
-    khitanan: { name: 'Muhammad Galang', role: 'Kontak Program Khitanan', phone: '082171136418' },
-    konseling: { name: 'Ust. Aldi Sanusi', role: 'Kontak Konseling Psikoterapi Tasawuf', phone: '085263318859' },
-    tawajjuh: { name: 'Ustadz Anshor', role: 'Kontak Tawajjuh & Kajian Rutin Ihsan', phone: '081261246706' },
-    baktiSosial: { name: 'Ustadz Anshor', role: 'Kontak Program Bakti Sosial', phone: '081261246706' },
-    silaturahmi: { name: 'Ustadz Anshor', role: 'Kontak Silaturahmi & Kerjasama Lembaga', phone: '081261246706' },
-    // Kontak Halaman Profil (Profil Salik). Bukan Halaman Program, tapi
-    // memakai kartu kontak yang sama.
-    salik: { name: 'Ustadz Anshor', role: 'Kontak Salik Surau Bateh', phone: '081261246706' },
-  },
-  // Isi tiap Halaman Program: judul, narasi, dan galeri dokumentasi.
+  // `contact` (kontak umum halaman `/kontak`, kontak person tiap Halaman
+  // Program, narasi+galeri keenam Halaman Program) SUDAH PINDAH ke Sanity
+  // sejak Fase 3 migrasi Sumber Data (ADR 0013,
+  // `.scratch/halaman-program-kontak-salik-via-sanity/spec.md`) -- ditarik
+  // build-time oleh `scripts/fetch-sanity-content.mjs` dan digabung ke
+  // `rawData` di `App.jsx`. Field-field itu DIHAPUS sepenuhnya dari sini
+  // (bukan ditinggal sebagai fallback mati) sebagai tiket cutover terpisah,
+  // sama seperti `gallery` sebelumnya (lihat komentar di bawah).
   //
-  // `gallery` -- array `{ src, alt, caption?, meta? }`. Nama field sengaja
-  // sama persis dengan dokumen `galleryItem` di Sanity supaya migrasi nanti
-  // tidak butuh penerjemah. Rasio foto TIDAK diatur di sini: grid halaman
-  // program selalu kotak (1:1), beda dari galeri Beranda. Cara menambah
-  // foto: taruh berkasnya di `src/design-system/assets/photos/`, tambahkan
-  // baris `import` di atas berkas ini, lalu masukkan entri baru ke array.
-  // Slot `gallery: []` yang kosong memang sengaja ditulis -- itu tempat
-  // menempelkan foto, bukan field yang terlupa dihapus.
-  khitanan: {
-    title: 'Khitanan',
-    gallery: [
-      { src: dokumentasiKhitanan1, alt: 'Dokumentasi kegiatan khitanan' },
-      { src: dokumentasiKhitanan2, alt: 'Dokumentasi kegiatan khitanan' },
-      { src: dokumentasiKhitanan3, alt: 'Dokumentasi kegiatan khitanan' },
-    ],
-    narrative: 'Program khitanan gratis Surau Bateh Lori adalah salah satu kegiatan sosial yang dikhususkan bagi anak-anak yang kurang mampu. Kegiatan ini dilaksanakan pada hari libur semester, yang dilaksanakan/disuvervisi langsung oleh Ahli Urologi yaitu, **Dr.dr. Etriyel MYH, SpU (K)**.  Tujuan dari kegiatan ini adalah meringankan beban orang tua sekaligus menanamkan syi\'ar Agama kepada anak sejak dini. Pendaftaran dan jadwal pelaksanaan diinformasikan langsung oleh kontak person di bawah ini:',
-  },
-  dauroh: {
-    title: 'Dauroh',
-    gallery: [
-      { src: daurahPertama, alt: 'Dokumentasi Dauroh Aswaja bersama jamaah' },
-      { src: daurahFlyer, alt: 'Dokumentasi Flyer Daurah' },
-    ],
-    narrative: 'Dauroh adalah pelatihan Ahlussunnah wal-Jama\'ah (ASWAJA), berbeda dengan kajian  pada umumnya, dalam pelatihan ini ditargetkan peserta mendapatkan kompetensi yang utuh dan paham dengan rukun Agama yang tiga yaitu, Iman Islam dan Ihsan, sehingga lengkaplah di dalam diri para peserta pemahaman terhadap rukun Agama tersebut. \n \nDalam daurah ini Peserta tidak hanya mendapatkan ilmu secara teori, akan tetapi dibimbing agar bisa mencapai kedudukan Ihsan yang disampaikan oleh Nabi dalam Hadisnya; Merasakan Allah dalam setiap Ibadah. Surau bateh siap hadir untuk mengisi Dauroh di berbagai Mesjid, Musholla, Lembaga atau Komunitas di Seluruh Kota Padang. **Daurah ini full gratis**, untuk info lebih lanjut silahkan hubungi kontak person di bawah ini:',
-  },
-  tawajjuh: {
-    title: 'Tawajjuh & Kajian Rutin Ihsan',
-    gallery: [],
-    // DRAFT — disusun berdasarkan konteks kajian yang sudah ada di situs,
-    // menunggu review/edit pengurus surau sebelum dianggap final.
-    narrative: 'Tawajjuh dan kajian rutin adalah nafas harian Surau Bateh Lori: majelis tempat jamaah duduk bersama Tuan Guru untuk membersihkan hati dan meneguhkan pemahaman terhadap rukun Agama yang tiga — Iman, Islam, dan Ihsan. Kajian tidak berhenti pada penjelasan teori; jamaah dibimbing sampai merasakan kehadiran Allah dalam setiap ibadah, kedudukan Ihsan yang disebut Nabi dalam hadisnya.\n \nMajelis ini terbuka untuk siapa saja — salik yang baru mengenal jalan ini maupun yang sudah lama menempuhnya, jamaah wanita, serta mahasiswa/i. Jadwal lengkap tiap pekannya tercantum di bawah. Untuk pertanyaan seputar majelis, silahkan hubungi kontak person di bawah ini:',
-  },
-  konseling: {
-    title: 'Konseling Psikoterapi Tasawuf',
-    gallery: [],
-    narrative: 'Kesedihan, rasa cemas, amarah, dan pikiran yang berlebihan bukan hanya melelahkan batin, melainkan juga dapat menurunkan kesehatan fisik.\n \nMelalui Psikoterapi Tasawuf - DzikirTerapi, mari duduk bersama untuk menata kembali kedamaian jiwa. Dengan pendekatan yang sesuai dengan Al-Qur\'an dan Sunnah, kami mendampingi Anda melepaskan beban batin dan menjemput kembali ketenangan diri yang sejati. Untuk informasi dan jadwal konsultasi, silahkan hubungi kontak person di bawah ini:',
-  },
-  baktiSosial: {
-    title: 'Bakti Sosial',
-    gallery: [],
-    // DRAFT — disusun berdasarkan konteks kegiatan sosial yang sudah ada di
-    // situs, menunggu review/edit pengurus surau sebelum dianggap final.
-    narrative: 'Bakti Sosial Surau Bateh Lori adalah wujud nyata bahwa ilmu yang dipelajari di majelis mesti turun jadi amal di tengah masyarakat. Kegiatannya beragam mengikuti kebutuhan yang ada di sekitar surau — penyaluran bantuan untuk keluarga yang membutuhkan, santunan, gotong royong, serta bantuan bagi warga yang tertimpa musibah.\n \nSeluruh kegiatan ini digerakkan dari infak jamaah dan tenaga sukarela pengurus serta salik surau. Jamaah yang ingin ikut serta, menyalurkan bantuan, atau mengusulkan sasaran bakti sosial di lingkungannya, silahkan hubungi kontak person di bawah ini:',
-  },
-  silaturahmi: {
-    title: 'Silaturahmi & Kerjasama Lembaga',
-    gallery: [
-      { src: kunjunganLembaga, alt: 'Kunjungan Lembaga UIN IB Imam Bonjol Prodi Tasawuf & Terapi' },
-      { src: kunjunganLembaga2, alt: 'Kunjungan Lembaga UIN IB Imam Bonjol Prodi Tasawuf & Terapi' }
-    ],
-    // DRAFT — disusun berdasarkan konteks program Dauroh yang sudah ada di
-    // situs, menunggu review/edit pengurus surau sebelum dianggap final.
-    narrative: 'Surau Bateh Lori terbuka untuk bersilaturahmi dan bekerja sama dengan masjid, musholla, pesantren, kampus, lembaga, maupun komunitas di Kota Padang dan sekitarnya. Kerjasama yang sudah berjalan mencakup pengisian dauroh dan kajian di tempat mitra, kegiatan sosial bersama, serta kunjungan silaturahmi antar lembaga.\n \nSurau Bateh siap hadir memenuhi undangan tanpa memungut biaya. Bila lembaga atau komunitas Anda ingin menjalin kerjasama atau mengundang Surau Bateh, silahkan hubungi kontak person di bawah ini:',
-  },
   // Isi Halaman Profil (lihat istilah "Halaman Profil" di CONTEXT.md). Bukan
   // Halaman Program: Profil Surau punya tata letak sendiri (tiap fotonya
   // berpasangan dengan teks di sebelahnya), Profil Salik meminjam
@@ -428,31 +354,10 @@ export const SB_DATA = {
       photo: { src: pengurusSurau, alt: 'Pengurus surau berfoto bersama', caption: 'Selepas musyawarah pengurus di ruang utama.' },
     },
   },
-  // Profil Salik. `bullets` dirender sebagai daftar <ul> di bawah `narrative`,
-  // `closing` sebagai paragraf penutup di bawah daftar itu. Halaman ini
-  // sengaja TIDAK punya blok jadwal -- ia menjelaskan karakter, bukan agenda;
-  // agenda sudah ada di Jadwal Kegiatan.
+  // `salik` (seluruh isi Profil Salik) SUDAH PINDAH ke Sanity sejak Fase 3
+  // migrasi Sumber Data yang sama (lihat komentar `contact` di atas) --
+  // dihapus sepenuhnya dari sini, bukan ditinggal sebagai fallback mati.
   //
-  // DRAFT — ditranskrip dari flyer `assets/flyer/karakter-salik.jpeg`,
-  // menunggu review/edit pengurus surau sebelum dianggap final.
-  salik: {
-    title: 'Karakter Salik Surau Bateh',
-    narrative: 'Salik adalah orang yang menempuh jalan menuju Allah di bawah bimbingan Mursyid — bukan sekadar hadir di majelis, melainkan menjalani prosesnya hari demi hari. Jalan ini bukan cepat, tapi pasti menuju Allah. Surau Bateh Lori merumuskan delapan karakter yang mesti tumbuh dalam diri seorang Salik agar ia menjadi Salik sejati, menuju ridha Ilahi:',
-    bullets: [
-      '**Berakhlakul Karimah** — bersikap dan berperilaku yang baik serta terpuji, sesuai tuntunan Agama Islam.',
-      '**Energik** — memiliki energi dan semangat yang tinggi dalam beribadah, perjuangan dakwah, dan dalam menjalani aktifitas sehari-hari.',
-      '**Zikir Muraqabah Wukuf** — tingkatan zikir (maqam) minimal yang harus dicapai seorang Salik.',
-      '**Istiqomah** — sikap teguh pendirian, konsisten, dan berkesinambungan dalam menempuh jalan spiritual "Ber Ihsan".',
-      '**Paham Rukun Agama** — memahami tentang kedudukan Iman, Islam, dan Ihsan dalam sistematika ajaran Agama Islam.',
-      '**Satu Komando (Qiyadah wal Jundiyah)** — kesatuan komando di mana bawahan (Salik) taat kepada pimpinan (Mursyid) yang bijaksana dan memiliki kapasitas mengarahkan dan membimbing salik-nya menuju Allah SWT.',
-      '**Amar Ma\'ruf Nahi Mungkar** — menyeru orang lain kepada kebaikan, dan mencegah segala bentuk kejahatan/keburukan.',
-      '**Rendah Hati** — tidak menyombongkan diri, tidak angkuh, dan tidak memandang rendah orang lain.',
-    ],
-    closing: 'Kedelapannya bermuara pada satu hal: **Ber Ihsan** — beribadah kepada Allah seakan-akan melihat-Nya; jika tidak mampu, maka yakinlah bahwa Dia selalu melihat kita. Untuk bertanya lebih jauh atau bergabung menempuh jalan ini, silahkan hubungi kontak person di bawah ini:',
-    gallery: [
-      { src: karakterSalik, alt: 'Flyer 8 Karakter Salik Surau Bateh', caption: '8 Karakter Salik Surau Bateh — klik untuk melihat utuh.' },
-    ],
-  },
   // Nilai awal `bank` berasal dari `New Surau Bateh Lori Design System/assets/informasi-rekening.md`.
   donation: {
     qris: qrisImage,

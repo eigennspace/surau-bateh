@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractYoutubeVideoId, resolveVideo, resolveEvents, resolveNews } from './resolveSanityContent.js';
+import { objectPositionFromHotspot, resolveImage, resolveBody, resolveArticles, resolveGallery, extractYoutubeVideoId, resolveVideo, resolveEvents, resolveNews, resolveProgram, resolveContact, resolveSalik } from './resolveSanityContent.js';
 
 // `urlFor` palsu -- meniru bentuk builder `@sanity/image-url` (method
 // chaining `.auto()`/`.width()`/`.url()`) tanpa memanggil Sanity sungguhan.
@@ -251,5 +251,98 @@ describe('resolveNews', () => {
 
   it('array kosong untuk newsDocs kosong/undefined', () => {
     expect(resolveNews(undefined)).toEqual([]);
+  });
+});
+
+describe('resolveProgram', () => {
+  const person = { name: 'Kontak fixture', role: 'Peran fixture', phone: '081200000000' };
+
+  it('galeri terisi -> src/alt/caption/meta/position ter-resolve, TANPA field ratio', () => {
+    const doc = {
+      title: 'Judul fixture', narrative: 'Narasi fixture.', person,
+      gallery: [{ image: { asset: { _ref: 'g-1' }, hotspot: { x: 0.5, y: 0.4 } }, alt: 'Alt fixture', caption: 'Caption fixture', meta: 'Meta fixture' }],
+    };
+    const result = resolveProgram(fakeUrlFor, doc);
+    expect(result.title).toBe('Judul fixture');
+    expect(result.narrative).toBe('Narasi fixture.');
+    expect(result.gallery).toHaveLength(1);
+    expect(result.gallery[0]).toEqual({
+      src: 'https://cdn.example.test/g-1?w=1200', alt: 'Alt fixture', position: '50% 40%', meta: 'Meta fixture', caption: 'Caption fixture',
+    });
+    expect(result.gallery[0].ratio).toBeUndefined();
+  });
+
+  it('galeri kosong/undefined tidak error, tetap array kosong', () => {
+    expect(resolveProgram(fakeUrlFor, { title: 'X', narrative: 'Y', person, gallery: [] }).gallery).toEqual([]);
+    expect(resolveProgram(fakeUrlFor, { title: 'X', narrative: 'Y', person }).gallery).toEqual([]);
+  });
+
+  it('meneruskan person (name/role/phone) apa adanya', () => {
+    const result = resolveProgram(fakeUrlFor, { title: 'X', narrative: 'Y', person, gallery: [] });
+    expect(result.person).toEqual(person);
+  });
+
+  it('markup **bold**/*italic* di narrative diteruskan mentah, tidak diparse', () => {
+    const doc = { title: 'X', narrative: 'Teks **tebal** dan *miring*.', person, gallery: [] };
+    expect(resolveProgram(fakeUrlFor, doc).narrative).toBe('Teks **tebal** dan *miring*.');
+  });
+
+  it('null bila dokumen belum pernah di-publish', () => {
+    expect(resolveProgram(fakeUrlFor, null)).toBeNull();
+    expect(resolveProgram(fakeUrlFor, undefined)).toBeNull();
+  });
+});
+
+describe('resolveContact', () => {
+  it('meneruskan address, dan maps dari field mapsUrl', () => {
+    const doc = { address: 'Alamat fixture', mapsUrl: 'https://maps.example.test/x', pengurus: [] };
+    const result = resolveContact(doc);
+    expect(result.address).toBe('Alamat fixture');
+    expect(result.maps).toBe('https://maps.example.test/x');
+  });
+
+  it('pengurus dikembalikan sebagai array, termasuk kasus 1 item', () => {
+    const doc = { address: 'A', mapsUrl: 'https://x.test', pengurus: [{ name: 'Ustadz Anshor', role: 'Pengurus surau', phone: '081261246706' }] };
+    const result = resolveContact(doc);
+    expect(result.pengurus).toEqual([{ name: 'Ustadz Anshor', role: 'Pengurus surau', phone: '081261246706' }]);
+  });
+
+  it('pengurus array kosong untuk field kosong/undefined, tidak error', () => {
+    expect(resolveContact({ address: 'A', mapsUrl: 'https://x.test' }).pengurus).toEqual([]);
+  });
+
+  it('null bila dokumen belum pernah di-publish', () => {
+    expect(resolveContact(null)).toBeNull();
+    expect(resolveContact(undefined)).toBeNull();
+  });
+});
+
+describe('resolveSalik', () => {
+  const person = { name: 'Kontak salik fixture', role: 'Peran salik fixture', phone: '081200000000' };
+
+  it('bullets diteruskan sebagai array string, closing apa adanya', () => {
+    const doc = { title: 'X', narrative: 'Y', bullets: ['**Satu** — a.', '**Dua** — b.'], closing: 'Penutup fixture.', person, gallery: [] };
+    const result = resolveSalik(fakeUrlFor, doc);
+    expect(result.bullets).toEqual(['**Satu** — a.', '**Dua** — b.']);
+    expect(result.closing).toBe('Penutup fixture.');
+  });
+
+  it('bullets array kosong untuk field kosong/undefined, gallery kosong tidak error', () => {
+    const result = resolveSalik(fakeUrlFor, { title: 'X', narrative: 'Y', closing: 'Z', person });
+    expect(result.bullets).toEqual([]);
+    expect(result.gallery).toEqual([]);
+  });
+
+  it('markup **bold** di bullets/closing/narrative diteruskan mentah, tidak diparse', () => {
+    const doc = { title: 'X', narrative: '**Narasi tebal**', bullets: ['**Bullet tebal**'], closing: '**Penutup tebal**', person, gallery: [] };
+    const result = resolveSalik(fakeUrlFor, doc);
+    expect(result.narrative).toBe('**Narasi tebal**');
+    expect(result.bullets[0]).toBe('**Bullet tebal**');
+    expect(result.closing).toBe('**Penutup tebal**');
+  });
+
+  it('null bila dokumen belum pernah di-publish', () => {
+    expect(resolveSalik(fakeUrlFor, null)).toBeNull();
+    expect(resolveSalik(fakeUrlFor, undefined)).toBeNull();
   });
 });

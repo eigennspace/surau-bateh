@@ -9,7 +9,7 @@ export default function BaktiSosialPage({ site }) {
       title={site.baktiSosial?.title || 'Bakti Sosial'}
       narrative={site.baktiSosial?.narrative}
       events={events}
-      person={site.contact?.baktiSosial}
+      person={site.baktiSosial?.person}
       whatsappMessage="Assalamu'alaikum, saya ingin bertanya soal program Bakti Sosial di Surau Bateh Lori"
       contactHeading="Ingin ikut serta atau menyalurkan bantuan?"
       gallery={site.baktiSosial?.gallery}

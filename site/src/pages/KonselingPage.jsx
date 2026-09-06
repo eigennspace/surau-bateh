@@ -13,7 +13,7 @@ export default function KonselingPage({ site }) {
       title={site.konseling?.title || 'Konseling Psikoterapi Tasawuf'}
       narrative={site.konseling?.narrative}
       events={events}
-      person={site.contact?.konseling}
+      person={site.konseling?.person}
       whatsappMessage="Assalamu'alaikum, saya ingin bertanya soal Konseling Psikoterapi Tasawuf di Surau Bateh Lori"
       contactHeading="Jadwalkan sesi konsultasi Anda"
       gallery={site.konseling?.gallery}

@@ -16,7 +16,7 @@ export default function TawajjuhPage({ site }) {
       title={site.tawajjuh?.title || 'Tawajjuh & Kajian Rutin Ihsan'}
       narrative={site.tawajjuh?.narrative}
       events={events}
-      person={site.contact?.tawajjuh}
+      person={site.tawajjuh?.person}
       whatsappMessage="Assalamu'alaikum, saya ingin bertanya soal Tawajjuh & Kajian Rutin Ihsan di Surau Bateh Lori"
       contactHeading="Ada pertanyaan soal majelis?"
       gallery={site.tawajjuh?.gallery}

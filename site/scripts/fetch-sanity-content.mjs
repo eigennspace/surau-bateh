@@ -19,7 +19,12 @@ import { fileURLToPath } from 'node:url';
 import { createClient } from '@sanity/client';
 import { createImageUrlBuilder } from '@sanity/image-url';
 import { loadDotEnv } from './lib/loadDotEnv.mjs';
-import { resolveArticles, resolveGallery, resolveVideo, resolveEvents, resolveNews } from '../src/lib/resolveSanityContent.js';
+import { resolveArticles, resolveGallery, resolveVideo, resolveEvents, resolveNews, resolveProgram, resolveContact, resolveSalik } from '../src/lib/resolveSanityContent.js';
+
+// Enam Halaman Program, satu type per program (ADR 0014) -- semuanya
+// singleton dengan bentuk field identik (`programFields.ts`), jadi query +
+// resolve dilakukan lewat satu loop, bukan ditulis ulang 6x.
+const PROGRAM_TYPES = ['khitanan', 'dauroh', 'tawajjuh', 'konseling', 'baktiSosial', 'silaturahmi'];
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(__dirname, '..');
@@ -59,8 +64,11 @@ async function main() {
   let recurringEventDocs = [];
   let oneOffEventDocs = [];
   let newsDocs = [];
+  let programDocs = [];
+  let contactDoc = null;
+  let salikDoc = null;
   try {
-    [articleDocs, galleryDocs, profilSurauDoc, recurringEventDocs, oneOffEventDocs, newsDocs] = await Promise.all([
+    [articleDocs, galleryDocs, profilSurauDoc, recurringEventDocs, oneOffEventDocs, newsDocs, programDocs, contactDoc, salikDoc] = await Promise.all([
       client.fetch(`*[_type == "article"]{
         title, "slug": slug.current, author, date, excerpt, cover, body
       }`),
@@ -80,6 +88,14 @@ async function main() {
       client.fetch(`*[_type == "news"] | order(date desc){
         tag, title, date, link, description
       }`),
+      // Keenam Halaman Program -- masing-masing singleton `[0]` sendiri
+      // (pola sama seperti `profilSurau` di atas), ditarik lewat satu query
+      // per type (bukan satu query gabungan) supaya dokumen yang belum
+      // pernah di-publish jelas jadi `null` per-program, bukan ikut hilang
+      // dari hasil.
+      Promise.all(PROGRAM_TYPES.map(type => client.fetch(`*[_type == "${type}"][0]{title, narrative, person, gallery}`))),
+      client.fetch(`*[_type == "contact"][0]{address, mapsUrl, pengurus}`),
+      client.fetch(`*[_type == "salik"][0]{title, narrative, bullets, closing, person, gallery}`),
     ]);
   } catch (err) {
     console.error(`fetch-sanity-content: gagal fetch dari Sanity (project ${projectId}/dataset ${dataset}): ${err.message}`);
@@ -91,6 +107,11 @@ async function main() {
   const video = resolveVideo(profilSurauDoc);
   const events = resolveEvents(recurringEventDocs, oneOffEventDocs);
   const news = resolveNews(newsDocs);
+  const programs = Object.fromEntries(
+    PROGRAM_TYPES.map((type, i) => [type, resolveProgram(urlFor, programDocs[i])]),
+  );
+  const contact = resolveContact(contactDoc);
+  const salik = resolveSalik(urlFor, salikDoc);
   // Validasi schema di Studio adalah jaring utama (lihat
   // `studio/schemaTypes/profilSurau.ts`); ini jaring pengaman untuk sisa
   // kasus yang lolos. Build TETAP berhasil -- satu salah-tempel pada satu
@@ -104,9 +125,15 @@ async function main() {
   }
 
   mkdirSync(path.dirname(outFile), { recursive: true });
-  writeFileSync(outFile, JSON.stringify({ articles, gallery, video, events, news }, null, 2) + '\n');
+  writeFileSync(outFile, JSON.stringify({ articles, gallery, video, events, news, ...programs, contact, salik }, null, 2) + '\n');
+  const missingPrograms = PROGRAM_TYPES.filter(type => !programs[type]);
+  if (missingPrograms.length > 0) {
+    console.warn(`fetch-sanity-content: dokumen belum pernah di-publish untuk: ${missingPrograms.join(', ')} -- halaman terkait akan tampil kosong.`);
+  }
+  if (!contact) console.warn('fetch-sanity-content: dokumen "contact" belum pernah di-publish -- halaman /kontak akan tampil kosong.');
+  if (!salik) console.warn('fetch-sanity-content: dokumen "salik" belum pernah di-publish -- halaman /profil-salik akan tampil kosong.');
   console.log(
-    `fetch-sanity-content: ${articles.length} artikel, ${gallery.length} foto galeri, video profil ${video ? 'ada' : 'tidak ada'}, ${events.length} kegiatan, ${news.length} pengumuman ditulis ke ${path.relative(siteRoot, outFile)}`,
+    `fetch-sanity-content: ${articles.length} artikel, ${gallery.length} foto galeri, video profil ${video ? 'ada' : 'tidak ada'}, ${events.length} kegiatan, ${news.length} pengumuman, ${PROGRAM_TYPES.length - missingPrograms.length}/${PROGRAM_TYPES.length} Halaman Program, kontak ${contact ? 'ada' : 'tidak ada'}, salik ${salik ? 'ada' : 'tidak ada'} ditulis ke ${path.relative(siteRoot, outFile)}`,
   );
 }
 

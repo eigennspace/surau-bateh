@@ -9,7 +9,7 @@ export default function KhitananPage({ site }) {
       title={site.khitanan?.title || 'Khitanan'}
       narrative={site.khitanan?.narrative}
       events={events}
-      person={site.contact?.khitanan}
+      person={site.khitanan?.person}
       whatsappMessage="Assalamu'alaikum, saya ingin bertanya soal program Khitanan di Surau Bateh Lori"
       gallery={site.khitanan?.gallery}
     />

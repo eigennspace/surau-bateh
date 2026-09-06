@@ -280,3 +280,94 @@ export function resolveNews(newsDocs) {
     };
   });
 }
+
+// resolveProgram/resolveContact/resolveSalik -- Fase 3 migrasi Sumber Data ke
+// Sanity (ADR 0013,
+// `.scratch/halaman-program-kontak-salik-via-sanity/spec.md`). Narasi/galeri
+// dokumentasi/kontak person keenam Halaman Program, kontak umum halaman
+// `/kontak`, dan seluruh isi Profil Salik pindah ke delapan dokumen
+// singleton baru -- fungsi di sini menormalkan bentuknya jadi bentuk yang
+// sudah dikonsumsi `ProgramSection.jsx`/`ContactPage.jsx`/`ProfilSalikPage.jsx`
+// sekarang, supaya komponen-komponen itu tidak perlu diubah.
+
+/**
+ * Galeri dokumentasi Halaman Program/Profil Salik -- bentuk field BEDA dari
+ * `galleryItem` Beranda (dipakai `resolveGallery` di atas): tidak ada
+ * `ratio`/`wide`/`order` di schema-nya (rasio dipaku 1:1 di
+ * `ProgramSection.jsx`, bukan hasil resolve -- lihat `programFields.ts`),
+ * jadi dipisah dari `resolveGallery`, bukan dipakai ulang apa adanya.
+ */
+function resolveProgramGallery(urlFor, galleryDocs) {
+  return (galleryDocs || [])
+    .filter(item => item.image?.asset)
+    .map(item => {
+      const image = resolveImage(urlFor, item.image, { width: 1200 });
+      return {
+        src: image.url,
+        alt: item.alt,
+        position: image.position,
+        meta: item.meta,
+        caption: item.caption,
+      };
+    });
+}
+
+/**
+ * @param {Function} urlFor Lihat `resolveImage`.
+ * @param {{title?, narrative?, person?: {name,role,phone}, gallery?: Array}|null} doc
+ *   Dokumen Halaman Program (`khitanan`/`dauroh`/`tawajjuh`/`konseling`/
+ *   `baktiSosial`/`silaturahmi`) mentah hasil GROQ. Dipanggil sekali per
+ *   program oleh `fetch-sanity-content.mjs`.
+ * @returns {{title, narrative, person, gallery: Array}|null} Bentuk yang
+ *   dikonsumsi `ProgramSection.jsx` lewat props `title`/`narrative`/
+ *   `person`/`gallery` -- `null` bila dokumen belum pernah di-publish.
+ *   `gallery` selalu array (kosong bila field-nya kosong/dokumen tidak
+ *   punya galeri), tidak pernah error.
+ */
+export function resolveProgram(urlFor, doc) {
+  if (!doc) return null;
+  return {
+    title: doc.title,
+    narrative: doc.narrative,
+    person: doc.person,
+    gallery: resolveProgramGallery(urlFor, doc.gallery),
+  };
+}
+
+/**
+ * @param {{address?: string, mapsUrl?: string, pengurus?: Array}|null} doc
+ *   Dokumen singleton `contact` (kontak umum halaman `/kontak`) mentah hasil
+ *   GROQ.
+ * @returns {{address, maps, pengurus: Array}|null} `maps` (bukan `mapsUrl`)
+ *   mengikuti nama field yang sudah dipakai `ContactPage.jsx` sekarang --
+ *   `null` bila dokumen belum pernah di-publish.
+ */
+export function resolveContact(doc) {
+  if (!doc) return null;
+  return {
+    address: doc.address,
+    maps: doc.mapsUrl,
+    pengurus: doc.pengurus || [],
+  };
+}
+
+/**
+ * @param {Function} urlFor Lihat `resolveImage`.
+ * @param {{title?, narrative?, bullets?: Array<string>, closing?, person?, gallery?: Array}|null} doc
+ *   Dokumen singleton `salik` (Profil Salik) mentah hasil GROQ.
+ * @returns {{title, narrative, bullets: Array<string>, closing, person, gallery: Array}|null}
+ *   Bentuk yang dikonsumsi `ProfilSalikPage.jsx` -- `bullets`/`gallery`
+ *   selalu array, tidak pernah error saat kosong. `null` bila dokumen belum
+ *   pernah di-publish.
+ */
+export function resolveSalik(urlFor, doc) {
+  if (!doc) return null;
+  return {
+    title: doc.title,
+    narrative: doc.narrative,
+    bullets: doc.bullets || [],
+    closing: doc.closing,
+    person: doc.person,
+    gallery: resolveProgramGallery(urlFor, doc.gallery),
+  };
+}
