@@ -1,0 +1,198 @@
+/* Shell split-screen dipakai bersama oleh /login, /daftar, /absen (lihat
+   .scratch/absen-magang-gerbang-visual/spec.md). Kelas lama di globals.css
+   (.container, .card, button, .status-badge, dsb) dipakai `/dashboard/*` dan
+   sengaja tidak disentuh di sini -- file terpisah, bukan blok baru di
+   globals.css, sesuai keputusan spec. */
+
+.gerbang-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+}
+
+.gerbang-shell__panel-kiri {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  overflow: hidden;
+  height: 100vh;
+  min-height: 240px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.gerbang-shell__foto {
+  position: absolute;
+  inset: -6%;
+  animation: gerbang-ken-burns 22s ease-in-out infinite alternate;
+}
+
+.gerbang-shell__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(34, 38, 44, .86) 0%, rgba(34, 38, 44, .66) 42%, rgba(34, 38, 44, .22) 72%, rgba(34, 38, 44, .30) 100%);
+}
+
+.gerbang-shell__brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  color: var(--sand-100);
+}
+
+.gerbang-shell__logo {
+  flex: 0 0 auto;
+  height: 48px;
+  width: auto;
+}
+
+.gerbang-shell__nama {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  font-size: var(--fs-h3);
+  color: var(--sand-100);
+  letter-spacing: -.01em;
+}
+
+.gerbang-shell__subjudul {
+  font-size: var(--fs-body-sm);
+  color: rgba(253, 251, 246, .82);
+  margin-top: 2px;
+}
+
+.gerbang-shell__panel-kanan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-6);
+  background: var(--surface-page);
+}
+
+.gerbang-shell__konten {
+  width: 100%;
+  max-width: 420px;
+  animation: gerbang-fade-in var(--dur-slow, 0.4s) var(--ease-standard, ease) both;
+}
+
+@keyframes gerbang-ken-burns {
+  from { transform: scale(1) translate(0, 0); }
+  to { transform: scale(1.08) translate(-1.5%, -1%); }
+}
+
+@keyframes gerbang-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Baris tombol berdampingan (Coba lagi/Lanjutkan, Check-in/Check-out, dst)
+   -- dipakai berulang di LokasiModal dan /absen, satu kelas bersama supaya
+   tidak diulang sebagai inline style di tiap tempat. */
+.gerbang-shell__btn-row {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* Autofill browser (mis. Chrome) mengecat background input dengan warna
+   biru pucat miliknya sendiri, menimpa background transparan `Input` yang
+   divendor -- kotak biru itu juga bersudut tajam sementara pilnya
+   membulat, jadi keliatan norak/berantakan begitu browser mengisi
+   otomatis. Trik `-webkit-box-shadow` inset ini "melukis ulang" area
+   dalam input dengan warna kartu kita sendiri agar autofill tidak lagi
+   kelihatan beda dari input kosong; `-webkit-text-fill-color` menjaga
+   warna teksnya tetap `--text-strong`, bukan warna default autofill.
+   Delay transisi panjang mencegah kedipan warna saat autofill baru masuk.
+   Discope ke .gerbang-shell supaya form lama /dashboard tidak tersentuh. */
+.gerbang-shell input:-webkit-autofill,
+.gerbang-shell input:-webkit-autofill:hover,
+.gerbang-shell input:-webkit-autofill:focus,
+.gerbang-shell input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text-strong);
+  -webkit-box-shadow: 0 0 0 1000px var(--white) inset;
+  box-shadow: 0 0 0 1000px var(--white) inset;
+  caret-color: var(--text-strong);
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+/* Link "ganti pilihan" kecil di atas form PIN /absen, untuk kembali ke
+   layar pilih Check-in/Check-out -- <button> polos ditampilkan sebagai
+   link kecil, konsisten dengan .gerbang-shell__nav-silang. */
+.gerbang-shell__ganti-pilihan {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  color: var(--text-link);
+  cursor: pointer;
+}
+
+.gerbang-shell__ganti-pilihan:hover {
+  background: none;
+  color: var(--text-link-hover);
+}
+
+/* Link navigasi silang kecil di panel kanan (bukan tombol besar). */
+.gerbang-shell__nav-silang {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--fs-body-sm);
+  color: var(--text-muted);
+}
+
+.gerbang-shell__nav-silang a {
+  color: var(--text-link);
+}
+
+.gerbang-shell__nav-silang a:hover {
+  color: var(--text-link-hover);
+}
+
+@media (max-width: 860px) {
+  .gerbang-shell {
+    grid-template-columns: 1fr;
+    /* Baris pertama (foto header) hanya sebesar kontennya sendiri; baris
+       kedua (form) mengambil SISA tinggi viewport. Tanpa ini, align-content
+       default grid ("normal" == stretch saat ada sisa ruang dari
+       min-height:100vh di atas) meregangkan KEDUA baris secara tidak
+       proporsional -- foto jadi lebih tinggi dari perlu dan form ikut
+       "digeser", membuat form terlihat tidak center atas-bawah. */
+    grid-template-rows: auto 1fr;
+  }
+
+  .gerbang-shell__panel-kiri {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 120px;
+  }
+
+  .gerbang-shell__brand {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .gerbang-shell__nama {
+    font-size: var(--fs-h4, var(--fs-h3));
+  }
+
+  .gerbang-shell__panel-kanan {
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gerbang-shell__foto {
+    animation: none;
+  }
+
+  .gerbang-shell__konten {
+    animation: none;
+  }
+}

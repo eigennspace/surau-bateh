@@ -1,0 +1,305 @@
+/* Shell admin-panel dipakai khusus `/dashboard/*` (lihat
+   .scratch/absen-magang-dashboard-redesign/spec.md) -- berbeda dari
+   .gerbang-shell yang bermerek/marketing dipakai /login, /daftar, /absen.
+   File terpisah, tidak menyentuh kelas lama globals.css yang masih dipakai
+   LokasiModal di /absen (.card, button, .status-badge, dsb -- lihat spec
+   Out of Scope). */
+
+.dashboard-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--surface-page);
+}
+
+.dashboard-shell__sidebar {
+  flex: 0 0 auto;
+  width: 264px;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-card);
+  border-right: var(--border-width-hairline) solid var(--border-default);
+  padding: var(--space-6) var(--space-4);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.dashboard-shell__brand {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  font-size: var(--fs-h4);
+  color: var(--text-brand);
+  padding: 0 var(--space-3) var(--space-4);
+}
+
+.dashboard-shell__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.dashboard-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--text-body);
+  font: var(--text-label);
+  text-decoration: none;
+  transition: var(--transition-control);
+}
+
+.dashboard-nav-item:hover {
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+}
+
+.dashboard-nav-item--active {
+  background: var(--surface-brand-soft);
+  color: var(--text-brand);
+}
+
+.dashboard-shell__footer {
+  border-top: var(--border-width-hairline) solid var(--border-default);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.dashboard-shell__username {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-label);
+  color: var(--text-muted);
+  padding: 0 var(--space-3);
+}
+
+.dashboard-shell__topbar {
+  display: none;
+}
+
+.dashboard-shell__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.dashboard-shell__content {
+  padding: var(--space-8) var(--space-6);
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.dashboard-shell__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.5);
+  z-index: 90;
+  border: none;
+  padding: 0;
+}
+
+.dashboard-shell__drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: min(300px, 84vw);
+  background: var(--surface-card);
+  z-index: 91;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) var(--space-4);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  animation: dashboard-drawer-in 0.2s ease both;
+}
+
+@keyframes dashboard-drawer-in {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 860px) {
+  .dashboard-shell__sidebar {
+    display: none;
+  }
+
+  .dashboard-shell__topbar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    background: var(--surface-card);
+    border-bottom: var(--border-width-hairline) solid var(--border-default);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .dashboard-shell__topbar-title {
+    font: var(--text-h4);
+    color: var(--text-strong);
+    margin: 0;
+  }
+
+  .dashboard-shell__hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: var(--space-2);
+    margin: calc(var(--space-2) * -1);
+    cursor: pointer;
+    color: var(--text-strong);
+    border-radius: var(--radius-md);
+  }
+
+  .dashboard-shell__hamburger:hover {
+    background: var(--surface-sunken);
+  }
+
+  .dashboard-shell__content {
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
+@media (min-width: 861px) {
+  .dashboard-shell__drawer,
+  .dashboard-shell__overlay {
+    display: none;
+  }
+}
+
+/* Kartu statistik Beranda */
+.stat-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.stat-card {
+  display: block;
+  text-decoration: none;
+}
+
+.stat-card__value {
+  font: var(--text-h1);
+  color: var(--text-strong);
+}
+
+.stat-card__label {
+  font: var(--text-label);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+
+/* Empty state ringan (ikon + teks) dipakai Pendaftaran & Kehadiran Ditinjau. */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+  padding: var(--space-10) var(--space-6);
+  color: var(--text-muted);
+}
+
+.empty-state__icon {
+  color: var(--text-faint);
+}
+
+.empty-state__text {
+  font: var(--text-body-default);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Pola tabel (desktop) <-> kartu (mobile) dipakai Pendaftaran & Kehadiran
+   Ditinjau (lib/ds/ResponsiveTable.jsx). Data dan handler sama di kedua
+   mode -- hanya presentasi yang beda per breakpoint. */
+.responsive-table__table {
+  width: 100%;
+}
+
+.responsive-table__cards {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (max-width: 720px) {
+  .responsive-table__table {
+    display: none;
+  }
+
+  .responsive-table__cards {
+    display: flex;
+  }
+}
+
+.entry-card__field {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  font-size: var(--fs-body-sm);
+}
+
+.entry-card__label {
+  color: var(--text-muted);
+  flex: 0 0 auto;
+}
+
+.entry-card__value {
+  color: var(--text-strong);
+  text-align: right;
+}
+
+.entry-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+/* Select bergaya senada dengan `Input` yang divendor (Card/Button/Input),
+   dipakai halaman Laporan -- Input.jsx belum mendukung <select>. */
+.ds-select {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--white);
+  color: var(--text-strong);
+  font: var(--text-body-default);
+}
+
+.ds-select:focus {
+  outline: none;
+  border-color: var(--maroon-700);
+  box-shadow: 0 0 0 3px rgba(220, 201, 69, .35);
+}
+
+.ds-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-sans);
+  margin-bottom: var(--space-4);
+}
+
+.ds-field > label {
+  font: var(--text-label);
+  color: var(--text-strong);
+  margin-bottom: 0;
+}

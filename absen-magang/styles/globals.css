@@ -1,0 +1,112 @@
+/* Token desain dipinjam murni dari `New Surau Bateh Lori Design System/tokens/`
+   (lihat spec.md, Implementation Decisions) -- disalin apa adanya ke sini
+   supaya Absen Magang tidak bergantung pada path root repo di produksi. */
+@import './tokens/fonts.css';
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/radii.css';
+@import './tokens/spacing.css';
+@import './tokens/elevation.css';
+@import './tokens/motion.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-body);
+  font: var(--text-body-default);
+}
+
+h1, h2, h3, h4 { color: var(--text-strong); margin: 0 0 var(--space-4); }
+h1 { font: var(--text-h1); }
+h2 { font: var(--text-h2); }
+h3 { font: var(--text-h3); }
+
+a { color: var(--text-link); }
+a:hover { color: var(--text-link-hover); }
+
+.container {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: var(--gutter-page);
+}
+
+.card {
+  background: var(--surface-card);
+  border: var(--border-width-hairline) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+label { display: block; font: var(--text-label); color: var(--text-strong); margin-bottom: var(--space-1); }
+
+input, select, textarea {
+  width: 100%;
+  font: var(--text-body-default);
+  padding: var(--space-3);
+  border: var(--border-width-hairline) solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+  background: var(--white);
+  color: var(--text-strong);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+button, .btn {
+  display: inline-block;
+  font: var(--text-label);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--surface-brand);
+  color: var(--text-on-brand);
+  cursor: pointer;
+}
+
+button:hover, .btn:hover { background: var(--maroon-800); }
+
+button.secondary { background: var(--surface-sunken); color: var(--text-strong); }
+button.danger { background: var(--status-danger); color: var(--text-on-brand); }
+
+.error { color: var(--status-danger); background: var(--status-danger-soft); padding: var(--space-3); border-radius: var(--radius-sm); margin-bottom: var(--space-4); }
+.success { color: var(--status-active); background: var(--status-active-soft); padding: var(--space-3); border-radius: var(--radius-sm); margin-bottom: var(--space-4); }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: var(--space-4); }
+th, td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: var(--border-width-hairline) solid var(--border-default); font-size: var(--fs-body-sm); }
+th { color: var(--text-muted); font-weight: var(--fw-semibold); }
+
+nav.dashboard-nav { display: flex; gap: var(--space-4); margin-bottom: var(--space-8); flex-wrap: wrap; }
+nav.dashboard-nav a { font: var(--text-label); }
+
+.status-badge { display: inline-block; padding: 2px var(--space-2); border-radius: var(--radius-pill); font-size: var(--fs-caption); font-weight: var(--fw-semibold); }
+.status-badge.menunggu, .status-badge.ditinjau { background: var(--status-next-soft); color: var(--gold-800); }
+.status-badge.disetujui, .status-badge.normal { background: var(--status-active-soft); color: var(--status-active); }
+.status-badge.ditolak { background: var(--status-danger-soft); color: var(--status-danger); }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 100;
+}
+
+.modal-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+  max-width: var(--container-narrow);
+  width: 100%;
+}
+
+.modal-card p { color: var(--text-body); margin: 0 0 var(--space-4); }
