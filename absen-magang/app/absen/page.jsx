@@ -1,6 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { GerbangShell } from '../../components/GerbangShell.jsx';
+import { Input } from '../../components/ds/Input.jsx';
+import { Button } from '../../components/ds/Button.jsx';
+import { Badge } from '../../components/ds/Badge.jsx';
+import { Card } from '../../components/ds/Card.jsx';
 
 function ambilLokasi() {
   return new Promise((resolve) => {
@@ -57,6 +63,10 @@ function useStatusLokasi() {
   return [status, setStatus];
 }
 
+// Overlay izin lokasi -- tetap komponen custom (bukan Dialog design system,
+// lihat spec Out of Scope), hanya kelas CSS lama (.modal-overlay/.modal-card
+// dari globals.css) yang dipakai sehingga tampilannya tidak berubah di
+// dalam shell baru.
 function LokasiModal({ status, onMinta, onTutup }) {
   if (status === 'memeriksa') return null;
 
@@ -66,7 +76,7 @@ function LokasiModal({ status, onMinta, onTutup }) {
         <div className="modal-card">
           <h3>📍 Lokasi sudah aktif</h3>
           <p>Lokasi Anda akan dikirim saat check-in/check-out untuk memastikan Kehadiran tercatat dalam radius surau.</p>
-          <button onClick={onTutup}>Lanjutkan</button>
+          <Button onClick={onTutup}>Lanjutkan</Button>
         </div>
       </div>
     );
@@ -82,8 +92,10 @@ function LokasiModal({ status, onMinta, onTutup }) {
             "ditinjau" tanpa lokasi. Aktifkan lewat pengaturan izin situs di browser Anda (ikon gembok/info di
             sebelah alamat), lalu coba lagi.
           </p>
-          <button onClick={onMinta}>Coba lagi</button>{' '}
-          <button className="secondary" onClick={onTutup}>Lanjutkan tanpa lokasi</button>
+          <div className="gerbang-shell__btn-row">
+            <Button onClick={onMinta}>Coba lagi</Button>
+            <Button tone="secondary" onClick={onTutup}>Lanjutkan tanpa lokasi</Button>
+          </div>
         </div>
       </div>
     );
@@ -95,7 +107,7 @@ function LokasiModal({ status, onMinta, onTutup }) {
         <div className="modal-card">
           <h3>📍 Lokasi tidak didukung</h3>
           <p>Browser ini tidak mendukung deteksi lokasi. Kehadiran tetap bisa dicatat, tapi otomatis ditandai "ditinjau".</p>
-          <button onClick={onTutup}>Mengerti</button>
+          <Button onClick={onTutup}>Mengerti</Button>
         </div>
       </div>
     );
@@ -107,8 +119,10 @@ function LokasiModal({ status, onMinta, onTutup }) {
       <div className="modal-card">
         <h3>📍 Aktifkan lokasi</h3>
         <p>Absen Magang butuh lokasi Anda untuk mengecek apakah check-in/check-out dilakukan di sekitar surau.</p>
-        <button onClick={onMinta}>Aktifkan Lokasi</button>{' '}
-        <button className="secondary" onClick={onTutup}>Lanjutkan tanpa lokasi</button>
+        <div className="gerbang-shell__btn-row">
+          <Button onClick={onMinta}>Aktifkan Lokasi</Button>
+          <Button tone="secondary" onClick={onTutup}>Lanjutkan tanpa lokasi</Button>
+        </div>
       </div>
     </div>
   );
@@ -169,40 +183,56 @@ export default function AbsenPage() {
   }
 
   return (
-    <main className="container">
-      <h1>Absen Peserta</h1>
-
+    <GerbangShell subjudul="Check-in / Check-out Peserta">
       {!modalDitutup && (
         <LokasiModal status={statusLokasi} onMinta={mintaLokasi} onTutup={() => setModalDitutup(true)} />
       )}
 
-      <div className="card">
-        {pesan && <div className={pesan.status === 'error' ? 'error' : 'success'}>{pesan.teks}</div>}
+      <Card>
+        <h1 style={{ marginBottom: 'var(--space-2)' }}>Absen Peserta</h1>
 
-        <p>
+        {pesan && <div className={pesan.status === 'error' ? 'error' : 'success'} style={{ marginBottom: 'var(--space-4)' }}>{pesan.teks}</div>}
+
+        <div style={{ marginBottom: 'var(--space-4)' }}>
           {statusLokasi === 'granted' ? (
-            <span className="status-badge normal">📍 Lokasi aktif</span>
+            <Badge tone="active" icon="map-pin">Lokasi aktif</Badge>
           ) : (
-            <button type="button" className="secondary" onClick={() => setModalDitutup(false)}>
-              📍 Lokasi belum aktif — ketuk untuk aktifkan
-            </button>
+            <Button type="button" tone="secondary" size="sm" icon="map-pin" onClick={() => setModalDitutup(false)}>
+              Lokasi belum aktif — ketuk untuk aktifkan
+            </Button>
           )}
-        </p>
+        </div>
 
-        <label htmlFor="pin">PIN</label>
-        <input id="pin" value={pin} onChange={e => setPin(e.target.value)} inputMode="numeric" maxLength={6} required />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+          <Input
+            label="PIN"
+            id="pin"
+            value={pin}
+            onChange={e => setPin(e.target.value)}
+            inputMode="numeric"
+            maxLength={6}
+            required
+          />
 
-        <label htmlFor="catatanAktivitas">Catatan aktivitas (diisi saat check-out)</label>
-        <textarea
-          id="catatanAktivitas"
-          rows={3}
-          value={catatanAktivitas}
-          onChange={e => setCatatanAktivitas(e.target.value)}
-        />
+          <Input
+            as="textarea"
+            label="Catatan aktivitas (diisi saat check-out)"
+            id="catatanAktivitas"
+            rows={3}
+            value={catatanAktivitas}
+            onChange={e => setCatatanAktivitas(e.target.value)}
+          />
 
-        <button disabled={pending || !pin} onClick={() => submit('checkin')}>Check-in</button>{' '}
-        <button className="secondary" disabled={pending || !pin} onClick={() => submit('checkout')}>Check-out</button>
+          <div className="gerbang-shell__btn-row">
+            <Button fullWidth disabled={pending || !pin} onClick={() => submit('checkin')}>Check-in</Button>
+            <Button tone="secondary" fullWidth disabled={pending || !pin} onClick={() => submit('checkout')}>Check-out</Button>
+          </div>
+        </div>
+      </Card>
+
+      <div className="gerbang-shell__nav-silang">
+        <Link href="/login">Pengurus? Masuk di sini</Link>
       </div>
-    </main>
+    </GerbangShell>
   );
 }
