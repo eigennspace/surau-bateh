@@ -183,6 +183,51 @@ describe('resolveEvents', () => {
   });
 });
 
+// Regresi dipindah dari `src/data/sourceData.test.js` sejak tiket cutover
+// (.scratch/jadwal-pengumuman-via-sanity/issues/03-cutover-hapus-events-news-lama.md)
+// -- dulu menguji `SB_DATA.events` langsung, sekarang menguji hasil
+// `resolveEvents` atas fixture yang menyalin isi kegiatan produksi saat ini
+// (lihat riwayat `scripts/migrate-events-news-to-sanity.mjs`, sudah dihapus
+// setelah dipakai), supaya invarian yang sama tetap terjaga meski
+// sumbernya sekarang Sanity, bukan lagi berkas di repo ini.
+describe('resolveEvents — regresi jadwal kegiatan produksi', () => {
+  const recurringDocs = [
+    { dayOfWeek: 'Sel', timeLabel: "Ba'da Maghrib", title: 'Tawajjuh', category: 'Tawajjuh' },
+    { dayOfWeek: 'Kam', timeLabel: "Ba'da Maghrib", title: 'Tawajjuh', category: 'Tawajjuh' },
+    { dayOfWeek: 'Sab', timeLabel: "Ba'da Isya", title: 'Latihan Silat Tradisi', category: 'Silat' },
+    { dayOfWeek: 'Sab', timeLabel: "Ba'da Maghrib", title: 'Kajian & Tawajjuh', category: 'Kajian & Tawajjuh' },
+    { dayOfWeek: 'Min', timeLabel: '09:00 WIB', title: '(Khusus Salik Baru) Pengenalan Tiga Rukun Agama', category: 'Kajian' },
+    { dayOfWeek: 'Min', timeLabel: 'Siang', title: 'Kajian & Tawajjuh Jama\'ah Wanita', category: 'Kajian & Tawajjuh' },
+    { dayOfWeek: 'Min', timeLabel: "Ba'da Maghrib", title: 'Tawajjuh & Penguatan Karakter Ikhlas Mahasiswa/i', category: 'Kajian & Tawajjuh' },
+  ];
+  const oneOffDocs = [
+    { date: '2026-08-13', timeLabel: "Ba'da Maghrib", title: 'Daurah Aswaja', category: 'Dauroh' },
+  ];
+
+  // AgendaSection.jsx me-render tiap event dengan React key `${day}-${title}`
+  // -- sebelumnya key itu hanya `title`, dan karena beberapa event berbagi
+  // title yang sama ("Kajian & Tawajjuh" muncul 4x/pekan), key itu tabrakan
+  // dan React salah mencocokkan node lama/baru saat filter kategori
+  // berpindah bolak-balik, meninggalkan event "hantu" (kelihatan seperti
+  // duplikasi data). Tes ini mengunci invarian itu supaya entri kegiatan
+  // baru yang ditambah pengurus lewat Studio tidak diam-diam merusak key.
+  it('menghasilkan key `${day}-${title}` yang unik untuk tiap kegiatan', () => {
+    const events = resolveEvents(recurringDocs, oneOffDocs);
+    const keys = events.map(e => `${e.day}-${e.title}`);
+    expect(new Set(keys).size).toBe(keys.length);
+  });
+
+  // DaurohPage.jsx memfilter `site.events` berdasarkan `category === 'Dauroh'`
+  // (bukan ejaan lama "Daurah") untuk menemukan jadwal Dauroh ("Daurah
+  // Aswaja"). Tes ini mengunci ejaan kategori itu supaya perubahan
+  // konten di Studio di masa depan tidak diam-diam merusak halaman Dauroh.
+  it('memakai ejaan kategori "Dauroh" (bukan "Daurah")', () => {
+    const categories = resolveEvents(recurringDocs, oneOffDocs).map(e => e.category);
+    expect(categories).not.toContain('Daurah');
+    expect(categories).toContain('Dauroh');
+  });
+});
+
 describe('resolveNews', () => {
   it('memformat date ISO jadi string tanggal Indonesia, meneruskan tag/title apa adanya', () => {
     const docs = [{ tag: 'Pengumuman', title: 'Pendataan Data Salik', date: '2026-08-08', link: 'https://forms.gle/x', description: 'Deskripsi.' }];

@@ -28,26 +28,11 @@ export const SB_DATA = {
   // direvisi (dipecah dari berkas ini supaya bisa diimpor tanpa menarik
   // dependency aset/React -- lihat komentar di `location.js`).
   location: LOCATION,
-  events: [
-    { day: 'Sel', month: 'Malam', title: 'Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh' },
-    { day: 'Kam', month: 'Malam', title: 'Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Tawajjuh' },
-    { day: 'Kam', month: 'Tiap Bulan', title: 'Daurah Aswaja', speaker: 'Tuan Guru Surau Bateh', time: "13 Agustus 2026 — Ba'da Maghrib", place: ' Musholla Al Mukmin Berok', category: 'Dauroh' },
-    { day: 'Sab', month: 'Malam', title: 'Latihan Silat Tradisi', speaker: 'Pelatih sasaran surau', time: "Ba'da Isya", place: 'Lapangan', category: 'Silat' },
-    { day: 'Sab', month: 'Malam', title: 'Kajian & Tawajjuh', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
-    { day: 'Min', month: 'Pagi', title: '(Khusus Salik Baru) Pengenalan Tiga Rukun Agama', speaker: 'Tuan Guru Surau Bateh', time: "09:00 WIB", place: 'Ruang utama', category: 'Kajian' },
-    { day: 'Min', month: 'Siang', title: 'Kajian & Tawajjuh Jama\'ah Wanita', speaker: 'Tuan Guru Surau Bateh', time: "Siang", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
-    { day: 'Min', month: 'Malam', title: 'Tawajjuh & Penguatan Karakter Ikhlas Mahasiswa/i', speaker: 'Tuan Guru Surau Bateh', time: "Ba'da Maghrib", place: 'Ruang utama', category: 'Kajian & Tawajjuh' },
-  ],
   programs: [
     { icon: 'mic', title: 'Kajian dan Tawajjuh', desc: 'Tafsir dan tawajjuh bersama Guru Surau Bateh', meta: 'Selasa, Kamis, Sabtu, Minggu · Ba’da Maghrib' },
     { icon: 'swords', title: 'Silat Tradisi', desc: 'Sasaran silat untuk remaja dan dewasa di Lapangan.', meta: 'Malam pekanan · Ba’da Isya' },
     // { icon: 'users', title: 'Tahsin Dewasa', desc: 'Perbaikan bacaan Al-Qur’an untuk jamaah dewasa, kelompok kecil.', meta: 'Rabu · Ba’da Isya' },
     // { icon: 'heart-handshake', title: 'Santunan Anak Yatim', desc: 'Penyaluran bulanan dari infak jamaah untuk anak yatim sekitar surau.', meta: 'Setiap Jumat pertama' },
-  ],
-  news: [
-    { tag: 'Pengumuman', title: 'Pendataan Data Salik Surau Bateh', date: '8 Agustus 2026', link: 'https://forms.gle/2Se3M6uMp6P2QP4t6', description: 'Harap bagi para Salik yang belum mengisi Formulir pendataan, untuk segera mengisi dengan klik bagian pengumuman ini.' },
-    // { tag: 'Laporan', title: 'Laporan Kas Surau Juli 2026', date: '2 Agustus 2026' },
-    // { tag: 'Kegiatan', title: 'Gotong Royong Pembersihan Ruang Wudhu', date: '28 Juli 2026' },
   ],
   ilmuTauhid: [
     {
