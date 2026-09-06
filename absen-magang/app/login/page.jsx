@@ -37,7 +37,6 @@ export default function LoginPage() {
 
       <div className="gerbang-shell__nav-silang">
         <Link href="/absen">Peserta magang? Check-in/out di sini</Link>
-        <Link href="/daftar">Belum terdaftar? Daftar di sini</Link>
       </div>
     </GerbangShell>
   );

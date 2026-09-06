@@ -225,6 +225,9 @@ export default function AbsenPage() {
             </p>
             <Button size="lg" fullWidth onClick={() => pilihTipe('checkin')}>Check-in</Button>
             <Button tone="secondary" size="lg" fullWidth onClick={() => pilihTipe('checkout')}>Check-out</Button>
+            <Link href="/daftar" className="gerbang-shell__ganti-pilihan">
+              Belum punya PIN? Daftar di sini
+            </Link>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
