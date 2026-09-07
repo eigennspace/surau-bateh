@@ -118,7 +118,7 @@ function LokasiModal({ status, onMinta, onTutup }) {
     <div className="modal-overlay">
       <div className="modal-card">
         <h3>📍 Aktifkan lokasi</h3>
-        <p>Absen Magang butuh lokasi Anda untuk mengecek apakah check-in/check-out dilakukan di sekitar surau.</p>
+        <p>Absen PL butuh lokasi Anda untuk mengecek apakah check-in/check-out dilakukan di sekitar surau.</p>
         <div className="gerbang-shell__btn-row">
           <Button onClick={onMinta}>Aktifkan Lokasi</Button>
           <Button tone="secondary" onClick={onTutup}>Lanjutkan tanpa lokasi</Button>

@@ -3,8 +3,8 @@ import '../styles/gerbang.css';
 import '../styles/dashboard.css';
 
 export const metadata = {
-  title: 'Absen Magang — Surau Bateh Lori',
-  description: 'Pencatatan kehadiran mahasiswi/intern magang di Surau Bateh Lori',
+  title: 'Absen PL — Surau Bateh Lori',
+  description: 'Pencatatan kehadiran mahasiswi/intern PL di Surau Bateh Lori',
 };
 
 export default function RootLayout({ children }) {

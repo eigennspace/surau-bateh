@@ -1,6 +1,6 @@
 # 03 — Pendaftaran: responsive table/card view + empty state
 
-**What to build:** Build a shared, reusable table↔card responsive pattern (table on desktop, one card per row on narrow screens) and apply it to the Pendaftaran page. On mobile, each calon Peserta renders as a card showing all fields (nama, asal kampus, jurusan, NIM, WhatsApp, Periode Magang) with full-width Setujui/Tolak buttons; the inline PIN reveal after approving stays in the same card. On desktop, the existing table layout is kept (now restyled). Also restyle the empty state ("Tidak ada Pendaftaran yang menunggu saat ini.") using `Card`/`Icon` instead of a plain `<p>`.
+**What to build:** Build a shared, reusable table↔card responsive pattern (table on desktop, one card per row on narrow screens) and apply it to the Pendaftaran page. On mobile, each calon Peserta renders as a card showing all fields (nama, asal kampus, jurusan, NIM, WhatsApp, Periode PL) with full-width Setujui/Tolak buttons; the inline PIN reveal after approving stays in the same card. On desktop, the existing table layout is kept (now restyled). Also restyle the empty state ("Tidak ada Pendaftaran yang menunggu saat ini.") using `Card`/`Icon` instead of a plain `<p>`.
 
 **Blocked by:** 01 (needs the new shell/page-title plumbing in place)
 

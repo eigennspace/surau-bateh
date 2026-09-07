@@ -1,6 +1,6 @@
-# Absen Magang
+# Absen PL
 
-Pencatatan kehadiran mahasiswi/intern magang di Surau Bateh Lori. Aplikasi
+Pencatatan kehadiran mahasiswi/intern PL di Surau Bateh Lori. Aplikasi
 Next.js terpisah dari `site/` (lihat `../CONTEXT-MAP.md`, `../absen/CONTEXT.md`,
 dan `../docs/adr/0015-absen-magang-penyimpanan-data-terpisah-dari-sanity.md`
 di root repo untuk konteks arsitektur dan domain lengkap).

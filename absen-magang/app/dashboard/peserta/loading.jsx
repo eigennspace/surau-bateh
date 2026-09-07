@@ -7,7 +7,7 @@ export default function PesertaLoading() {
     <div>
       <h1>Daftar Peserta</h1>
       <p>Seluruh Peserta yang pernah mendaftar, apa pun status Pendaftarannya.</p>
-      <SkeletonTable columns={['Nama', 'Asal kampus', 'Jurusan', 'NIM', 'WhatsApp', 'Periode Magang', 'Status']} />
+      <SkeletonTable columns={['Nama', 'Asal kampus', 'Jurusan', 'NIM', 'WhatsApp', 'Periode PL', 'Status']} />
     </div>
   );
 }

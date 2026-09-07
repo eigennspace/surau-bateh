@@ -1,10 +1,10 @@
 Status: ready-for-agent
 
-# Tampilan Gerbang Absen Magang — Lebih Hidup dan Responsive
+# Tampilan Gerbang Absen PL — Lebih Hidup dan Responsive
 
 ## Problem Statement
 
-Halaman gerbang Absen Magang (`/`, `/login`, `/daftar`, `/absen`) saat ini murni fungsional: container tengah, satu kartu putih, label+input polos, tanpa identitas visual surau yang terasa. Tidak ada perlakuan khusus untuk layar kecil di luar container yang menyempit — tidak ada split-layout yang runtuh rapi ke satu kolom, navigasi dashboard yang cuma flex-wrap, dsb. Peserta magang membuka `/absen` dari HP tiap hari, calon Peserta membuka `/daftar` sekali dari HP, dan Pengurus membuka `/login` dari desktop maupun HP — ketiganya pantas terasa seperti bagian dari identitas Surau Bateh Lori (dipakai di Situs Publik), bukan form generik tanpa merek.
+Halaman gerbang Absen PL (`/`, `/login`, `/daftar`, `/absen`) saat ini murni fungsional: container tengah, satu kartu putih, label+input polos, tanpa identitas visual surau yang terasa. Tidak ada perlakuan khusus untuk layar kecil di luar container yang menyempit — tidak ada split-layout yang runtuh rapi ke satu kolom, navigasi dashboard yang cuma flex-wrap, dsb. Peserta PL membuka `/absen` dari HP tiap hari, calon Peserta membuka `/daftar` sekali dari HP, dan Pengurus membuka `/login` dari desktop maupun HP — ketiganya pantas terasa seperti bagian dari identitas Surau Bateh Lori (dipakai di Situs Publik), bukan form generik tanpa merek.
 
 ## Solution
 
@@ -16,7 +16,7 @@ Bangun satu "shell" visual split-screen yang dipakai bersama oleh `/login`, `/da
 2. As Pengurus, I want melihat panel bermerek (foto surau, logo, nama surau) di samping form login saya di layar lebar, so that saya merasa masuk ke sistem resmi Surau Bateh Lori, bukan form generik.
 3. As Pengurus, I want login tetap berfungsi identik seperti sebelumnya (username, password, tombol Masuk, pesan error saat kredensial salah) meski tampilannya berubah, so that alur kerja saya tidak terganggu oleh redesign.
 4. As Pengurus yang sedang di `/login`, I want ada link kecil untuk berpindah ke halaman check-in/check-out Peserta (`/absen`) dan ke halaman pendaftaran (`/daftar`), so that saya bisa cepat memandu Peserta yang salah buka halaman tanpa mengetik URL manual.
-5. As calon Peserta, I want membuka `/daftar` dan melihat form Pendaftaran (nama, asal kampus/instansi, jurusan/prodi, NIM, nomor WhatsApp, Periode Magang) di panel kanan dengan tampilan konsisten dengan identitas surau, so that saya percaya ini kanal resmi pendaftaran magang.
+5. As calon Peserta, I want membuka `/daftar` dan melihat form Pendaftaran (nama, asal kampus/instansi, jurusan/prodi, NIM, nomor WhatsApp, Periode PL) di panel kanan dengan tampilan konsisten dengan identitas surau, so that saya percaya ini kanal resmi pendaftaran PL.
 6. As calon Peserta yang sudah mengirim Pendaftaran, I want melihat konfirmasi "menunggu persetujuan Pengurus" dengan tampilan yang sama bermereknya (bukan halaman polos berbeda gaya), so that pengalaman saya konsisten dari awal sampai akhir alur pendaftaran.
 7. As calon Peserta yang ternyata sudah Peserta terdaftar (sudah punya PIN), I want ada link kecil dari `/daftar` ke `/absen`, so that saya tidak perlu mendaftar ulang kalau salah buka halaman.
 8. As Peserta, I want membuka `/absen` dari HP dan melihat form PIN + catatan aktivitas dalam satu kolom penuh yang mudah disentuh, so that saya bisa check-in/check-out cepat berdiri di lokasi surau.
@@ -37,15 +37,15 @@ Bangun satu "shell" visual split-screen yang dipakai bersama oleh `/login`, `/da
 - **Shell bersama**: satu komponen shell (mis. `GerbangShell` atau nama serupa) dipakai oleh halaman `/login`, `/daftar`, `/absen` — menerima konten form sebagai children/props, merender panel kiri bermerek (identik di ketiga halaman kecuali mungkin subjudul kecil) + panel kanan (konten spesifik tiap halaman). Ketiga rute Next.js tetap terpisah; `actions.js` tiap rute tidak berubah.
 - **Panel kiri (bermerek)**:
   - Latar: `assets/foto-surau.jpg` dari design system + overlay gradien gelap sesuai pedoman `guidelines/brand-imagery.html` (scrim slate `#22262C` 86%→22%, arah 100°, teks selalu di sisi gelap).
-  - Konten: logo/emblem surau, nama "Surau Bateh Lori", satu baris subjudul kecil ("Pencatatan Kehadiran Magang" atau serupa) — bukan headline besar bergaya marketing/hero situs publik.
+  - Konten: logo/emblem surau, nama "Surau Bateh Lori", satu baris subjudul kecil ("Pencatatan Kehadiran PL" atau serupa) — bukan headline besar bergaya marketing/hero situs publik.
   - Gerak: pan/zoom lambat (Ken Burns) pada foto latar, kontinu/lembut, dinonaktifkan total di bawah `prefers-reduced-motion: reduce`.
   - Di layar sempit, panel kiri runtuh jadi header ringkas (tinggi lebih kecil, tetap tampilkan logo minimal) di atas panel kanan yang menjadi satu kolom penuh.
 - **Panel kanan**: konten spesifik tiap halaman, dibangun dari komponen yang divendor:
   - `/login`: form username + password (komponen `Input`), tombol Masuk (`Button`), pesan error dari `state.pesan` yang sudah ada dipertahankan.
-  - `/daftar`: seluruh field Pendaftaran yang sudah ada (nama, asal kampus/instansi, jurusan/prodi, NIM, nomor WhatsApp, Periode Magang mulai/selesai) dipetakan ke komponen `Input`/`Card`, termasuk state sukses ("menunggu persetujuan") tetap dalam shell yang sama.
+  - `/daftar`: seluruh field Pendaftaran yang sudah ada (nama, asal kampus/instansi, jurusan/prodi, NIM, nomor WhatsApp, Periode PL mulai/selesai) dipetakan ke komponen `Input`/`Card`, termasuk state sukses ("menunggu persetujuan") tetap dalam shell yang sama.
   - `/absen`: field PIN, catatan aktivitas, badge status lokasi (`Badge`), tombol Check-in/Check-out (`Button`); `LokasiModal` (overlay izin lokasi) tetap komponen custom terpisah yang sudah ada — tidak diganti ke `Dialog` dari design system.
 - **Navigasi silang** (link kecil, bukan tombol besar, ditaruh di panel kanan tiap halaman):
-  - `/login` → link ke `/absen` ("Peserta magang? Check-in/out di sini") dan ke `/daftar` ("Belum terdaftar? Daftar di sini").
+  - `/login` → link ke `/absen` ("Peserta PL? Check-in/out di sini") dan ke `/daftar` ("Belum terdaftar? Daftar di sini").
   - `/daftar` → link ke `/absen` ("Sudah Peserta? Check-in/out di sini"). Tidak ada link ke `/login` dari `/daftar`.
   - `/absen` → link ke `/login` ("Pengurus? Masuk di sini"). Tidak ada link ke `/daftar` dari `/absen`.
 - **Rute `/`**: `app/page.jsx` diganti jadi redirect (server-side, mis. `redirect('/login')` dari `next/navigation`) — bukan halaman pilih-peran lagi.

@@ -20,7 +20,7 @@ export function renderLaporanPdf({ peserta, kehadiran, tanggalMulai, tanggalSele
   doc.on('data', chunk => chunks.push(chunk));
   const done = new Promise(resolve => doc.on('end', () => resolve(Buffer.concat(chunks))));
 
-  doc.fontSize(16).text('Laporan Kehadiran Magang', { align: 'center' });
+  doc.fontSize(16).text('Laporan Kehadiran PL', { align: 'center' });
   doc.moveDown(0.5);
   doc.fontSize(11);
   doc.text(`Peserta: ${peserta.nama}`);

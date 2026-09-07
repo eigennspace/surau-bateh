@@ -42,7 +42,7 @@ export function PesertaCard({ peserta }) {
         <span className="entry-card__value">{peserta.noWhatsapp}</span>
       </div>
       <div className="entry-card__field">
-        <span className="entry-card__label">Periode Magang</span>
+        <span className="entry-card__label">Periode PL</span>
         <span className="entry-card__value">{peserta.periodeMulai} — {peserta.periodeSelesai}</span>
       </div>
       <div className="entry-card__field">

@@ -1,10 +1,10 @@
 Status: ready-for-agent
 
-# Redesain Dashboard Pengurus Absen Magang — Admin Panel & Mobile Friendly
+# Redesain Dashboard Pengurus Absen PL — Admin Panel & Mobile Friendly
 
 ## Problem Statement
 
-Setelah redesign gerbang (`/login`, `/daftar`, `/absen`, lihat `.scratch/absen-magang-gerbang-visual/spec.md`), area `/dashboard/*` yang dipakai Pengurus sehari-hari (Beranda, Pendaftaran, Jendela Absen, Kehadiran Ditinjau, Laporan) sengaja tidak disentuh dan masih memakai styling generik paling dasar dari `globals.css`: satu `<nav>` flex-wrap berisi lima link teks polos, tabel HTML mentah untuk Pendaftaran dan Kehadiran Ditinjau (7 dan 6 kolom), form tanpa struktur visual, dan halaman Beranda yang hanya berisi satu paragraf ("pilih menu di atas"). Tidak ada perlakuan khusus untuk layar sempit di luar `flex-wrap` pada nav — tabel berkolom banyak tidak terbaca di HP, dan Pengurus yang membuka dashboard dari HP (yang dikonfirmasi terjadi, lihat spec Absen Magang User Story 12) tidak punya cara nyaman menavigasi atau membaca data. Pengurus sudah senang dengan tampilan gerbang yang baru dan ingin area dashboard mendapat perlakuan setara: rapi, mengikuti identitas visual surau lewat token yang sama, dan nyaman dipakai dari HP maupun desktop.
+Setelah redesign gerbang (`/login`, `/daftar`, `/absen`, lihat `.scratch/absen-magang-gerbang-visual/spec.md`), area `/dashboard/*` yang dipakai Pengurus sehari-hari (Beranda, Pendaftaran, Jendela Absen, Kehadiran Ditinjau, Laporan) sengaja tidak disentuh dan masih memakai styling generik paling dasar dari `globals.css`: satu `<nav>` flex-wrap berisi lima link teks polos, tabel HTML mentah untuk Pendaftaran dan Kehadiran Ditinjau (7 dan 6 kolom), form tanpa struktur visual, dan halaman Beranda yang hanya berisi satu paragraf ("pilih menu di atas"). Tidak ada perlakuan khusus untuk layar sempit di luar `flex-wrap` pada nav — tabel berkolom banyak tidak terbaca di HP, dan Pengurus yang membuka dashboard dari HP (yang dikonfirmasi terjadi, lihat spec Absen PL User Story 12) tidak punya cara nyaman menavigasi atau membaca data. Pengurus sudah senang dengan tampilan gerbang yang baru dan ingin area dashboard mendapat perlakuan setara: rapi, mengikuti identitas visual surau lewat token yang sama, dan nyaman dipakai dari HP maupun desktop.
 
 ## Solution
 
@@ -14,14 +14,14 @@ Bangun satu admin-panel shell baru khusus `/dashboard/*` — berbeda dari `Gerba
 
 1. As Pengurus, I want membuka `/dashboard` dan langsung melihat ringkasan berapa Pendaftaran yang menunggu keputusan saya, so that saya tahu ada pekerjaan yang perlu saya selesaikan tanpa harus membuka halaman Pendaftaran dulu.
 2. As Pengurus, I want melihat di Beranda berapa Kehadiran yang berstatus ditinjau, so that saya tahu ada kasus check-in/check-out di luar Jendela Absen yang perlu saya putuskan.
-3. As Pengurus, I want melihat di Beranda berapa Peserta yang statusnya aktif (Pendaftaran-nya sudah disetujui), so that saya punya gambaran skala operasional magang saat ini tanpa membuka halaman Laporan.
+3. As Pengurus, I want melihat di Beranda berapa Peserta yang statusnya aktif (Pendaftaran-nya sudah disetujui), so that saya punya gambaran skala operasional PL saat ini tanpa membuka halaman Laporan.
 4. As Pengurus, I want mengetuk/klik kartu statistik di Beranda dan langsung diarahkan ke halaman terkait (Pendaftaran, Kehadiran Ditinjau), so that ringkasan itu jadi jalan pintas kerja, bukan cuma angka pajangan.
 5. As Pengurus di desktop, I want melihat sidebar navigasi permanen di sisi layar berisi kelima menu (Beranda, Pendaftaran, Jendela Absen, Kehadiran Ditinjau, Laporan), so that saya bisa berpindah menu tanpa scroll ke atas mencari link seperti sekarang.
 6. As Pengurus di desktop, I want melihat username saya dan tombol Keluar di bagian bawah sidebar, so that saya tahu akun mana yang sedang login dan bisa logout tanpa mencarinya di tempat lain.
 7. As Pengurus yang membuka dashboard dari HP, I want melihat top bar ringkas berisi tombol hamburger dan judul halaman yang sedang dibuka, so that saya tetap tahu saya sedang di halaman mana tanpa sidebar memenuhi layar sempit saya.
 8. As Pengurus di HP, I want mengetuk tombol hamburger dan melihat sidebar yang sama (lima menu + username + tombol Keluar) muncul sebagai drawer, so that navigasi saya di HP identik isinya dengan di desktop, hanya beda cara memunculkannya.
 9. As Pengurus di HP, I want drawer navigasi tertutup lagi setelah saya memilih satu menu atau mengetuk area di luar drawer, so that saya langsung melihat halaman yang saya pilih tanpa langkah tambahan menutup drawer.
-10. As Pengurus di HP yang membuka halaman Pendaftaran, I want melihat tiap calon Peserta sebagai satu kartu berisi semua field (nama, asal kampus, jurusan, NIM, WhatsApp, Periode Magang) dan tombol Setujui/Tolak, bukan tabel yang harus digeser ke samping, so that saya bisa membaca dan memutuskan Pendaftaran tanpa scroll horizontal yang merepotkan.
+10. As Pengurus di HP yang membuka halaman Pendaftaran, I want melihat tiap calon Peserta sebagai satu kartu berisi semua field (nama, asal kampus, jurusan, NIM, WhatsApp, Periode PL) dan tombol Setujui/Tolak, bukan tabel yang harus digeser ke samping, so that saya bisa membaca dan memutuskan Pendaftaran tanpa scroll horizontal yang merepotkan.
 11. As Pengurus di desktop yang membuka halaman Pendaftaran, I want tetap melihat data itu sebagai tabel biasa (bukan kartu), so that saya bisa membandingkan banyak baris sekaligus seperti kebiasaan kerja saya di layar lebar.
 12. As Pengurus yang menyetujui sebuah Pendaftaran, I want tetap melihat PIN yang di-generate ditampilkan jelas di kartu/baris Peserta itu setelah keputusan saya, so that saya tetap bisa langsung menyalin dan menyampaikannya ke Peserta secara manual seperti alur sekarang.
 13. As Pengurus di HP yang membuka halaman Kehadiran Ditinjau, I want melihat tiap Kehadiran sebagai satu kartu berisi nama Peserta, tanggal, jam masuk/pulang, info lokasi check-in dan check-out, serta tombol Setujui/Tolak/Koreksi jam, so that saya bisa meninjau dan memutuskan tanpa tabel sempit yang memotong informasi lokasi.
@@ -78,12 +78,12 @@ Bangun satu admin-panel shell baru khusus `/dashboard/*` — berbeda dari `Gerba
 - Query/fungsi database baru untuk statistik Beranda — ketiga angka dihitung dari fungsi `lib/absen` yang sudah ada, bukan agregasi baru di level database.
 - Penggabungan atau pemecahan rute dashboard (kelima halaman tetap URL terpisah seperti sekarang).
 - Mengganti `LokasiModal` custom di `/absen` dengan komponen `Dialog` design system (tidak relevan dengan lingkup dashboard).
-- Notifikasi otomatis, fitur baru, atau perubahan alur bisnis apa pun di luar yang sudah ada (tetap sesuai Out of Scope spec Absen Magang induk).
+- Notifikasi otomatis, fitur baru, atau perubahan alur bisnis apa pun di luar yang sudah ada (tetap sesuai Out of Scope spec Absen PL induk).
 - Collapse-to-icon pada sidebar desktop, atau pola bottom-tab-bar untuk navigasi mobile (sudah diputuskan pakai hamburger+drawer).
 - Automated test/visual regression baru (lihat Testing Decisions).
 
 ## Further Notes
 
-- Spec ini adalah lanjutan dari `.scratch/absen-magang-gerbang-visual/spec.md` (redesign gerbang) — keduanya bersama menyelesaikan redesign visual penuh Absen Magang (gerbang + dashboard), tapi dipisah jadi dua spec karena gerbang dan dashboard punya kebutuhan shell yang berbeda (bermerek/marketing vs admin-panel/fungsional) dan dikerjakan di sesi terpisah.
+- Spec ini adalah lanjutan dari `.scratch/absen-magang-gerbang-visual/spec.md` (redesign gerbang) — keduanya bersama menyelesaikan redesign visual penuh Absen PL (gerbang + dashboard), tapi dipisah jadi dua spec karena gerbang dan dashboard punya kebutuhan shell yang berbeda (bermerek/marketing vs admin-panel/fungsional) dan dikerjakan di sesi terpisah.
 - Keputusan breakpoint spesifik (nilai piksel persis untuk switch sidebar↔drawer dan tabel↔kartu) sengaja tidak dipatok di sini — detail implementasi yang wajar diserahkan ke tim implementasi selama konsisten dan hasil akhirnya lolos skenario manual di atas.
 - Nama komponen baru (`DashboardShell`, `Sidebar`, `StatCard`, dll.) adalah usulan penamaan, bukan nama final yang mengikat — tim implementasi bebas menyesuaikan selama perannya sesuai Implementation Decisions di atas.

@@ -16,7 +16,7 @@ export default async function PendaftaranPage() {
         <EmptyState icon="user-plus">Tidak ada Pendaftaran yang menunggu saat ini.</EmptyState>
       ) : (
         <ResponsiveTable
-          columns={['Nama', 'Asal kampus', 'Jurusan', 'NIM', 'WhatsApp', 'Periode Magang', 'Keputusan']}
+          columns={['Nama', 'Asal kampus', 'Jurusan', 'NIM', 'WhatsApp', 'Periode PL', 'Keputusan']}
           rows={daftar.map(peserta => <PendaftaranTableRow key={peserta.id} peserta={peserta} />)}
           cards={daftar.map(peserta => <PendaftaranCard key={peserta.id} peserta={peserta} />)}
         />

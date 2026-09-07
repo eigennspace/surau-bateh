@@ -36,7 +36,7 @@ export default function LoginPage() {
       </Card>
 
       <div className="gerbang-shell__nav-silang">
-        <Link href="/absen">Peserta magang? Check-in/out di sini</Link>
+        <Link href="/absen">Peserta PL? Check-in/out di sini</Link>
       </div>
     </GerbangShell>
   );

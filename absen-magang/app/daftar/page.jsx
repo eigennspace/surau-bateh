@@ -33,9 +33,9 @@ export default function DaftarPage() {
   return (
     <GerbangShell>
       <Card>
-        <h1 style={{ marginBottom: 'var(--space-2)' }}>Pendaftaran Peserta Magang</h1>
+        <h1 style={{ marginBottom: 'var(--space-2)' }}>Pendaftaran Peserta PL</h1>
         <p style={{ margin: '0 0 var(--space-6)', color: 'var(--text-muted)' }}>
-          Isi data berikut untuk mendaftar sebagai Peserta magang di Surau Bateh Lori.
+          Isi data berikut untuk mendaftar sebagai Peserta PL di Surau Bateh Lori.
         </p>
 
         <form action={formAction} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
@@ -48,8 +48,8 @@ export default function DaftarPage() {
           <Input label="Jurusan/prodi" name="jurusan" id="jurusan" required />
           <Input label="NIM" name="nim" id="nim" required />
           <Input label="Nomor WhatsApp" name="noWhatsapp" id="noWhatsapp" required />
-          <Input label="Periode Magang — mulai" name="periodeMulai" id="periodeMulai" type="date" required />
-          <Input label="Periode Magang — selesai" name="periodeSelesai" id="periodeSelesai" type="date" required />
+          <Input label="Periode PL — mulai" name="periodeMulai" id="periodeMulai" type="date" required />
+          <Input label="Periode PL — selesai" name="periodeSelesai" id="periodeSelesai" type="date" required />
 
           <Button type="submit" fullWidth disabled={pending}>
             {pending ? 'Mengirim…' : 'Kirim Pendaftaran'}

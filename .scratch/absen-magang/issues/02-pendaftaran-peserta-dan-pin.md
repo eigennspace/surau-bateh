@@ -2,7 +2,7 @@
 
 Status: done
 
-**What to build:** Calon Peserta mengisi form Pendaftaran publik (nama, asal kampus/instansi, jurusan/prodi, NIM, nomor WhatsApp, Periode Magang — tanggal mulai dan selesai). Pendaftaran tersimpan berstatus `menunggu`. Pengurus (setelah login, lihat ticket 01) melihat antrean Pendaftaran yang menunggu di dashboard, dan bisa menyetujui atau menolak masing-masing. Menyetujui memicu sistem meng-generate PIN unik untuk Peserta itu secara otomatis, ditampilkan ke Pengurus di layar (untuk diteruskan manual ke Peserta — tidak ada notifikasi otomatis, lihat spec). Peserta yang Pendaftaran-nya belum disetujui belum bisa memakai fitur Kehadiran (diperiksa lengkap di ticket 03).
+**What to build:** Calon Peserta mengisi form Pendaftaran publik (nama, asal kampus/instansi, jurusan/prodi, NIM, nomor WhatsApp, Periode PL — tanggal mulai dan selesai). Pendaftaran tersimpan berstatus `menunggu`. Pengurus (setelah login, lihat ticket 01) melihat antrean Pendaftaran yang menunggu di dashboard, dan bisa menyetujui atau menolak masing-masing. Menyetujui memicu sistem meng-generate PIN unik untuk Peserta itu secara otomatis, ditampilkan ke Pengurus di layar (untuk diteruskan manual ke Peserta — tidak ada notifikasi otomatis, lihat spec). Peserta yang Pendaftaran-nya belum disetujui belum bisa memakai fitur Kehadiran (diperiksa lengkap di ticket 03).
 
 **Blocked by:** 01 — butuh app shell, skema DB dasar, dan login Pengurus
 

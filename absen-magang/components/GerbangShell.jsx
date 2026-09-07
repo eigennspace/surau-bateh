@@ -6,7 +6,7 @@ import Image from 'next/image';
 // konten spesifik tiap halaman lewat `children`. Lihat spec di
 // .scratch/absen-magang-gerbang-visual/spec.md dan ADR 0016 untuk konteks
 // vendoring komponen yang dipakai di panel kanan.
-export function GerbangShell({ subjudul = 'Pencatatan Kehadiran Magang', children }) {
+export function GerbangShell({ subjudul = 'Pencatatan Kehadiran PL', children }) {
   return (
     <div className="gerbang-shell">
       <aside className="gerbang-shell__panel-kiri">

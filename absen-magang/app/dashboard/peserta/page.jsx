@@ -17,7 +17,7 @@ export default async function DaftarPesertaPage() {
         <EmptyState icon="users">Belum ada Peserta yang terdaftar.</EmptyState>
       ) : (
         <ResponsiveTable
-          columns={['Nama', 'Asal kampus', 'Jurusan', 'NIM', 'WhatsApp', 'Periode Magang', 'Status']}
+          columns={['Nama', 'Asal kampus', 'Jurusan', 'NIM', 'WhatsApp', 'Periode PL', 'Status']}
           rows={daftar.map(peserta => <PesertaTableRow key={peserta.id} peserta={peserta} />)}
           cards={daftar.map(peserta => <PesertaCard key={peserta.id} peserta={peserta} />)}
         />

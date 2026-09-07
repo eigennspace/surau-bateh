@@ -6,7 +6,7 @@ export default function PendaftaranLoading() {
   return (
     <div>
       <h1>Pendaftaran Menunggu</h1>
-      <SkeletonTable columns={['Nama', 'Asal kampus', 'Jurusan', 'NIM', 'WhatsApp', 'Periode Magang', 'Keputusan']} />
+      <SkeletonTable columns={['Nama', 'Asal kampus', 'Jurusan', 'NIM', 'WhatsApp', 'Periode PL', 'Keputusan']} />
     </div>
   );
 }

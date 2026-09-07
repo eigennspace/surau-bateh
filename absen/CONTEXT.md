@@ -1,19 +1,19 @@
-# Absen Magang
+# Absen PL
 
-Pencatatan kehadiran mahasiswi/intern yang menjalani magang/PKL di Surau Bateh Lori — aplikasi terpisah dari Situs Publik, dengan penyimpanan data operasional sendiri (bukan Sanity). Skala: satu lokasi, puluhan Peserta per periode.
+Pencatatan kehadiran mahasiswi/intern yang menjalani PL/PKL di Surau Bateh Lori — aplikasi terpisah dari Situs Publik, dengan penyimpanan data operasional sendiri (bukan Sanity). Skala: satu lokasi, puluhan Peserta per periode.
 
 ## Language
 
 **Peserta**:
-Mahasiswi atau intern yang menjalani magang/PKL di surau dan mencatat kehadirannya lewat aplikasi ini. Satu Peserta terikat pada satu Periode Magang.
-_Avoid_: Mahasiswi, Intern, Anak Magang (istilah sehari-hari, bukan istilah baku sistem)
+Mahasiswi atau intern yang menjalani PL/PKL di surau dan mencatat kehadirannya lewat aplikasi ini. Satu Peserta terikat pada satu Periode PL.
+_Avoid_: Mahasiswi, Intern, Anak PL (istilah sehari-hari, bukan istilah baku sistem)
 
 **Pendaftaran**:
-Permintaan awal seorang calon Peserta untuk terdaftar — berisi nama, asal kampus/instansi, jurusan/prodi, NIM, nomor WhatsApp, dan Periode Magang. Berstatus menunggu sampai disetujui atau ditolak Pengurus; PIN baru diberikan setelah disetujui.
+Permintaan awal seorang calon Peserta untuk terdaftar — berisi nama, asal kampus/instansi, jurusan/prodi, NIM, nomor WhatsApp, dan Periode PL. Berstatus menunggu sampai disetujui atau ditolak Pengurus; PIN baru diberikan setelah disetujui.
 _Avoid_: Registrasi, Sign up
 
-**Periode Magang**:
-Rentang tanggal mulai–selesai magang seorang Peserta, diisi saat Pendaftaran. Menentukan jangka waktu Peserta itu berhak mencatat Kehadiran.
+**Periode PL**:
+Rentang tanggal mulai–selesai PL seorang Peserta, diisi saat Pendaftaran. Menentukan jangka waktu Peserta itu berhak mencatat Kehadiran.
 _Avoid_: Periode Absen (itu istilah untuk rentang laporan — lihat Laporan — bukan keanggotaan Peserta)
 
 **PIN**:
